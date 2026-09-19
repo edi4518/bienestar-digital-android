@@ -37,7 +37,7 @@ git config --global core.longpaths true
 Abrir la terminal en el directorio de trabajo habitual y clonar el repositorio:
 
 ```bash
-git clone https://github.com/TU_ADMIN/bienestar-digital-android.git
+git clone https://github.com/edi4518/bienestar-digital-android
 cd bienestar-digital-android
 ```
 
@@ -101,12 +101,12 @@ git checkout -b feature/<nombre-feature>
 ```
 
 #### Ramas oficiales por módulo:
-* `feature/onboarding-profile` (Registro y datos del perfil inicial)
-* `feature/hub-bento-grid` (Menú Bento Grid principal y navegación)
-* `feature/game-decisiones-conectadas` (Minijuego 1)
-* `feature/game-caza-notificaciones` (Minijuego 2)
-* `feature/game-desmitificador` (Minijuego 3)
-* `feature/game-organizador-24hs` (Minijuego 4)
+* `feature/onboarding` (Registro y datos del perfil inicial)
+* `feature/hub` (Menú Bento Grid principal y navegación)
+* `feature/decisionesconectadas` (Minijuego 1)
+* `feature/cazanotificaciones` (Minijuego 2)
+* `feature/desmitificador` (Minijuego 3)
+* `feature/organizador24h` (Minijuego 4)
 
 ---
 
