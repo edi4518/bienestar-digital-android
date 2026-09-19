@@ -1,0 +1,29 @@
+# Archivos y carpetas de compilación
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Carpeta de compilación dentro de cada módulo
+app/build/
+*/build/
+
+# Archivos de firma y APKs generados localmente
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Configuración personal del entorno de Android Studio
+.idea/

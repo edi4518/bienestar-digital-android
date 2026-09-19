@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es" style=""><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#0e0e12;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-error-container": "#ffdad6", "on-background": "#e4e1e7", "surface-bright": "#39393d", "secondary-fixed-dim": "#00dfc1", "surface-container-low": "#1b1b1f", "surface-tint": "#abd600", "on-surface": "#e4e1e7", "inverse-surface": "#e4e1e7", "surface-container-highest": "#353439", "inverse-on-surface": "#303034", "secondary-fixed": "#26fedc", "primary-fixed-dim": "#abd600", "on-tertiary-fixed-variant": "#6a0baa", "surface-container-high": "#2a292e", "primary-fixed": "#c3f400", "error": "#ffb4ab", "tertiary-fixed": "#f2daff", "on-surface-variant": "#c4c9ac", "tertiary-container": "#f2daff", "background": "#131317", "surface": "#131317", "error-container": "#93000a", "surface-dim": "#131317", "surface-container-lowest": "#0e0e12", "on-secondary-container": "#006a5a", "on-primary-fixed-variant": "#3c4d00", "primary-container": "#c3f400", "on-error": "#690005", "outline": "#8e9379", "on-secondary-fixed-variant": "#005144", "secondary-container": "#00f2d1", "on-secondary-fixed": "#00201a", "secondary": "#c7fff0", "inverse-primary": "#506600", "tertiary-fixed-dim": "#e0b6ff", "on-tertiary-fixed": "#2e004e", "on-secondary": "#00382f", "surface-variant": "#353439", "on-primary-fixed": "#161e00", "on-tertiary-container": "#8b3aca", "on-primary-container": "#556d00", "tertiary": "#ffffff", "on-tertiary": "#4c007d", "surface-container": "#1f1f23", "on-primary": "#283500", "primary": "#ffffff", "outline-variant": "#444933" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "bento-gap-md": "1rem", "screen-margin-mobile": "1rem", "spacing-2xs": "0.25rem", "spacing-2xl": "2rem", "bento-gap-sm": "0.75rem", "spacing-sm": "0.75rem", "screen-margin-tablet": "1.5rem", "spacing-md": "1rem", "spacing-3xl": "3rem", "spacing-xs": "0.5rem", "spacing-xl": "1.5rem", "spacing-lg": "1.25rem" }, fontFamily: { "body-md": ["Plus Jakarta Sans"], "display-xl": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "display-xl-mobile": ["Space Grotesk"], "label-md": ["Space Grotesk"], "title-lg": ["Plus Jakarta Sans"], "headline-md": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"] }, fontSize: { "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "display-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "700" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" }], "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface-container-lowest text-on-surface font-body-md min-h-screen flex flex-col justify-between items-center selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.2)]"></header><main class="w-full max-w-[430px] mx-auto px-spacing-md pt-16 pb-28 flex-1 flex flex-col bg-surface-container-lowest"><div class="flex flex-col w-full gap-spacing-md">
+<!-- TOP HUD: Nivel & Presupuesto -->
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center gap-spacing-xs">
+<button aria-label="Volver al menú" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface active:translate-y-0.5 transition-transform shadow-md" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="bg-surface-container px-spacing-sm py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-primary-fixed text-[14px]">tune</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider">Nivel 1: Día de Semana</span>
+</div>
+</div>
+<!-- Indicador de presupuesto total -->
+<div class="bg-primary-fixed text-on-primary-fixed px-spacing-sm py-1.5 rounded-full flex items-center gap-1.5 shadow-md" id="budget-chip">
+<span class="material-symbols-outlined text-[16px]">timelapse</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wide font-bold" id="budget-text">24h / 24h ASIGNADAS</span>
+</div>
+</div>
+<!-- HERO: Barra de Tiempo de 24 Horas Segmentada -->
+<div class="w-full bg-surface-container rounded-DEFAULT p-spacing-md flex flex-col gap-spacing-sm shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">schedule</span>
+<span class="font-label-lg text-label-lg text-on-surface uppercase">Línea de 24 Horas</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">00:00 - 23:59</span>
+</div>
+<!-- Shield flotante de recomendación médica -->
+<div class="w-full bg-on-tertiary-container/30 px-spacing-sm py-1.5 rounded-DEFAULT flex items-center justify-between" id="sleep-shield-banner">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">shield</span>
+<span class="font-label-sm text-label-sm text-on-surface">Escudo de Sueño: <span class="text-tertiary-fixed-dim font-bold">8h Recomendadas</span> (SAP)</span>
+</div>
+<span class="bg-surface-container-lowest px-2 py-0.5 rounded-full font-label-sm text-label-sm text-tertiary-fixed-dim">PROTEGIDO</span>
+</div>
+<!-- Pista visual de 24 horas -->
+<div class="w-full bg-surface-container-lowest p-1 rounded-DEFAULT">
+<div class="w-full h-7 rounded-DEFAULT overflow-hidden flex items-center">
+<!-- Bloque Sueño (8h = 33.3%) -->
+<div class="h-full bg-on-tertiary-container flex items-center justify-center transition-all duration-300" id="bar-sleep" style="width: 33.33%">
+<span class="material-symbols-outlined text-on-surface text-[14px]">bedtime</span>
+</div>
+<!-- Bloque Escuela (6h = 25%) -->
+<div class="h-full bg-secondary-fixed-dim flex items-center justify-center transition-all duration-300" id="bar-school" style="width: 25%">
+<span class="material-symbols-outlined text-on-secondary text-[14px]">school</span>
+</div>
+<!-- Bloque Deporte & Amigos (3h = 12.5%) -->
+<div class="h-full bg-primary-fixed-dim flex items-center justify-center transition-all duration-300" id="bar-sport" style="width: 12.5%">
+<span class="material-symbols-outlined text-on-primary text-[14px]">directions_run</span>
+</div>
+<!-- Bloque Pantallas (4h = 16.66%) -->
+<div class="h-full bg-error flex items-center justify-center transition-all duration-300" id="bar-screens" style="width: 16.66%">
+<span class="material-symbols-outlined text-on-error text-[14px]">smartphone</span>
+</div>
+<!-- Bloque Ocio / Libre (3h = 12.5%) -->
+<div class="h-full bg-surface-bright flex items-center justify-center transition-all duration-300" id="bar-leisure" style="width: 12.5%">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">restaurant</span>
+</div>
+</div>
+<!-- Marcas de tiempo de referencia -->
+<div class="flex justify-between px-1 pt-1.5 text-on-surface-variant font-label-sm text-label-sm">
+<span class="">00h</span>
+<span class="">06h</span>
+<span class="">12h</span>
+<span class="">18h</span>
+<span class="">24h</span>
+</div>
+</div>
+<!-- Banner de Alerta Dinámica -->
+<div class="hidden w-full bg-error-container/40 p-2.5 rounded-DEFAULT flex items-center gap-2" id="alert-banner">
+<span class="material-symbols-outlined text-error text-[18px]">warning</span>
+<p class="font-label-sm text-label-sm text-on-error-container">
+        ¡Ojo! Las pantallas están canibalizando tu tiempo de descanso profundo.
+      </p>
+</div>
+</div>
+<!-- MICRO-DASHBOARD: Pronóstico de Consecuencias (3 Columnas) -->
+<div class="w-full bg-surface-container rounded-DEFAULT p-spacing-md flex flex-col gap-spacing-xs shadow-md">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Pronóstico para mañana</span>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary-fixed"></span>
+</span>
+</div>
+<div class="grid grid-cols-3 gap-spacing-xs">
+<!-- Batería -->
+<div class="bg-surface-container-lowest p-2.5 rounded-DEFAULT flex flex-col items-center justify-center text-center gap-1 shadow-sm">
+<div class="flex items-center gap-1 text-primary-fixed">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="font-headline-md text-headline-md leading-none" id="metric-battery">85%</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Batería Diurna</span>
+</div>
+<!-- Foco -->
+<div class="bg-surface-container-lowest p-2.5 rounded-DEFAULT flex flex-col items-center justify-center text-center gap-1 shadow-sm">
+<div class="flex items-center gap-1 text-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+<span class="font-title-lg text-title-lg text-secondary-fixed leading-none" id="metric-focus">Óptimo</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Foco Cognitivo</span>
+</div>
+<!-- Riesgo Cansancio -->
+<div class="bg-surface-container-lowest p-2.5 rounded-DEFAULT flex flex-col items-center justify-center text-center gap-1 shadow-sm">
+<div class="flex items-center gap-1 text-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-[18px]">sentiment_neutral</span>
+<span class="font-title-lg text-title-lg text-tertiary-fixed-dim leading-none" id="metric-fatigue">Bajo</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Cansancio</span>
+</div>
+</div>
+</div>
+<!-- MAZO DE ASIGNACIÓN: Stepper Cards -->
+<div class="flex flex-col gap-spacing-xs w-full">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Ajustá tu distribución</span>
+<span class="font-label-sm text-label-sm text-primary-fixed font-bold">1 bloque = 1 hora</span>
+</div>
+<!-- Tarjeta 1: Sueño -->
+<div class="w-full bg-surface-container p-spacing-sm rounded-DEFAULT flex items-center justify-between shadow-md">
+<div class="flex items-center gap-spacing-sm min-w-0">
+<div class="w-10 h-10 rounded-DEFAULT bg-on-tertiary-container/30 flex items-center justify-center text-tertiary-fixed-dim shrink-0">
+<span class="material-symbols-outlined text-[22px]">bedtime</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface truncate">Sueño y Descanso</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim">Recomendado SAP: 8h - 10h</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('sleep', -1)" type="button">
+          -
+        </button>
+<span class="font-headline-md text-headline-md text-on-surface w-7 text-center" id="val-sleep">8h</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('sleep', 1)" type="button">
+          +
+        </button>
+</div>
+</div>
+<!-- Tarjeta 2: Escuela (Fijo/Obligatorio) -->
+<div class="w-full bg-surface-container/70 p-spacing-sm rounded-DEFAULT flex items-center justify-between shadow-md">
+<div class="flex items-center gap-spacing-sm min-w-0">
+<div class="w-10 h-10 rounded-DEFAULT bg-secondary-fixed-dim/20 flex items-center justify-center text-secondary-fixed shrink-0">
+<span class="material-symbols-outlined text-[22px]">school</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface truncate">Escuela y Tareas</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">lock</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Horas fijas obligatorias</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0 px-2 py-1 bg-surface-container-lowest rounded-full">
+<span class="font-headline-md text-headline-md text-secondary-fixed">6h</span>
+</div>
+</div>
+<!-- Tarjeta 3: Redes y Pantallas (Zona crítica) -->
+<div class="w-full bg-surface-container p-spacing-sm rounded-DEFAULT flex items-center justify-between shadow-md">
+<div class="flex items-center gap-spacing-sm min-w-0">
+<div class="w-10 h-10 rounded-DEFAULT bg-error-container/30 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined text-[22px]">smartphone</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface truncate">Redes y Pantallas</span>
+</div>
+<span class="font-label-sm text-label-sm text-error" id="screen-subtext">Zona crítica de ocio</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('screens', -1)" type="button">
+          -
+        </button>
+<span class="font-headline-md text-headline-md text-error w-7 text-center" id="val-screens">4h</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('screens', 1)" type="button">
+          +
+        </button>
+</div>
+</div>
+<!-- Tarjeta 4: Deporte y Amigos -->
+<div class="w-full bg-surface-container p-spacing-sm rounded-DEFAULT flex items-center justify-between shadow-md">
+<div class="flex items-center gap-spacing-sm min-w-0">
+<div class="w-10 h-10 rounded-DEFAULT bg-primary-fixed/20 flex items-center justify-center text-primary-fixed shrink-0">
+<span class="material-symbols-outlined text-[22px]">sports_volleyball</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface truncate">Deporte y Amigos</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-fixed">Conexión real</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('sport', -1)" type="button">
+          -
+        </button>
+<span class="font-headline-md text-headline-md text-on-surface w-7 text-center" id="val-sport">3h</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('sport', 1)" type="button">
+          +
+        </button>
+</div>
+</div>
+<!-- Tarjeta 5: Comidas & Tiempo Libre -->
+<div class="w-full bg-surface-container p-spacing-sm rounded-DEFAULT flex items-center justify-between shadow-md">
+<div class="flex items-center gap-spacing-sm min-w-0">
+<div class="w-10 h-10 rounded-DEFAULT bg-surface-bright flex items-center justify-center text-on-surface shrink-0">
+<span class="material-symbols-outlined text-[22px]">restaurant</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface truncate">Comidas y Desconexión</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rutina familiar y comidas</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('leisure', -1)" type="button">
+          -
+        </button>
+<span class="font-headline-md text-headline-md text-on-surface w-7 text-center" id="val-leisure">3h</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-headline-md text-headline-md active:translate-y-0.5 shadow-sm" onclick="updateHours('leisure', 1)" type="button">
+          +
+        </button>
+</div>
+</div>
+</div>
+<!-- BOTÓN CTA & EVIDENCIA CIENTÍFICA -->
+<div class="flex flex-col gap-spacing-xs w-full pt-1">
+<button class="w-full h-14 bg-primary-fixed text-on-primary-fixed font-headline-md text-headline-md rounded-full flex items-center justify-center gap-2 shadow-lg active:translate-y-1 transition-transform" id="cta-button" onclick="submitDay()" type="button">
+<span class="">COMPROBAR EQUILIBRIO</span>
+<span class="material-symbols-outlined text-[22px]">bolt</span>
+</button>
+<!-- Modal feedback inline trigger container -->
+<div class="hidden w-full bg-surface-container p-spacing-sm rounded-DEFAULT flex items-center gap-2 shadow-md" id="result-toast">
+<span class="material-symbols-outlined text-primary-fixed text-[20px]">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface">¡Día equilibrado! Desbloqueaste la insignia: "Maestro del Tiempo".</span>
+</div>
+<!-- Badge de Evidencia Científica SAP -->
+<div class="bg-surface-container-low p-spacing-sm rounded-DEFAULT flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary-fixed text-[18px] shrink-0 mt-0.5">lightbulb</span>
+<p class="font-body-md text-body-md text-on-surface-variant">
+<strong class="text-on-surface">Sociedad Argentina de Pediatría:</strong> Superar las 2 horas de pantallas recreativas diarias canibaliza horas de descanso REM y reduce la consolidación de la memoria escolar.
+      </p>
+</div>
+</div>
+</div>
+<script>
+  const state = {
+    sleep: 8,
+    school: 6, // Fijo
+    screens: 4,
+    sport: 3,
+    leisure: 3
+  };
+
+  function updateHours(key, delta) {
+    const current = state[key];
+    const next = current + delta;
+    if (next < 0 || next > 14) return;
+
+    // Calcular suma tentativa
+    const tentativeTotal = (state.sleep + state.school + state.screens + state.sport + state.leisure) - current + next;
+    if (tentativeTotal > 24 && delta > 0) {
+      // Shaking feedback visual
+      const budgetChip = document.getElementById('budget-chip');
+      budgetChip.classList.add('animate-bounce');
+      setTimeout(() => budgetChip.classList.remove('animate-bounce'), 400);
+      return;
+    }
+
+    state[key] = next;
+    render();
+  }
+
+  function render() {
+    const total = state.sleep + state.school + state.screens + state.sport + state.leisure;
+    
+    // Actualizar números de las cards
+    document.getElementById('val-sleep').innerText = state.sleep + 'h';
+    document.getElementById('val-screens').innerText = state.screens + 'h';
+    document.getElementById('val-sport').innerText = state.sport + 'h';
+    document.getElementById('val-leisure').innerText = state.leisure + 'h';
+
+    // Barra de tiempo
+    document.getElementById('bar-sleep').style.width = (state.sleep / 24 * 100) + '%';
+    document.getElementById('bar-school').style.width = (state.school / 24 * 100) + '%';
+    document.getElementById('bar-sport').style.width = (state.sport / 24 * 100) + '%';
+    document.getElementById('bar-screens').style.width = (state.screens / 24 * 100) + '%';
+    document.getElementById('bar-leisure').style.width = (state.leisure / 24 * 100) + '%';
+
+    // Budget chip
+    const budgetText = document.getElementById('budget-text');
+    const budgetChip = document.getElementById('budget-chip');
+    budgetText.innerText = total + 'h / 24h ASIGNADAS';
+
+    if (total === 24) {
+      budgetChip.className = 'bg-primary-fixed text-on-primary-fixed px-spacing-sm py-1.5 rounded-full flex items-center gap-1.5 shadow-md';
+    } else {
+      budgetChip.className = 'bg-surface-bright text-on-surface px-spacing-sm py-1.5 rounded-full flex items-center gap-1.5 shadow-md';
+    }
+
+    // Alerta de canibalización si pantallas > 4h o sueño < 7h
+    const alertBanner = document.getElementById('alert-banner');
+    const sleepShield = document.getElementById('sleep-shield-banner');
+    if (state.sleep < 8 || state.screens > 4) {
+      alertBanner.classList.remove('hidden');
+      sleepShield.classList.add('opacity-50');
+    } else {
+      alertBanner.classList.add('hidden');
+      sleepShield.classList.remove('opacity-50');
+    }
+
+    // Micro dashboard consecuencias
+    const battery = document.getElementById('metric-battery');
+    const focus = document.getElementById('metric-focus');
+    const fatigue = document.getElementById('metric-fatigue');
+
+    if (state.sleep >= 8 && state.screens <= 3) {
+      battery.innerText = '95%';
+      focus.innerText = 'Máximo';
+      fatigue.innerText = 'Nulo';
+    } else if (state.sleep >= 7 && state.screens <= 5) {
+      battery.innerText = '80%';
+      focus.innerText = 'Óptimo';
+      fatigue.innerText = 'Bajo';
+    } else if (state.sleep < 7) {
+      battery.innerText = '45%';
+      focus.innerText = 'Brumoso';
+      fatigue.innerText = 'Alto';
+    } else {
+      battery.innerText = '60%';
+      focus.innerText = 'Regular';
+      fatigue.innerText = 'Medio';
+    }
+  }
+
+  function submitDay() {
+    const total = state.sleep + state.school + state.screens + state.sport + state.leisure;
+    const toast = document.getElementById('result-toast');
+    if (total !== 24) {
+      alert('Tenés que completar exactamente las 24 horas del día antes de comprobar.');
+      return;
+    }
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 4000);
+  }
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pointer-events-none pb-safe mb-spacing-md px-spacing-md flex justify-center" data-active-classes="text-primary-fixed drop-shadow-[0_0_8px_rgba(195,244,0,0.6)] font-bold"></nav>
+</body></html>

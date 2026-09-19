@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es" style=""><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#0e0e12;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-error-container": "#ffdad6", "on-background": "#e4e1e7", "surface-bright": "#39393d", "secondary-fixed-dim": "#00dfc1", "surface-container-low": "#1b1b1f", "surface-tint": "#abd600", "on-surface": "#e4e1e7", "inverse-surface": "#e4e1e7", "surface-container-highest": "#353439", "inverse-on-surface": "#303034", "secondary-fixed": "#26fedc", "primary-fixed-dim": "#abd600", "on-tertiary-fixed-variant": "#6a0baa", "surface-container-high": "#2a292e", "primary-fixed": "#c3f400", "error": "#ffb4ab", "tertiary-fixed": "#f2daff", "on-surface-variant": "#c4c9ac", "tertiary-container": "#f2daff", "background": "#131317", "surface": "#131317", "error-container": "#93000a", "surface-dim": "#131317", "surface-container-lowest": "#0e0e12", "on-secondary-container": "#006a5a", "on-primary-fixed-variant": "#3c4d00", "primary-container": "#c3f400", "on-error": "#690005", "outline": "#8e9379", "on-secondary-fixed-variant": "#005144", "secondary-container": "#00f2d1", "on-secondary-fixed": "#00201a", "secondary": "#c7fff0", "inverse-primary": "#506600", "tertiary-fixed-dim": "#e0b6ff", "on-tertiary-fixed": "#2e004e", "on-secondary": "#00382f", "surface-variant": "#353439", "on-primary-fixed": "#161e00", "on-tertiary-container": "#8b3aca", "on-primary-container": "#556d00", "tertiary": "#ffffff", "on-tertiary": "#4c007d", "surface-container": "#1f1f23", "on-primary": "#283500", "primary": "#ffffff", "outline-variant": "#444933" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "bento-gap-md": "1rem", "screen-margin-mobile": "1rem", "spacing-2xs": "0.25rem", "spacing-2xl": "2rem", "bento-gap-sm": "0.75rem", "spacing-sm": "0.75rem", "screen-margin-tablet": "1.5rem", "spacing-md": "1rem", "spacing-3xl": "3rem", "spacing-xs": "0.5rem", "spacing-xl": "1.5rem", "spacing-lg": "1.25rem" }, fontFamily: { "body-md": ["Plus Jakarta Sans"], "display-xl": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "display-xl-mobile": ["Space Grotesk"], "label-md": ["Space Grotesk"], "title-lg": ["Plus Jakarta Sans"], "headline-md": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"] }, fontSize: { "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "display-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "700" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" }], "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface-container-lowest text-on-surface font-body-md min-h-screen flex flex-col justify-between items-center selection:bg-primary-fixed selection:text-on-primary-fixed filter hue-rotate-15"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.2)]"></header><main class="w-full max-w-[430px] mx-auto px-spacing-md pt-16 pb-28 flex-1 flex flex-col bg-surface-container-lowest"><div class="flex flex-col w-full pb-10 select-none">
+<!-- HUD Superior Táctico Arcade -->
+<header class="flex items-center justify-between gap-spacing-xs mb-spacing-md">
+<!-- Botón Pausa -->
+<button aria-label="Pausar juego" class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface shadow-[0_3px_0_#000000] active:translate-y-[2px] active:shadow-[0_1px_0_#000000] transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">pause</span>
+</button>
+<!-- Cronómetro Digital / Dopamine Timer -->
+<div class="flex-1 max-w-[170px] bg-surface-container-high rounded-full px-spacing-sm py-1.5 flex flex-col items-center justify-center shadow-[0_3px_0_#000000] relative overflow-hidden">
+<div class="flex items-center gap-1.5 z-10">
+<span class="material-symbols-outlined text-primary-fixed text-[16px] animate-pulse">timer</span>
+<span class="font-label-lg text-label-lg tracking-tight text-on-surface" id="game-timer">00:00s</span>
+</div>
+<!-- Barra decreciente de tiempo -->
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary-fixed rounded-full w-3/4 transition-all duration-1000 ease-linear" id="timer-bar" style="width: 0%;"></div>
+</div>
+</div>
+<!-- Puntos y Vidas -->
+<div class="flex items-center gap-spacing-xs">
+<div class="bg-surface-container-high px-2 py-1.5 rounded-full flex items-center gap-0.5 shadow-[0_3px_0_#000000]">
+<span class="material-symbols-outlined text-error text-[16px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="material-symbols-outlined text-error text-[16px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="material-symbols-outlined text-error text-[16px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+</header>
+<!-- Banner de Misión: Reglas del Algoritmo -->
+<section class="bg-surface-container rounded-lg p-spacing-sm mb-spacing-md shadow-[0_4px_0_#000000]">
+<div class="flex items-start gap-spacing-xs mb-2">
+<span class="material-symbols-outlined text-secondary-container text-[20px] shrink-0 mt-0.5">target</span>
+<div>
+<p class="font-label-md text-label-md text-secondary-container tracking-wider uppercase">Directriz del Desafío</p>
+<h1 class="font-headline-md text-headline-md text-on-surface leading-tight">¡Cazá lo importante!</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Tocá solo lo prioritario. Las trampas algorítmicas te restan vidas.</p>
+</div>
+</div>
+<!-- Leyenda interactiva de colores tácticos -->
+<div class="flex items-center gap-spacing-xs pt-2">
+<div class="flex-1 bg-surface-container-low px-2 py-1 rounded-full flex items-center justify-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-container shadow-[0_0_8px_rgba(0,242,209,0.8)]"></span>
+<span class="font-label-sm text-label-sm text-secondary-container uppercase">Prioridad (Tocar)</span>
+</div>
+<div class="flex-1 bg-surface-container-low px-2 py-1 rounded-full flex items-center justify-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_rgba(255,89,100,0.8)]"></span>
+<span class="font-label-sm text-label-sm text-error uppercase">Carnada (Ignorar)</span>
+</div>
+</div>
+</section>
+<!-- Arena de Notificaciones (Lockscreen Feed Táctico) -->
+<div class="flex flex-col gap-spacing-sm mb-spacing-md relative" id="notification-arena">
+<!-- Card 1: PRIORIDAD (Teléfono Mamá) -->
+<article class="notification-card group bg-surface-container p-spacing-md rounded-lg shadow-[0_4px_0_#000000] relative overflow-hidden transition-all duration-200" data-type="priority">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary-container"></div>
+<div class="flex items-center justify-between mb-2 pl-2">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[15px]">call</span>
+</div>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-secondary-container">Teléfono • Llamada perdida</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">hace 1 min</span>
+</div>
+<div class="pl-2">
+<h2 class="font-title-lg text-title-lg text-on-surface tracking-tight">Llamada de mamá</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Avisame apenas salgas del colegio que te paso a buscar.</p>
+</div>
+<div class="mt-3 pl-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary-container tracking-widest bg-secondary-container/10 px-2.5 py-1 rounded-full uppercase">
+          Prioridad Real
+        </span>
+<button class="tap-priority-btn bg-secondary-container text-on-secondary-container font-label-md text-label-md px-3.5 py-1.5 rounded-full flex items-center gap-1 shadow-[0_2px_0_#000000] active:translate-y-[2px] active:shadow-none transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+<span class="">TOCAR (+100)</span>
+</button>
+</div>
+</article>
+<!-- Card 2: TRAMPA ALGORÍTMICA (TikTok Doomscroll Bait) -->
+<article class="notification-card bg-surface-container p-spacing-md rounded-lg shadow-[0_4px_0_#000000] relative overflow-hidden transition-all duration-200" data-type="bait">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-error"></div>
+<div class="flex items-center justify-between mb-2 pl-2">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-error/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[15px]">local_fire_department</span>
+</div>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-error">TikTok • Sugerencia Viral</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">hace 3 min</span>
+</div>
+<div class="pl-2">
+<h2 class="font-title-lg text-title-lg text-on-surface tracking-tight">A 14 amigos les gustó este reel</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">No te pierdas esta tendencia antes de que desaparezca del feed...</p>
+</div>
+<div class="mt-3 pl-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-error tracking-widest bg-error/10 px-2.5 py-1 rounded-full flex items-center gap-1 uppercase">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+          FOMO Bait
+        </span>
+<button class="tap-bait-btn bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1 shadow-[0_2px_0_#000000] active:translate-y-[2px] transition-all" type="button">
+<span class="">DESLIZAR / IGNORAR</span>
+</button>
+</div>
+</article>
+<!-- Card 3: PRIORIDAD (Google Classroom) -->
+<article class="notification-card bg-surface-container p-spacing-md rounded-lg shadow-[0_4px_0_#000000] relative overflow-hidden transition-all duration-200" data-type="priority">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary-container"></div>
+<div class="flex items-center justify-between mb-2 pl-2">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[15px]">school</span>
+</div>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-secondary-container">Classroom • Entrega Urgente</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">hace 5 min</span>
+</div>
+<div class="pl-2">
+<h2 class="font-title-lg text-title-lg text-on-surface tracking-tight">TP de Historia: Entrega hoy 18:00 hs</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Prof. Méndez: Se cierra la plataforma sin excepción al horario límite.</p>
+</div>
+<div class="mt-3 pl-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary-container tracking-widest bg-secondary-container/10 px-2.5 py-1 rounded-full uppercase">
+          Prioridad Real
+        </span>
+<button class="tap-priority-btn bg-secondary-container text-on-secondary-container font-label-md text-label-md px-3.5 py-1.5 rounded-full flex items-center gap-1 shadow-[0_2px_0_#000000] active:translate-y-[2px] active:shadow-none transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+<span class="">TOCAR (+100)</span>
+</button>
+</div>
+</article>
+<!-- Card 4: TRAMPA ALGORÍTMICA (Instagram Retention Loop) -->
+<article class="notification-card bg-surface-container p-spacing-md rounded-lg shadow-[0_4px_0_#000000] relative overflow-hidden transition-all duration-200" data-type="bait">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-tertiary-fixed-dim"></div>
+<div class="flex items-center justify-between mb-2 pl-2">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-[15px]">photo_camera</span>
+</div>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-tertiary-fixed-dim">Instagram • Alerta Social</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">hace 7 min</span>
+</div>
+<div class="pl-2">
+<h2 class="font-title-lg text-title-lg text-on-surface tracking-tight">Lucas subió una historia</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Hacía semanas que no publicaba nada. Tocá antes de que pasen 24hs...</p>
+</div>
+<div class="mt-3 pl-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim tracking-widest bg-tertiary-container/10 px-2.5 py-1 rounded-full flex items-center gap-1 uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+          Métrica de Retención
+        </span>
+<button class="tap-bait-btn bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1 shadow-[0_2px_0_#000000] active:translate-y-[2px] transition-all" type="button">
+<span class="">DESLIZAR / IGNORAR</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Barra de Habilidad Especial / Power-Up de Emergencia -->
+<section class="mb-spacing-md">
+</section>
+<!-- Footnote Científico & Formativo (Center for Humane Tech) -->
+<aside class="bg-surface-container-low rounded-lg p-spacing-sm flex items-start gap-spacing-xs">
+<div class="w-7 h-7 rounded-full bg-primary-fixed/10 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-primary-fixed text-[18px]">lightbulb</span>
+</div>
+<div class="text-left">
+<p class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wide">Center for Humane Technology</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 leading-relaxed">
+        Las alertas intermitentes activan los mismos picos de dopamina que una máquina tragamonedas. Entrenar tu filtro te devuelve el control de tu concentración.
+      </p>
+</div>
+</aside>
+</div>
+<script>
+  (function() {
+    let score = 320;
+    let timer = 24;
+    const scoreEl = document.getElementById('score-counter');
+    const timerEl = document.getElementById('game-timer');
+    const timerBar = document.getElementById('timer-bar');
+    const freezeBtn = document.getElementById('freeze-skill-btn');
+    let isFrozen = false;
+
+    // Timer countdown micro-interaction
+    const interval = setInterval(() => {
+      if (!isFrozen && timer > 0) {
+        timer--;
+        timerEl.textContent = '00:' + (timer < 10 ? '0' + timer : timer) + 's';
+        const pct = Math.max(0, (timer / 24) * 100);
+        timerBar.style.width = pct + '%';
+      }
+    }, 1000);
+
+    // Click prioritario (+100 puntos y animación táctil)
+    document.querySelectorAll('.tap-priority-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const card = this.closest('.notification-card');
+        score += 100;
+        scoreEl.textContent = score;
+
+        // Visual flash feedback
+        card.style.transform = 'scale(0.97)';
+        card.style.opacity = '0.4';
+        setTimeout(() => {
+          card.style.display = 'none';
+        }, 180);
+      });
+    });
+
+    // Descartar trampa con éxito
+    document.querySelectorAll('.tap-bait-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const card = this.closest('.notification-card');
+        card.style.transform = 'translateX(100%)';
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.style.display = 'none';
+        }, 220);
+      });
+    });
+
+    // Powerup congelar tiempo
+    if (freezeBtn) {
+      freezeBtn.addEventListener('click', function() {
+        if (!isFrozen) {
+          isFrozen = true;
+          this.style.opacity = '0.5';
+          this.style.pointerEvents = 'none';
+          const badge = this.querySelector('.bg-primary-fixed');
+          if (badge) badge.textContent = 'USADO';
+
+          document.body.classList.add('filter', 'hue-rotate-15');
+          setTimeout(() => {
+            isFrozen = false;
+            document.body.classList.remove('filter', 'hue-rotate-15');
+          }, 3000);
+        }
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pointer-events-none pb-safe mb-spacing-md px-spacing-md flex justify-center" data-active-classes="text-primary-fixed drop-shadow-[0_0_8px_rgba(195,244,0,0.6)] font-bold"></nav>
+</body></html>
