@@ -7,11 +7,23 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.bienestar_digital_android.core.common.Screen
 import com.example.bienestar_digital_android.core.designsystem.BienestardigitalandroidTheme
+import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesScreen
+import com.example.bienestar_digital_android.feature.decisionesconectadas.DecicionesConectadasScreen
+import com.example.bienestar_digital_android.feature.desmitificador.DesmitificadorScreen
+import com.example.bienestar_digital_android.feature.hub.HubScreen
+import com.example.bienestar_digital_android.feature.hub.HubUiEvent
+import com.example.bienestar_digital_android.feature.hub.HubViewModel
+import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +31,71 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BienestardigitalandroidTheme {
+                val navController: NavHostController = rememberNavController()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.Hub.route,
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    ) {
+                        // 1. Pantalla Principal (Hub)
+                        composable(route = Screen.Hub.route) {
+                            val viewModel: HubViewModel = viewModel()
+                            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                            HubScreen(
+                                uiState = uiState,
+                                onEvent = { event ->
+                                    when (event) {
+                                        is HubUiEvent.OnContinuarNarrativaClick -> {
+                                            navController.navigate(Screen.DecisionesConectadas.route)
+                                        }
+                                        is HubUiEvent.OnOrganizadorClick -> {
+                                            navController.navigate(Screen.Organizador24h.route)
+                                        }
+                                        is HubUiEvent.OnMiniMisionClick -> {
+                                            when (event.misionId) {
+                                                "mito_verdad" -> navController.navigate(Screen.Desmitificador.route)
+                                                "caza_notis" -> navController.navigate(Screen.CazaNotificaciones.route)
+                                            }
+                                        }
+                                        else -> Unit
+                                    }
+                                }
+                            )
+                        }
+
+                        // 2. Pantalla destino (Desmitificador)
+                        composable(route = Screen.Desmitificador.route) {
+                            DesmitificadorScreen(
+                                onNavigateBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        // 3. Caza de Notificaciones
+                        composable(route = Screen.CazaNotificaciones.route) {
+                            CazaNotificacionesScreen(
+                                onNavigateBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        // 4. Decisiones Conectadas (Narrativa)
+                        composable(route = Screen.DecisionesConectadas.route) {
+                            DecicionesConectadasScreen(
+                                onNavigateBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        // 5. Organizador 24h
+                        composable(route = Screen.Organizador24h.route) {
+                            Organizador24hScreen(
+                                onNavigateBack = { navController.popBackStack() }
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BienestardigitalandroidTheme {
-        Greeting("Android")
     }
 }
