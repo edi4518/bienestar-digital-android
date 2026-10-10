@@ -1,9 +1,8 @@
 package com.example.bienestar_digital_android.feature.onboarding
 
-
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -11,8 +10,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.bienestar_digital_android.domain.model.GenderOption
 
 // --- Paleta de colores ---
 val DarkBg = Color(0xFF0D0E11)
@@ -35,18 +38,8 @@ val TextGray = Color(0xFF9E9E9E)
 
 @Composable
 fun ProfileScreen(
-    // --- ESTADOS (Datos que vienen de la Lógica) ---
-    gamertag: String,
-    age: Int,
-    selectedGender: String,
-
-    // --- EVENTOS (Acciones que se envían a la Lógica) ---
-    onGamertagChange: (String) -> Unit,
-    onAgeChange: (Int) -> Unit,
-    onGenderSelect: (String) -> Unit,
-    onChangeAvatarClick: () -> Unit,
-    onStartAdventureClick: () -> Unit,
-
+    uiState: OnboardingUiState,
+    onEvent: (OnboardingEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -59,7 +52,7 @@ fun ProfileScreen(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Badge superior: CREA TU PERFIL
+        // --- BADGE SUPERIOR: CREA TU PERFIL ---
         Surface(
             color = InputDarkBg,
             shape = RoundedCornerShape(50)
@@ -99,7 +92,7 @@ fun ProfileScreen(
             modifier = Modifier.padding(top = 4.dp, bottom = 20.dp)
         )
 
-        // --- TARJETA DE AVATAR ---
+        // --- TARJETA DE AVATAR Y NIVEL ---
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -130,14 +123,13 @@ fun ProfileScreen(
                     }
 
                     Surface(
+                        onClick = { onEvent(OnboardingEvent.OnAvatarChanged(uiState.avatarResId + 1)) },
                         color = NeonYellow,
                         shape = RoundedCornerShape(50),
-                        modifier = Modifier
-                            .offset(y = 10.dp)
-                            .clickable { onChangeAvatarClick() }
+                        modifier = Modifier.offset(y = 10.dp)
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -156,18 +148,58 @@ fun ProfileScreen(
                         }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // --- ETIQUETA DE NIVEL ---
+                Surface(
+                    color = InputDarkBg,
+                    shape = RoundedCornerShape(50),
+                    border = BorderStroke(1.dp, BorderDark)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Shield,
+                            contentDescription = null,
+                            tint = NeonGreenText,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = uiState.levelTitle.uppercase(),
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
             }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         // --- SECCIÓN TAG / APODO ---
-        Text(
-            text = "¿CÓMO TE LLAMAS O CUÁL ES TU APODO?",
-            color = TextGray,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Bold
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "¿CÓMO TE LLAMAS O CUÁL ES TU APODO?",
+                color = TextGray,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "TAG",
+                color = NeonGreenText,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -184,8 +216,8 @@ fun ProfileScreen(
             ) {
                 Text(text = "# ", color = NeonGreenText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 BasicTextField(
-                    value = gamertag,
-                    onValueChange = onGamertagChange,
+                    value = uiState.gamertag,
+                    onValueChange = { onEvent(OnboardingEvent.OnGamertagChanged(it)) },
                     textStyle = LocalTextStyle.current.copy(
                         color = Color.White,
                         fontSize = 20.sp,
@@ -197,7 +229,7 @@ fun ProfileScreen(
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
                     contentDescription = null,
-                    tint = if (gamertag.isNotBlank()) NeonYellow else TextGray,
+                    tint = if (uiState.isFormValid) NeonYellow else TextGray,
                     modifier = Modifier.size(22.dp)
                 )
             }
@@ -222,55 +254,66 @@ fun ProfileScreen(
             colors = CardDefaults.cardColors(containerColor = InputDarkBg),
             shape = RoundedCornerShape(16.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Botón Restar (-)
-                Surface(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clickable { onAgeChange(age - 1) },
-                    color = CardDarkBg,
-                    shape = RoundedCornerShape(8.dp)
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text(text = "—", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    // Botón Restar (-)
+                    IconButton(
+                        onClick = { onEvent(OnboardingEvent.OnAgeChanged(uiState.age - 1)) },
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(CardDarkBg, RoundedCornerShape(8.dp))
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Remove,
+                            contentDescription = "Restar edad",
+                            tint = Color.White
+                        )
+                    }
+
+                    // Número de edad
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        Text(
+                            text = "${uiState.age}",
+                            color = NeonYellow,
+                            fontSize = 36.sp,
+                            fontWeight = FontWeight.Black
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "AÑOS",
+                            color = Color.White,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 6.dp)
+                        )
+                    }
+
+                    // Botón Sumar (+)
+                    IconButton(
+                        onClick = { onEvent(OnboardingEvent.OnAgeChanged(uiState.age + 1)) },
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(CardDarkBg, RoundedCornerShape(8.dp))
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Sumar edad",
+                            tint = Color.White
+                        )
                     }
                 }
 
-                // Número de edad centrado
-                Row(verticalAlignment = Alignment.Bottom) {
+                if (!uiState.isTargetAge) {
                     Text(
-                        text = "$age",
-                        color = NeonYellow,
-                        fontSize = 36.sp,
-                        fontWeight = FontWeight.Black
+                        text = "Recomendado para 13 a 16 años",
+                        color = Color(0xFFFF583A),
+                        fontSize = 11.sp,
+                        modifier = Modifier.padding(top = 8.dp)
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "AÑOS",
-                        color = Color.White,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 6.dp)
-                    )
-                }
-
-                // Botón Sumar (+)
-                Surface(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clickable { onAgeChange(age + 1) },
-                    color = CardDarkBg,
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text(text = "+", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    }
                 }
             }
         }
@@ -293,16 +336,16 @@ fun ProfileScreen(
         ) {
             GenderChip(
                 text = "FEMENINO",
-                isSelected = selectedGender == "FEMENINO",
+                isSelected = uiState.gender == GenderOption.FEMALE,
                 modifier = Modifier.weight(1f),
-                onClick = { onGenderSelect("FEMENINO") }
+                onClick = { onEvent(OnboardingEvent.OnGenderSelected(GenderOption.FEMALE)) }
             )
 
             GenderChip(
                 text = "MASCULINO",
-                isSelected = selectedGender == "MASCULINO",
+                isSelected = uiState.gender == GenderOption.MASCULINE,
                 modifier = Modifier.weight(1f),
-                onClick = { onGenderSelect("MASCULINO") }
+                onClick = { onEvent(OnboardingEvent.OnGenderSelected(GenderOption.MASCULINE)) }
             )
         }
 
@@ -310,26 +353,62 @@ fun ProfileScreen(
 
         GenderChip(
             text = "PREFIERO NO DECIR / OTRO",
-            isSelected = selectedGender == "OTRO",
+            isSelected = uiState.gender == GenderOption.PREFER_NOT_TO_SAY,
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onGenderSelect("OTRO") }
+            onClick = { onEvent(OnboardingEvent.OnGenderSelected(GenderOption.PREFER_NOT_TO_SAY)) }
         )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // --- TARJETA DE PRIVACIDAD / AVISO ---
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, BorderDark, RoundedCornerShape(12.dp)),
+            colors = CardDefaults.cardColors(containerColor = CardDarkBg),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.padding(14.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(28.dp)
+                        .background(InputDarkBg, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = "🛡️", fontSize = 14.sp)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = "Sin rastreo invasivo: Tus datos quedan solo en tu teléfono para adaptar los desafíos a tus hábitos diarios.",
+                    color = TextGray,
+                    fontSize = 11.sp,
+                    lineHeight = 15.sp
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // --- BOTÓN PRINCIPAL DE ACCIÓN ---
+        // --- BOTÓN COMENZAR LA AVENTURA ---
         Button(
-            onClick = onStartAdventureClick,
+            onClick = { onEvent(OnboardingEvent.OnSubmitProfile) },
+            enabled = uiState.isFormValid,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = NeonYellow),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = NeonYellow,
+                disabledContainerColor = CardDarkBg
+            ),
             shape = RoundedCornerShape(50)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "COMENZAR LA AVENTURA",
-                    color = Color.Black,
+                    color = if (uiState.isFormValid) Color.Black else TextGray,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Black
                 )
@@ -350,13 +429,13 @@ fun GenderChip(
     onClick: () -> Unit
 ) {
     Surface(
+        onClick = onClick,
         modifier = modifier
             .border(
                 width = 1.dp,
                 color = if (isSelected) NeonGreenText else BorderDark,
                 shape = RoundedCornerShape(50)
-            )
-            .clickable { onClick() },
+            ),
         color = InputDarkBg,
         shape = RoundedCornerShape(50)
     ) {
@@ -384,22 +463,43 @@ fun GenderChip(
     }
 }
 
-// Preview con valores vacíos/iniciales para ver cómo arranca
+@Suppress("Unused")
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    name = "Profile Screen Preview"
+    name = "Profile Screen Interactive Preview"
 )
 @Composable
 fun ProfileScreenPreview() {
+    var state by remember { mutableStateOf(OnboardingUiState(gamertag = "Alex_24")) }
+
     ProfileScreen(
-        gamertag = "", // Empieza vacío
-        age = 16,
-        selectedGender = "MASCULINO",
-        onGamertagChange = {},
-        onAgeChange = {},
-        onGenderSelect = {},
-        onChangeAvatarClick = {},
-        onStartAdventureClick = {}
+        uiState = state,
+        onEvent = { event ->
+            when (event) {
+                is OnboardingEvent.OnGamertagChanged -> {
+                    state = state.copy(
+                        gamertag = event.gamertag,
+                        isFormValid = event.gamertag.isNotBlank()
+                    )
+                }
+                is OnboardingEvent.OnAgeChanged -> {
+                    val newAge = event.age.coerceIn(10, 99)
+                    state = state.copy(
+                        age = newAge,
+                        isTargetAge = newAge in 13..16
+                    )
+                }
+                is OnboardingEvent.OnGenderSelected -> {
+                    state = state.copy(gender = event.gender)
+                }
+                is OnboardingEvent.OnAvatarChanged -> {
+                    state = state.copy(avatarResId = event.avatarResId)
+                }
+                is OnboardingEvent.OnSubmitProfile -> {
+                    // Acción de prueba en preview
+                }
+            }
+        }
     )
 }
