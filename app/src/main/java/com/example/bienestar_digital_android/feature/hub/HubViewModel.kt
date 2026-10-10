@@ -2,37 +2,41 @@ package com.example.bienestar_digital_android.feature.hub
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bienestar_digital_android.data.repository.UserProgressRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HubViewModel: ViewModel() {
+class HubViewModel : ViewModel() {
 
-    // 1. Estado mutable privado (solo el Vier Model puede modificarlo)
-    private val _uiState = MutableStateFlow(HubUiState(isLoading = true))
+    // 1. Estado mutable privado (solo el ViewModel puede modificarlo)
+    private val _uiState = MutableStateFlow(HubUiState())
 
-    // 2. Estado publico inmutable (la vista solo lo lee de forma reactiva)
+    // 2. Estado público inmutable (la vista solo lo lee de forma reactiva)
     val uiState: StateFlow<HubUiState> = _uiState.asStateFlow()
 
+    // 1. Invocamos las funciones en el arranque
     init {
         cargarDatasHub()
+        observarProgresoGlobal()
+
     }
 
     private fun cargarDatasHub() {
         viewModelScope.launch {
             // Simulamos la carga inicial con los datos del diseño
             _uiState.update {
-                HubUiState (
+                HubUiState(
                     isLoading = false,
                     userName = "Alex",
                     userRacha = 3,
                     nivel = 2,
                     stats = RadarStats(
-                        energia = 75,
-                        foco = 60,
-                        animo = 85
+                        energia = UserProgressRepository.estadoGlobal.value.energia,
+                        foco = UserProgressRepository.estadoGlobal.value.foco,
+                        animo = UserProgressRepository.estadoGlobal.value.animo
                     ),
                     misionNarrativa = MissionNarrativaState(
                         id = "mision_narrativa_1",
@@ -73,7 +77,29 @@ class HubViewModel: ViewModel() {
         }
     }
 
-    // Funcion para llamar el nombre puesto en la creacion de perfil
+    /* OBSERVA EL ESTADO GLOBAL COMPARTIDO:
+         Cuando el usuario juega "Decisiones Conectadas", termina su partida y pulsa
+         "Volver al menú principal", esta corrutina recibe la emisión de UserProgressRepository
+         y actualiza de inmediato el objeto `stats = RadarStats(...)` de la pantalla principal.
+     */
+    private fun observarProgresoGlobal() {
+        // Escuchamos los cambios del repositorio global en tiempo real
+        viewModelScope.launch {
+            UserProgressRepository.estadoGlobal.collect { estado ->
+                _uiState.update { actual ->
+                    actual.copy(
+                        stats = actual.stats.copy(
+                            energia = estado.energia,
+                            foco = estado.foco,
+                            animo = estado.animo
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    // Función para llamar el nombre puesto en la creación de perfil
     fun setUserName(name: String) {
         if(name.isNotBlank()) {
             _uiState.update { it.copy(userName = name) }
@@ -84,21 +110,24 @@ class HubViewModel: ViewModel() {
     fun onEvent (event: HubUiEvent) {
         when (event) {
             is HubUiEvent.OnContinuarNarrativaClick -> {
-                // Aqui mas adelante dispararemos la navegacion al capitulo 2
+                // Aquí más adelante dispararemos la navegación al capítulo
             }
+
             is HubUiEvent.OnMiniMisionClick -> {
                 // event.misionId nos dice si tocó "caza_notis" o "mito_verdad"
             }
+
             is HubUiEvent.OnOrganizadorClick -> {
-                // Navegacion a la pantalla del organizador 24h
+                // Navegación a la pantalla del organizador 24 hs
             }
+
             is HubUiEvent.OnPerfilClick -> {
-                // Navegacion al perfil
+                // Navegación al perfil
             }
+
             is HubUiEvent.OnTipClick -> {
-                // Accion opcional para abrir ling/nota
+                // Acción opcional para abrir link/nota
             }
         }
     }
-
 }

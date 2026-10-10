@@ -3,19 +3,19 @@ package com.example.bienestar_digital_android.feature.hub
 
 sealed class HubUiEvent {
 
-    // Click en el avatar o nombre de usuario
+    // Clic en el avatar o nombre de usuario
     data object OnPerfilClick: HubUiEvent()
 
-    // Click en el boton "Contiinuar" de la tarjeta Narrativa
+    // Clic en el botón "Continuar" de la tarjeta Narrativa
     data object OnContinuarNarrativaClick: HubUiEvent()
 
-    // Click en alguna de las mini misiones (recibe el id para saber si fue Caza de Notis o Mito/Verdad)
+    // Clic en alguna de las mini misiones (recibe el Id para saber si fue Caza de Notis o Mito/Verdad)
     data class OnMiniMisionClick (val misionId: String) : HubUiEvent()
 
-    // Click en la tarjeta del Orgenizador de las 24 Horas
+    // Clic en la tarjeta del Organizador de las 24 Horas
     data object OnOrganizadorClick : HubUiEvent()
 
-    // Click en la tarjeta de Data real / Tip informacion
+    // Clic en la tarjeta de Data real / Tip información
     data object OnTipClick : HubUiEvent()
 
 

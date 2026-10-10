@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -18,7 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bienestar_digital_android.core.common.Screen
 import com.example.bienestar_digital_android.core.designsystem.BienestardigitalandroidTheme
 import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesScreen
-import com.example.bienestar_digital_android.feature.decisionesconectadas.DecicionesConectadasScreen
+import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasView
+import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasViewModel
+import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesViewModelFactory
 import com.example.bienestar_digital_android.feature.desmitificador.DesmitificadorScreen
 import com.example.bienestar_digital_android.feature.hub.HubScreen
 import com.example.bienestar_digital_android.feature.hub.HubUiEvent
@@ -78,21 +81,28 @@ class MainActivity : ComponentActivity() {
                             HubScreen(
                                 uiState = uiState,
                                 onEvent = { event ->
+                                    // Notificamos al ViewModel para que procese el evento
+                                    viewModel.onEvent(event)
+
+                                    // Gestionamos la navegación correspondiente
                                     viewModel.onEvent(event)
 
                                     when (event) {
                                         is HubUiEvent.OnContinuarNarrativaClick -> {
                                             navController.navigate(Screen.DecisionesConectadas.route)
                                         }
+
                                         is HubUiEvent.OnOrganizadorClick -> {
                                             navController.navigate(Screen.Organizador24h.route)
                                         }
+
                                         is HubUiEvent.OnMiniMisionClick -> {
                                             when (event.misionId) {
                                                 "mito_verdad" -> navController.navigate(Screen.Desmitificador.route)
                                                 "caza_notis" -> navController.navigate(Screen.CazaNotificaciones.route)
                                             }
                                         }
+
                                         else -> Unit
                                     }
                                 }
@@ -115,12 +125,18 @@ class MainActivity : ComponentActivity() {
 
                         // 4. Decisiones Conectadas (Narrativa)
                         composable(route = Screen.DecisionesConectadas.route) {
-                            DecicionesConectadasScreen(
+                            val context = LocalContext.current
+                            val viewModel: DecisionesConectadasViewModel = viewModel(
+                                factory = DecisionesViewModelFactory(context)
+                            )
+
+                            DecisionesConectadasView(
+                                viewModel = viewModel,
                                 onNavigateBack = { navController.popBackStack() }
                             )
                         }
 
-                        // 5. Organizador 24h
+                        // 5. Organizador 24 hs
                         composable(route = Screen.Organizador24h.route) {
                             Organizador24hScreen(
                                 onNavigateBack = { navController.popBackStack() }

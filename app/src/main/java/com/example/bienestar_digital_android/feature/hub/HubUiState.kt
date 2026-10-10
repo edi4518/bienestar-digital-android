@@ -17,9 +17,9 @@ data class HubUiState(
 // Métricas de energia, foco y ánimo (valores de 0 a 100)
 
 data class RadarStats(
-    val energia: Int = 0,
-    val foco: Int = 0,
-    val animo: Int = 0
+    val energia: Int = 100,
+    val foco: Int = 100,
+    val animo: Int = 100
 )
 
 // Tarjeta grande izquierda

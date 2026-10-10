@@ -1,0 +1,1164 @@
+{
+  "modosJornada": [
+    {
+      "id": "MODO_ESTANDAR",
+      "nombre": "Semana Estándar",
+      "energiaInicial": 100,
+      "animoInicial": 100,
+      "focoInicial": 100,
+      "descripcion": "Jornada habitual escolar y balance digital."
+    },
+    {
+      "id": "MODO_EXAMENES",
+      "nombre": "Semana de Exámenes",
+      "energiaInicial": 75,
+      "animoInicial": 70,
+      "focoInicial": 60,
+      "descripcion": "Semana decisiva de evaluaciones trimestrales. La presión exige alto Foco, pero la tentación digital agota la Energía."
+    },
+    {
+      "id": "MODO_BATERIA_BAJA",
+      "nombre": "Batería al 10%",
+      "energiaInicial": 40,
+      "animoInicial": 50,
+      "focoInicial": 45,
+      "descripcion": "Acumulación crítica de trasnocho. Cualquier mala decisión en Noche o Madrugada puede forzar un colapso prematuro."
+    }
+  ],
+  "eventosAleatorios": [
+    {
+      "id": "EVENTO_RANDOM_A",
+      "titulo": "El Grupo Arde",
+      "contextoNarrativo": "Un rumor viral sobre dos compañeros se propaga en WhatsApp durante el recreo.",
+      "opcionA": {
+        "texto": "Entrar a la cadena de mensajes y pedir capturas.",
+        "deltaEnergia": -10,
+        "deltaAnimo": -5,
+        "deltaFoco": -20,
+        "tagEfectoEco": "ECO_DRAMA_ESCOLAR",
+        "feedbackReflexivo": "Participar de la difusión pasiva o activa de rumores polariza el clima escolar y genera rumiación atencional innecesaria."
+      },
+      "opcionB": {
+        "texto": "Silenciar el grupo y mantenerse al margen.",
+        "deltaEnergia": 0,
+        "deltaAnimo": 5,
+        "deltaFoco": 15,
+        "tagEfectoEco": null,
+        "feedbackReflexivo": "Poner límites a las dinámicas de ciberchisme protege tu tranquilidad mental y corta la viralización dañina."
+      }
+    },
+    {
+      "id": "EVENTO_RANDOM_B",
+      "titulo": "Racha en Peligro",
+      "contextoNarrativo": "Un amigo envía 5 alertas seguidas pidiendo salvar el fuego de TikTok o Snapchat a punto de vencer.",
+      "opcionA": {
+        "texto": "Mandar fotos en negro urgente para no perderla.",
+        "deltaEnergia": -5,
+        "deltaAnimo": 5,
+        "deltaFoco": -15,
+        "tagEfectoEco": null,
+        "feedbackReflexivo": "Las mecánicas de rachas explotan el miedo a la pérdida artificial, obligándote a interactuar por obligación y no por genuino interés."
+      },
+      "opcionB": {
+        "texto": "Dejar que el contador se reinicie y avisarle después.",
+        "deltaEnergia": 5,
+        "deltaAnimo": -5,
+        "deltaFoco": 10,
+        "tagEfectoEco": null,
+        "feedbackReflexivo": "Romper la dependencia de contadores virtuales te devuelve soberanía sobre tus tiempos y prioridades diarias."
+      }
+    },
+    {
+      "id": "EVENTO_RANDOM_C",
+      "titulo": "Alerta de Entrega Urgente",
+      "contextoNarrativo": "Un docente adelanta la entrega de un TP en Google Classroom a las 23:00 hs.",
+      "opcionA": {
+        "texto": "Entrar en pánico y quejarse furiosamente por el grupo.",
+        "deltaEnergia": -15,
+        "deltaAnimo": -15,
+        "deltaFoco": -15,
+        "tagEfectoEco": "ECO_ESTRES_ACADEMICO",
+        "feedbackReflexivo": "La catarsis desordenada en chats grupales contagia estrés y retrasa la resolución efectiva del imprevisto."
+      },
+      "opcionB": {
+        "texto": "Avanzar metódicamente y entregar hasta donde se llegó.",
+        "deltaEnergia": -10,
+        "deltaAnimo": 5,
+        "deltaFoco": 10,
+        "tagEfectoEco": null,
+        "feedbackReflexivo": "Afrontar la exigencia imprevista con foco práctico y sin dramatismo mitiga la sobrecarga del sistema nervioso."
+      }
+    },
+    {
+      "id": "EVENTO_RANDOM_D",
+      "titulo": "Stream Sorpresa",
+      "contextoNarrativo": "Tu streamer favorito inicia un directo inesperado a las 00:30 hs sorteando pases de batalla.",
+      "opcionA": {
+        "texto": "Quedarse despierto con los auriculares puestos.",
+        "deltaEnergia": -25,
+        "deltaAnimo": 10,
+        "deltaFoco": -20,
+        "tagEfectoEco": "ECO_VAMPING_STREAM",
+        "feedbackReflexivo": "Las transmisiones imprevistas apelan a recompensas variables para retenerte a deshora a expensas de tu ciclo circadiano."
+      },
+      "opcionB": {
+        "texto": "Priorizar el descanso y ver el clip mañana.",
+        "deltaEnergia": 15,
+        "deltaAnimo": -5,
+        "deltaFoco": 15,
+        "tagEfectoEco": null,
+        "feedbackReflexivo": "Saber posponer la gratificación inmediata refuerza el autocontrol frente al secuestro atencional."
+      }
+    }
+  ],
+  "capitulos": [
+    {
+      "numero": 1,
+      "dia": "LUNES",
+      "titulo": "Reinicio de Sistema",
+      "temaCentral": "El choque del despertar semanal y la inercia del scroll matutino.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "FOMO ALTO",
+          "appOrigen": "INSTAGRAM",
+          "remitenteNotificacion": "Feed Algorítmico",
+          "mensajeNotificacion": "Reels recomendados para vos: 12 videos nuevos de cuentas que seguís esperando.",
+          "tiempoRelativo": "ahora",
+          "contextoNarrativo": "Suena la alarma. Sentís el cuerpo pesado por el fin de semana. Tenés 20 minutos para desayunar y salir hacia el colegio.",
+          "opcionA": {
+            "texto": "Posponer alarma 10 minutos y scrollear reels en la cama.",
+            "deltaEnergia": -10,
+            "deltaAnimo": 5,
+            "deltaFoco": -15,
+            "tagEfectoEco": "ECO_RETRASO_MANANA",
+            "feedbackReflexivo": "Posponer la alarma fragmenta el despertar e introduce micro-dosis de dopamina desordenada. Salís apurado, sin desayunar y con fatiga atencional residual."
+          },
+          "opcionB": {
+            "texto": "Apagar la alarma, levantarse de inmediato y tomar agua.",
+            "deltaEnergia": 5,
+            "deltaAnimo": 0,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Levantarse al primer estímulo activa el ciclo circadiano natural y permite que tu cerebro pase de ondas lentas a ondas beta sin niebla mental matutina."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE ESCOLAR",
+          "estadoFomo": "DISTRACCIÓN EN CLASE",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Grupo 'Los del Fondo' (18)",
+          "mensajeNotificacion": "Nico: @todos miren la foto que subieron recién al patio, no tiene desperdicio 😂",
+          "tiempoRelativo": "hace 1 min",
+          "contextoNarrativo": "Clase de Matemáticas. El profesor explica fórmulas complejas para la prueba. Tu celular vibra en el bolsillo con una mención de grupo.",
+          "opcionA": {
+            "texto": "Mirar disimuladamente debajo del banco.",
+            "deltaEnergia": -5,
+            "deltaAnimo": 10,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_DESCONEXION_AULA",
+            "feedbackReflexivo": "Center for Humane Technology advierte: El costo del cambio atencional (context switching) hace que el cerebro tarde hasta 20 minutos en recuperar el hilo profundo."
+          },
+          "opcionB": {
+            "texto": "Dejarlo en la mochila en modo 'Silencio'.",
+            "deltaEnergia": 0,
+            "deltaAnimo": -5,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Alejar la tentación visual protege tu memoria de trabajo y reduce el agotamiento de tener que resistir conscientemente la distracción."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "TRAMPA DE ALGORITMO",
+          "appOrigen": "YOUTUBE",
+          "remitenteNotificacion": "Recomendado para vos",
+          "mensajeNotificacion": "¡ESCÁNDALO TOTAL! La pelea que nadie esperaba entre dos streamers (Video 8 min)",
+          "tiempoRelativo": "hace 5 min",
+          "contextoNarrativo": "Llegás a casa con hambre. Tenés que leer 15 páginas de Historia. Abrís YouTube para 'poner música suave' y ves un video polémico de 8 minutos.",
+          "opcionA": {
+            "texto": "Ver el video mientras comés algo rápido.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -5,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_PROCRASTINACION_NOCHE",
+            "feedbackReflexivo": "La reproducción automática y las sugerencias algorítmicas están calculadas para transformar 8 minutos en 45. Procrastinar posterga la tarea hacia la noche."
+          },
+          "opcionB": {
+            "texto": "Poner playlist instrumental y abrir el libro.",
+            "deltaEnergia": -5,
+            "deltaAnimo": 10,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Completar la obligación temprano libera dopamina por logro real y deja la noche libre de culpas ni apuros."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "VAMPING DIGITAL",
+          "appOrigen": "INSTAGRAM",
+          "remitenteNotificacion": "Historias pendientes",
+          "mensajeNotificacion": "Hay 24 historias nuevas de tus mejores amigos sin ver antes de dormir.",
+          "tiempoRelativo": "hace 3 min",
+          "contextoNarrativo": "Cena terminada. Estás en la cama. Sentís necesidad de 'desconectar' viendo historias de Instagram con la luz apagada.",
+          "opcionA": {
+            "texto": "Mirar historias hasta que te dé sueño.",
+            "deltaEnergia": -25,
+            "deltaAnimo": -10,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_VAMPING_ACTIVO",
+            "feedbackReflexivo": "Fuente SAP: La luz azul de espectro corto frena la secreción de melatonina, engañando a tu glándula pineal y retrasando el sueño reparador por más de una hora."
+          },
+          "opcionB": {
+            "texto": "Enchufar el celular lejos de la cama y leer un libro o descansar.",
+            "deltaEnergia": 20,
+            "deltaAnimo": 10,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Retirar pantallas 30 a 60 minutos antes de dormir facilita la entrada a la fase REM, clave para fijar lo que estudiaste durante el día."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "FOMO CRÍTICO",
+          "appOrigen": "DISCORD",
+          "remitenteNotificacion": "Sofi (Grupo del Cole)",
+          "mensajeNotificacion": "¿Estás despierto? Pasaron el chisme del año por el stream de voz y se pudre todo si no entrás ya 👀🔥",
+          "tiempoRelativo": "hace 2 min",
+          "contextoNarrativo": "Notificación Discord en penumbra: Sofi avisa que pasaron capturas de una discusión entre dos cursos y todos se están conectando a opinar.",
+          "opcionA": {
+            "texto": "Entrar a la llamada con la pantalla tapada para enterarse.",
+            "deltaEnergia": -30,
+            "deltaAnimo": 10,
+            "deltaFoco": -25,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El FOMO (miedo a perderse algo) te mantiene en hiperalerta simpática. Tu cuerpo segrega cortisol a deshora y mañana arrancarás en déficit físico crítico."
+          },
+          "opcionB": {
+            "texto": "Activar 'No Molestar' y darse vuelta para dormir.",
+            "deltaEnergia": 15,
+            "deltaAnimo": -5,
+            "deltaFoco": 10,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Poner límites al grupo nocturno es un acto de soberanía digital. Mañana el drama se habrá disipado y tu mente estará fresca para rendir."
+          }
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "dia": "MARTES",
+      "titulo": "Presión de Grupo y Rondas Rápidas",
+      "temaCentral": "La validación social, la necesidad de responder al instante y el miedo a quedar fuera del círculo.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "RACHAS EN PELIGRO",
+          "appOrigen": "TIKTOK / SNAP",
+          "remitenteNotificacion": "Alertas de Racha (6)",
+          "mensajeNotificacion": "¡Fuego a punto de expirar con Lucas, Cami y 4 más! Envía una foto en 2 hs 🔥",
+          "tiempoRelativo": "ahora",
+          "contextoNarrativo": "La alarma suena. Antes de pararte, ves que tenés 6 fotos directas para mantener rachas de fuego en redes.",
+          "opcionA": {
+            "texto": "Responder fotos rápidas con el techo negro para no perder el fuego.",
+            "deltaEnergia": -10,
+            "deltaAnimo": 5,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Las mecánicas de rachas explotan la aversión a la pérdida: te hacen sentir culpable por un contador numérico artificial diseñado por empresas."
+          },
+          "opcionB": {
+            "texto": "Ignorar la racha y salir a bañarse.",
+            "deltaEnergia": 10,
+            "deltaAnimo": -5,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Priorizar tu rutina física sobre un indicador virtual te devuelve el control de tus primeras decisiones del día."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE ESCOLAR",
+          "estadoFomo": "PRESIÓN SOCIAL",
+          "appOrigen": "TIKTOK",
+          "remitenteNotificacion": "Matias y 3 compañeros",
+          "mensajeNotificacion": "Te etiquetaron en un borrador: 'Vení al patio ya que falta uno para el audio viral'.",
+          "tiempoRelativo": "hace 4 min",
+          "contextoNarrativo": "Recreo largo. Unos compañeros están grabando un challenge viral en el patio y te insisten para que salgas bailando.",
+          "opcionA": {
+            "texto": "Sumarte al video aunque te dé vergüenza quedar expuesto.",
+            "deltaEnergia": -10,
+            "deltaAnimo": 15,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La presión de pares muchas veces empuja a ceder la propia privacidad digital por unos segundos de visibilidad en perfiles públicos."
+          },
+          "opcionB": {
+            "texto": "Decir que preferís charlar y sentarte a tomar algo.",
+            "deltaEnergia": 5,
+            "deltaAnimo": 5,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Saber decir 'paso' sin perder la pertenencia refuerza la autoestima y la autenticidad frente al estándar del grupo."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "TENSIÓN GRUPAL",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Grupo TP Historia",
+          "mensajeNotificacion": "Audio de Facu (0:48): 'Loco nadie responde, si me desaprueban por su culpa se pudre'.",
+          "tiempoRelativo": "hace 1 min",
+          "contextoNarrativo": "Grupo del TP: Tres integrantes no responden y uno manda audios quejándose de que nadie hace nada. Sentís tensión en el pecho.",
+          "opcionA": {
+            "texto": "Mandar audios enojado discutiendo en tiempo real.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -20,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_CONFLICTO_CHAT",
+            "feedbackReflexivo": "La reactividad inmediata en chats amplifica malos entendidos y desgasta tu energía socioemocional sin avanzar en la tarea."
+          },
+          "opcionB": {
+            "texto": "Escribir con calma dividiendo tareas claras y apagar el chat 1 hora.",
+            "deltaEnergia": -5,
+            "deltaAnimo": 10,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La asertividad escrita y la distancia temporal evitan la escalada del conflicto y ordenan el trabajo escolar."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "BÚSQUEDA DE LIKES",
+          "appOrigen": "INSTAGRAM",
+          "remitenteNotificacion": "Actividad de tu publicación",
+          "mensajeNotificacion": "A @flor_r y 14 personas más les gustó tu foto. Toca para ver los comentarios.",
+          "tiempoRelativo": "hace 8 min",
+          "contextoNarrativo": "Estás acostado. Subiste una foto hace 40 minutos. Mirás a cada rato quién la vio y cuántos likes acumuló.",
+          "opcionA": {
+            "texto": "Recargar la pestaña cada dos minutos esperando reacciones.",
+            "deltaEnergia": -20,
+            "deltaAnimo": -10,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_BUSQUEDA_VALIDACION",
+            "feedbackReflexivo": "El refuerzo intermitente de las notificaciones funciona idéntico a una máquina tragamonedas: la incertidumbre engancha el circuito de dopamina."
+          },
+          "opcionB": {
+            "texto": "Cerrar sesión de la app hasta mañana a la tarde.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 10,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Desprenderse de las métricas de vanidad nocturnas reduce la ansiedad de validación y permite un descanso reparador."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "DEMANDA EMOCIONAL",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Joaco (Mejor Amigo)",
+          "mensajeNotificacion": "¿Estás despierto? Me peleé feo en casa y no doy más, me siento un desastre...",
+          "tiempoRelativo": "hace 2 min",
+          "contextoNarrativo": "Un amigo íntimo te escribe un mensaje largo contándote que se siente solo y triste por un problema familiar.",
+          "opcionA": {
+            "texto": "Quedarte chateando 2 horas más en texto con respuestas cortas.",
+            "deltaEnergia": -25,
+            "deltaAnimo": -10,
+            "deltaFoco": -20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El chat nocturno a deshora suele ser confuso, no reemplaza la presencia real y deja a ambos exhaustos al amanecer."
+          },
+          "opcionB": {
+            "texto": "Responderle con afecto genuino y coordinar para charlar bien mañana en el recreo.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 10,
+            "deltaFoco": 10,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Validar el afecto pero fijar un espacio diurno cara a cara ofrece una contención de calidad sin desgastar los límites de salud física."
+          }
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "dia": "MIÉRCOLES",
+      "titulo": "El Algoritmo Tramposo",
+      "temaCentral": "Arquitecturas persuasivas, reproducción continua y contenido polémico polarizante.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "DOOMSCROLLING",
+          "appOrigen": "X (TWITTER)",
+          "remitenteNotificacion": "Tendencias en tu zona",
+          "mensajeNotificacion": "¡INDIGNACIÓN TOTAL! Vecinos enfurecidos por un choque múltiple en la avenida.",
+          "tiempoRelativo": "hace 6 min",
+          "contextoNarrativo": "El despertador suena a las 7:00. Mirás el pronóstico y el feed te mete en una noticia indignante sobre maltrato animal o choque vial.",
+          "opcionA": {
+            "texto": "Leer los comentarios furiosos durante 15 minutos.",
+            "deltaEnergia": -10,
+            "deltaAnimo": -15,
+            "deltaFoco": -15,
+            "tagEfectoEco": "ECO_DOOMSCROLLING",
+            "feedbackReflexivo": "El 'doomscrolling' (consumo compulsivo de noticias negativas) despierta al cerebro en estado de alarma y hostilidad antes de empezar la jornada."
+          },
+          "opcionB": {
+            "texto": "Cerrar la app de noticias y poner música enérgica.",
+            "deltaEnergia": 5,
+            "deltaAnimo": 15,
+            "deltaFoco": 10,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Elegir conscientemente los primeros estímulos mentales protege tu humor matutino y tu predisposición social."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE ESCOLAR",
+          "estadoFomo": "MORBO VIRAL",
+          "appOrigen": "TIKTOK",
+          "remitenteNotificacion": "En vivo ahora",
+          "mensajeNotificacion": "Streamer 'PeleasUrbanas' está transmitiendo en vivo: 35.4k personas viendo.",
+          "tiempoRelativo": "hace 3 min",
+          "contextoNarrativo": "Hora libre por ausencia docente. La mitad del aula está viendo directos de TikTok de cuentas que generan peleas callejeras.",
+          "opcionA": {
+            "texto": "Engancharse en la ronda mirando la pantalla colectiva.",
+            "deltaEnergia": -10,
+            "deltaAnimo": -5,
+            "deltaFoco": -20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El algoritmo premia la controversia extrema porque genera retención rápida a costa de crispar el ambiente escolar."
+          },
+          "opcionB": {
+            "texto": "Ir al patio con dos amigos a jugar al metegol o caminar.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El movimiento corporal y la interacción sin pantallas en espacios abiertos recargan la batería ejecutiva del lóbulo frontal."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "CLICKBAIT",
+          "appOrigen": "GOOGLE DISCOVER",
+          "remitenteNotificacion": "Sugerencias Web",
+          "mensajeNotificacion": "Científicos confirman una estructura no humana en la Antártida (Fotos filtradas)",
+          "tiempoRelativo": "hace 10 min",
+          "contextoNarrativo": "Tenés que investigar fuentes para Geografía. Abrís el navegador y las recomendaciones de la página de inicio te muestran conspiraciones virales.",
+          "opcionA": {
+            "texto": "Cliquear en 'La verdad oculta sobre la Antártida'.",
+            "deltaEnergia": -10,
+            "deltaAnimo": -5,
+            "deltaFoco": -25,
+            "tagEfectoEco": "ECO_DESINFORMACION",
+            "feedbackReflexivo": "Center for Humane Technology: Las fake news y contenidos sensacionalistas circulan 6 veces más rápido que la evidencia comprobada."
+          },
+          "opcionB": {
+            "texto": "Escribir la URL académica directa y cerrar pestañas extras.",
+            "deltaEnergia": 0,
+            "deltaAnimo": 5,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La navegación intencional con pestañas acotadas evita que caigas en túneles de desinformación diseñados para robar clics."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "REPRODUCCIÓN AUTOMÁTICA",
+          "appOrigen": "YOUTUBE",
+          "remitenteNotificacion": "Siguiente Video (Autoplay)",
+          "mensajeNotificacion": "Reproduciendo en 5 seg: 'DEBATE TÓXICO: Dos streamers se insultan por dinero'.",
+          "tiempoRelativo": "ahora",
+          "contextoNarrativo": "Buscás un tutorial de estiramiento para relajarte. El reproductor activa automáticamente un video de streamers debatiendo a los gritos.",
+          "opcionA": {
+            "texto": "Dejarlo correr de fondo mientras mirás el techo.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -10,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La reproducción continua elimina la 'fricción de parada', haciendo que consumas estímulos ruidosos de forma totalmente pasiva."
+          },
+          "opcionB": {
+            "texto": "Apagar el autoplay y silenciar la tablet/celular.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 10,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Desactivar el autoplay recupera tu poder de decisión: vos decidís cuándo termina el contenido, no la plataforma."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "ESCASEZ FICTICIA",
+          "appOrigen": "CLASH ROYALE / FREE FIRE",
+          "remitenteNotificacion": "Alerta del Juego",
+          "mensajeNotificacion": "¡Cofre legendario por tiempo limitado! Quedan 15 minutos para reclamarlo ⏳",
+          "tiempoRelativo": "hace 1 min",
+          "contextoNarrativo": "Notificación de juego móvil: '¡Cofre legendario desbloqueado! Reclamalo antes de que expire en 15 minutos'.",
+          "opcionA": {
+            "texto": "Abrir el juego para reclamarlo rápido.",
+            "deltaEnergia": -20,
+            "deltaAnimo": 5,
+            "deltaFoco": -20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El diseño lúdico de escasez ficticia te obliga a interrumpir el descanso profundo por una recompensa de píxeles sin valor real."
+          },
+          "opcionB": {
+            "texto": "Bloquear la pantalla y dormir.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 5,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Identificar las trampas de gamificación predatoria te ayuda a desmantelar la urgencia artificial de los videojuegos móviles."
+          }
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "dia": "JUEVES",
+      "titulo": "Semana de Exámenes (Pico de Sobrecarga)",
+      "temaCentral": "Fatiga cognitiva acumulada, multitarea ineficiente y desesperación nocturna.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "PÁNICO COLECTIVO",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Curso 4to Año (32)",
+          "mensajeNotificacion": "Martina: 'No llego con la unidad 3, nos van a bochar a todos qué desastre'.",
+          "tiempoRelativo": "hace 5 min",
+          "contextoNarrativo": "Suena la alarma. Hoy hay prueba integradora a las 10 AM. Tu mente siente pánico por no haber repasado una unidad entera.",
+          "opcionA": {
+            "texto": "Abrir el chat del grupo a ver quién más está desesperado.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -15,
+            "deltaFoco": -15,
+            "tagEfectoEco": "ECO_ANSIEDAD_EXAMEN",
+            "feedbackReflexivo": "El contagio emocional de pánico en grupos amplifica la ansiedad pre-examen y bloquea la memoria de evocación rápida."
+          },
+          "opcionB": {
+            "texto": "Leer el resumen en papel tomando un té caliente.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 5,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Repasar en soporte analógico con calma fija las ideas clave sin generar sobrecarga sensorial en el nervio óptico."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE ESCOLAR",
+          "estadoFomo": "RUMIACIÓN POST-EXAMEN",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Chat con Tomás",
+          "mensajeNotificacion": "Che en la 4 era la B seguro, busquemos el PDF del ministerio a ver quién tiene razón.",
+          "tiempoRelativo": "hace 2 min",
+          "contextoNarrativo": "Terminó la prueba. Salís mareado. Todos tus compañeros discuten acaloradamente si la respuesta de la pregunta 4 era 'A' o 'B'.",
+          "opcionA": {
+            "texto": "Meterse al debate buscando el examen resuelto en internet.",
+            "deltaEnergia": -10,
+            "deltaAnimo": -10,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Rumiar sobre un examen ya entregado mediante búsquedas compulsivas desgasta energía mental sin posibilidad de modificar la nota."
+          },
+          "opcionB": {
+            "texto": "Respirar hondo, guardarse las dudas y comer un sándwich.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 10,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Aceptar el cierre de la evaluación permite que tu cerebro haga 'reinicio' atencional para las clases que continúan en la tarde."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "SOBRECARGA MULTITAREA",
+          "appOrigen": "SISTEMA",
+          "remitenteNotificacion": "Modo Pantalla Dividida Activo",
+          "mensajeNotificacion": "WhatsApp (9 no leídos) y Spotify reproduciendo sobre el visor de apuntes.",
+          "tiempoRelativo": "ahora",
+          "contextoNarrativo": "Tenés que preparar la entrega de Plástica/Dibujo. Ponés música y cada 5 minutos frenás para contestar mensajes de WhatsApp en pantalla dividida.",
+          "opcionA": {
+            "texto": "Mantener la multitarea con la pantalla partida.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -5,
+            "deltaFoco": -25,
+            "tagEfectoEco": "ECO_MULTITAREA_FRUSTRADA",
+            "feedbackReflexivo": "La neurociencia demuestra que la multitarea con pantallas es un mito: no hacés dos cosas a la vez, alternás con torpeza y triplicás los errores."
+          },
+          "opcionB": {
+            "texto": "Poner el celular en otra habitación durante 45 minutos.",
+            "deltaEnergia": -5,
+            "deltaAnimo": 10,
+            "deltaFoco": 25,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El 'Deep Work' o trabajo enfocado sin celular cerca te permite terminar en la mitad del tiempo con menor desgaste cognitivo."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "DESVELO COGNITIVO",
+          "appOrigen": "YOUTUBE",
+          "remitenteNotificacion": "Canal 'Explicaciones Express'",
+          "mensajeNotificacion": "Clase magistral de repaso en directo: 'Todo lo que entra mañana en 1 hora'.",
+          "tiempoRelativo": "hace 12 min",
+          "contextoNarrativo": "Te duele la nuca por la postura del celular. Mañana es el último examen de la semana. Querés quedarte repasando hasta las 2 AM con videos de YouTube.",
+          "opcionA": {
+            "texto": "Tomar café/energizante y seguir mirando explicaciones en la cama.",
+            "deltaEnergia": -30,
+            "deltaAnimo": -15,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_DESVELO_ESTUDIO",
+            "feedbackReflexivo": "Estudiar con privación de sueño es contraproducente: la falta de sueño de ondas lentas impide que la información pase a la memoria a largo plazo."
+          },
+          "opcionB": {
+            "texto": "Cortar el estudio, ordenar los útiles y dormir a las 23:00 hs.",
+            "deltaEnergia": 25,
+            "deltaAnimo": 10,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Dormir 8 horas completas antes de una prueba rinde mucho más que dos horas extra de repaso aturdido frente a la pantalla."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "FILTRACIÓN FALSA",
+          "appOrigen": "TELEGRAM",
+          "remitenteNotificacion": "Canal Anónimo 'Filtrados Cole'",
+          "mensajeNotificacion": "Foto adjunta: 'Miren las preguntas que toma mañana el de Física, me la pasó uno de 5to'.",
+          "tiempoRelativo": "hace 4 min",
+          "contextoNarrativo": "Notificación en pantalla: Un compañero subió una foto de las respuestas filtradas de la evaluación de mañana. La imagen se ve borrosa.",
+          "opcionA": {
+            "texto": "Desvelarse tratando de descifrar la foto y pasársela a todos.",
+            "deltaEnergia": -25,
+            "deltaAnimo": -10,
+            "deltaFoco": -25,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El 90% de las 'pruebas filtradas' son engaños o exámenes de años anteriores que solo generan confusión y desvelo inútil."
+          },
+          "opcionB": {
+            "texto": "Pensar que suele ser una broma/engaño y apagar el móvil.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 5,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Confiar en tu preparación y resguardar tu descanso es la mejor estrategia para resolver con lucidez cualquier consigna real."
+          }
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "dia": "VIERNES",
+      "titulo": "La Euforia del Fin de Semana",
+      "temaCentral": "Pérdida de límites temporales, streaming infinito y desconexión de la realidad.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "MEMES DE VIERNES",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Grupo 'Los Pibes'",
+          "mensajeNotificacion": "Lucas envió 8 stickers y 3 videos: 'Es viernes y el cuerpo lo sabe señores 🍻'.",
+          "tiempoRelativo": "hace 1 min",
+          "contextoNarrativo": "Último día escolar de la semana. Te levantás con mejor humor pero con el cuerpo agotado. Mirás el teléfono para ver los memes del viernes.",
+          "opcionA": {
+            "texto": "Quedarte 15 minutos en la cama riéndote con videos.",
+            "deltaEnergia": -10,
+            "deltaAnimo": 10,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Empezar scrolleando crea una sensación de lentitud temporal que te hace llegar tarde o salir corriendo con pulsaciones altas."
+          },
+          "opcionB": {
+            "texto": "Levantarse, estirar y poner música en un parlante externo.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La música ambiental sin interacción táctil alegra la rutina sin atrapar la mirada en una pantalla fija."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE ESCOLAR",
+          "estadoFomo": "PLAN EN DISCORD VS REAL",
+          "appOrigen": "DISCORD",
+          "remitenteNotificacion": "Servidor 'Los Ranked'",
+          "mensajeNotificacion": "Gero: 'Salimos antes, a las 12:30 todos en el server para rankear en Valorant sin parar'.",
+          "tiempoRelativo": "hace 5 min",
+          "contextoNarrativo": "Salida anticipada. Están planeando una juntada en una plaza. Dos amigos no van porque prefieren ir directo a su casa a rankear en un juego online.",
+          "opcionA": {
+            "texto": "Irte a tu casa a jugar online solo en tu pieza.",
+            "deltaEnergia": -10,
+            "deltaAnimo": 5,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El encierro con videojuegos tras la jornada escolar sustituye la socialización de cuerpo presente por vínculos virtuales mediados por pantallas."
+          },
+          "opcionB": {
+            "texto": "Ir a la plaza a tomar tereré/mate y charlar cara a cara.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 20,
+            "deltaFoco": 10,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Compartir tiempo al aire libre promueve la síntesis de vitamina D y el bienestar socioemocional que ninguna partida virtual iguala."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "SCROLL INFINITO",
+          "appOrigen": "TIKTOK",
+          "remitenteNotificacion": "Para Ti",
+          "mensajeNotificacion": "Nuevas tendencias seleccionadas según tus gustos. No te quedes atrás.",
+          "tiempoRelativo": "ahora",
+          "contextoNarrativo": "Llegás a tu casa a las 17:00. No hay tareas para el lunes. Te tirás en el sillón con el teléfono. Sentís que 'te merecés' todo el scroll del mundo.",
+          "opcionA": {
+            "texto": "Pasar 3 horas seguidas viendo videos cortos sin límite.",
+            "deltaEnergia": -25,
+            "deltaAnimo": -15,
+            "deltaFoco": -25,
+            "tagEfectoEco": "ECO_SATURACION_SCROLL",
+            "feedbackReflexivo": "UNICEF advierte: El consumo compulsivo no descansa el cerebro; satura la atención y deja una sensación de apatía y pérdida de tiempo al terminar."
+          },
+          "opcionB": {
+            "texto": "Poner un temporizador de 40 minutos y luego salir en bici o hacer un hobby.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Establecer un límite previo te permite disfrutar del ocio digital sin quedar atrapado en la inercia del scroll infinito."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "LLAMADA ETERNA",
+          "appOrigen": "DISCORD",
+          "remitenteNotificacion": "Voz 'Noche de Vicio'",
+          "mensajeNotificacion": "Hay 7 personas conectadas en llamada: 'Entrá que es viernes y arrancamos el torneo'.",
+          "tiempoRelativo": "hace 2 min",
+          "contextoNarrativo": "Es viernes a la noche. No hay que madrugar mañana. Tus amigos armaron una llamada en Discord para jugar hasta que salga el sol.",
+          "opcionA": {
+            "texto": "Prometerte 'jugar hasta que me canse' sin mirar la hora.",
+            "deltaEnergia": -30,
+            "deltaAnimo": 10,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_JETLAG_SOCIAL",
+            "feedbackReflexivo": "El desajuste del ritmo circadiano (jet lag social de fin de semana) hace que el domingo sufras insomnio severo y el lunes colapses."
+          },
+          "opcionB": {
+            "texto": "Fijar como tope las 01:00 AM para no dar vuelta tu horario biológico.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 10,
+            "deltaFoco": 10,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Disfrutar de la diversión nocturna con un corte pactado equilibra el disfrute social con el reloj biológico."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "BINGE-WATCHING",
+          "appOrigen": "DISCORD",
+          "remitenteNotificacion": "Stream de Pantalla de Agustín",
+          "mensajeNotificacion": "Comenzando transmisión: 'Temporada completa de Attack on Titan capítulo 1 al 12'.",
+          "tiempoRelativo": "hace 7 min",
+          "contextoNarrativo": "Son las 01:45 AM. La partida terminó, pero en el canal de voz empiezan a transmitir una serie anime de 24 capítulos.",
+          "opcionA": {
+            "texto": "Quedarse a ver 4 o 5 capítulos más en la llamada.",
+            "deltaEnergia": -25,
+            "deltaAnimo": 0,
+            "deltaFoco": -25,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El 'binge-watching' en grupo alimenta la sobreestimulación visual y auditiva, impidiendo la conciliación natural del sueño profundo."
+          },
+          "opcionB": {
+            "texto": "Saludarlos, desconectarse y apagar la PC/móvil.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 5,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Cerrar la sesión cuando el plan principal terminó demuestra madurez y respeto por tu propia energía física."
+          }
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "dia": "SÁBADO",
+      "titulo": "Comparación Social y Vidas Perfectas",
+      "temaCentral": "Fotos retocadas, envidia digital, baja autoestima y hábitos de fin de semana.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "ENVIDIA DIGITAL",
+          "appOrigen": "INSTAGRAM",
+          "remitenteNotificacion": "Historias de Martina y 8 más",
+          "mensajeNotificacion": "Subieron fotos de la fiesta en la quinta ayer: 'La mejor noche de nuestras vidas ✨'.",
+          "tiempoRelativo": "hace 4 horas",
+          "contextoNarrativo": "Te despertás a las 9:30 AM (el simulador arranca el bloque matutino). Te quedás 1 hora entera en la cama mirando fotos de viajes y fiestas ajenas.",
+          "opcionA": {
+            "texto": "Comparar tu fin de semana con lo que ves en Instagram y desanimarte.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -20,
+            "deltaFoco": -15,
+            "tagEfectoEco": "ECO_ENVIDIA_DIGITAL",
+            "feedbackReflexivo": "Las redes muestran únicamente el 'carrete de mejores momentos' de los demás. Comparar tu cotidianeidad con fotos editadas genera insatisfacción irreal."
+          },
+          "opcionB": {
+            "texto": "Dejar el teléfono en el escritorio y levantarte a desayunar en familia.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Conectar con tu entorno inmediato te protege de la trampa psicológica de la comparación y revaloriza tus propios momentos."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE (SÁBADO)",
+          "estadoFomo": "PHUBBING FAMILIAR",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Juli (Notificación Silenciada)",
+          "mensajeNotificacion": "Te mandó un mensaje: 'Viste lo que puso Flor en mejores amigos??'",
+          "tiempoRelativo": "ahora",
+          "contextoNarrativo": "Estás almorzando con tu familia o amigos. Todos están hablando, pero sentís la compulsión de chequear si te respondieron un mensaje.",
+          "opcionA": {
+            "texto": "Apoyar el celular en la mesa al lado del plato con la pantalla hacia arriba.",
+            "deltaEnergia": -5,
+            "deltaAnimo": -10,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El 'phubbing' (ignorar a los presentes por mirar la pantalla) deteriora los vínculos de confianza y envía el mensaje de que el celular importa más que ellos."
+          },
+          "opcionB": {
+            "texto": "Dejar el celular guardado en el bolsillo o en otra habitación.",
+            "deltaEnergia": 0,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La presencia plena sin pantallas sobre la mesa enriquece las conversaciones y fortalece la empatía interpersonal."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "DISMORFIA DIGITAL",
+          "appOrigen": "FACETUNE / INSTAGRAM",
+          "remitenteNotificacion": "Filtros en Tendencia",
+          "mensajeNotificacion": "'Smooth Skin Pro' y 'Sunset Glow' están listos para probarse en tu cámara frontal.",
+          "tiempoRelativo": "hace 2 min",
+          "contextoNarrativo": "Tarde soleada. Querés subir una foto. Pasás 45 minutos probando 12 filtros distintos y borrando imperfecciones de tu cara con una app de edición.",
+          "opcionA": {
+            "texto": "Retocar la imagen hasta que parezca de catálogo y esperar likes.",
+            "deltaEnergia": -10,
+            "deltaAnimo": -15,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_DISMORFIA_FILTROS",
+            "feedbackReflexivo": "El uso de filtros de distorsión corporal alimenta la dismorfia digital y crea una dependencia destructiva sobre la validación externa."
+          },
+          "opcionB": {
+            "texto": "Subir una foto natural o guardarla para vos sin necesidad de aprobación ajena.",
+            "deltaEnergia": 5,
+            "deltaAnimo": 20,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Aceptar la imagen real desafía los estándares irreales de los algoritmos y afianza una autoestima sólida e independiente."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "EXCLUSIÓN SOCIAL",
+          "appOrigen": "INSTAGRAM",
+          "remitenteNotificacion": "Historias en Directo",
+          "mensajeNotificacion": "Todo tu curso está etiquetado en un boliche/previa: 'Si no viniste te la querés cortar'.",
+          "tiempoRelativo": "hace 10 min",
+          "contextoNarrativo": "Estás en casa aburrido. Ves que un grupo de conocidos del cole salieron a una fiesta a la que no te invitaron. Suben videos cantando.",
+          "opcionA": {
+            "texto": "Mirar las historias una y otra vez sintiéndote excluido.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -25,
+            "deltaFoco": -20,
+            "tagEfectoEco": "ECO_EXCLUSION_FOMO",
+            "feedbackReflexivo": "Alimentar el FOMO mirando bucles de eventos donde no estás solo incrementa la sensación de soledad y angustia no productiva."
+          },
+          "opcionB": {
+            "texto": "Silenciar sus historias por 24 horas y ponerte a ver una película que te guste.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El 'JOMO' (Joy of Missing Out o la alegría de perderse cosas) enseña a disfrutar del propio espacio sin medir el valor personal por fiestas ajenas."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "DIRECTO SORPRESA",
+          "appOrigen": "TWITCH",
+          "remitenteNotificacion": "Tu Streamer Favorito",
+          "mensajeNotificacion": "¡EN VIVO AHORA! Abriendo 200 cajas de skins y regalando a los que estén en el chat.",
+          "tiempoRelativo": "hace 3 min",
+          "contextoNarrativo": "Aparece un directo sorpresa de tu streamer predilecto abriendo cajas de skins a las 2 AM.",
+          "opcionA": {
+            "texto": "Conectarte al stream a escribir en el chat en vivo.",
+            "deltaEnergia": -25,
+            "deltaAnimo": 5,
+            "deltaFoco": -20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Las transmisiones nocturnas monetizan la sensación parasocial de 'comunidad', manteniéndote despierto para inflar sus métricas de audiencia."
+          },
+          "opcionB": {
+            "texto": "Pensar 'mañana veo el resumen en video' y apagar todo.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 5,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Priorizar tus necesidades biológicas sobre el entretenimiento de un extraño en internet es el mayor logro de autocontrol digital."
+          }
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "dia": "DOMINGO",
+      "titulo": "El Domingo de Ansiedad (Reset Final)",
+      "temaCentral": "Preparación para la nueva semana, cierre del ciclo y balance reflexivo.",
+      "franjas": [
+        {
+          "franjaId": "MANANA_0700",
+          "horaLabel": "07:00 AM",
+          "etapaLabel": "MAÑANA",
+          "estadoFomo": "APATÍA MATUTINA",
+          "appOrigen": "TIKTOK / REELS",
+          "remitenteNotificacion": "Feed de Domingos",
+          "mensajeNotificacion": "Videos graciosos para pasar la resaca del fin de semana.",
+          "tiempoRelativo": "hace 15 min",
+          "contextoNarrativo": "Despertar tardío de domingo. Te quedás en la cama scrolleando reels hasta el mediodía sin haberte lavado la cara.",
+          "opcionA": {
+            "texto": "Dejar que las horas pasen en el feed automático.",
+            "deltaEnergia": -20,
+            "deltaAnimo": -15,
+            "deltaFoco": -25,
+            "tagEfectoEco": "ECO_DOMINGO_APATIA",
+            "feedbackReflexivo": "El scroll pasivo matutino en días de descanso drena la dopamina basal, dejándote apático y sin ganas de hacer nada el resto del día."
+          },
+          "opcionB": {
+            "texto": "Poner un límite: celular afuera y levantarse a desayunar.",
+            "deltaEnergia": 15,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Activar el cuerpo temprano los domingos ayuda a mantener regulado el reloj interno para el regreso a clases del lunes."
+          }
+        },
+        {
+          "franjaId": "TARDE_ESCOLAR_1130",
+          "horaLabel": "11:30 AM",
+          "etapaLabel": "TARDE (DOMINGO)",
+          "estadoFomo": "DEUDA DE ATENCIÓN",
+          "appOrigen": "GOOGLE CLASSROOM",
+          "remitenteNotificacion": "Entrega Pendiente",
+          "mensajeNotificacion": "Recordatorio: 'Trabajo Integrador Trimestral' vence hoy a las 23:59 hs.",
+          "tiempoRelativo": "hace 30 min",
+          "contextoNarrativo": "Te acordás de que tenías que imprimir un trabajo o preparar la mochila. Decís: 'Bueno, después de almorzar lo hago' mientras abrís TikTok.",
+          "opcionA": {
+            "texto": "Dejar todo para última hora de la noche.",
+            "deltaEnergia": -10,
+            "deltaAnimo": -15,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "La postergación genera una deuda de ansiedad subterránea que arruina el descanso de la tarde de domingo."
+          },
+          "opcionB": {
+            "texto": "Dedicar 30 minutos ya mismo a dejar la mochila lista.",
+            "deltaEnergia": -5,
+            "deltaAnimo": 15,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Tener las cosas preparadas con anticipación te permite disfrutar de la tarde libre con tranquilidad mental absoluta."
+          }
+        },
+        {
+          "franjaId": "TIEMPO_LIBRE_1700",
+          "horaLabel": "17:00 PM",
+          "etapaLabel": "TIEMPO LIBRE",
+          "estadoFomo": "SUNDAY BLUES",
+          "appOrigen": "WHATSAPP",
+          "remitenteNotificacion": "Grupo Curso 'No Quiero Lunes'",
+          "mensajeNotificacion": "Mateo: 'Qué bajón mañana entrar a las 7:30, no hice nada del fin de semana lpm'.",
+          "tiempoRelativo": "hace 4 min",
+          "contextoNarrativo": "Llega el atardecer del domingo. Empieza a sentirse el peso del lunes escolar. El grupo del cole empieza a quejarse de la semana que arranca.",
+          "opcionA": {
+            "texto": "Sumarte a la catarsis del chat lamentándote durante horas.",
+            "deltaEnergia": -15,
+            "deltaAnimo": -20,
+            "deltaFoco": -15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Alimentar la queja colectiva digital intensifica el 'Sunday blues' (ansiedad de domingo por la tarde) sin resolver nada."
+          },
+          "opcionB": {
+            "texto": "Desconectarte, salir a caminar o charlar con tu familia.",
+            "deltaEnergia": 10,
+            "deltaAnimo": 15,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Despejar la mente con actividades analógicas en la naturaleza o el hogar ayuda a encarar la semana con optimismo."
+          }
+        },
+        {
+          "franjaId": "NOCHE_2230",
+          "horaLabel": "22:30 PM",
+          "etapaLabel": "NOCHE",
+          "estadoFomo": "ÚLTIMA PARTIDA",
+          "appOrigen": "DISCORD / STEAM",
+          "remitenteNotificacion": "Invitación de Grupo",
+          "mensajeNotificacion": "Lucas te invitó a jugar: 'Una sola rápida para despedir el fin de semana'.",
+          "tiempoRelativo": "hace 1 min",
+          "contextoNarrativo": "Son las 22:30. Sabés que mañana suena la alarma a las 7:00 AM. Tenés ganas de jugar una última partida para 'aprovechar lo que queda del finde'.",
+          "opcionA": {
+            "texto": "Tirar 'una partida más' que sabés que durará 45 minutos.",
+            "deltaEnergia": -25,
+            "deltaAnimo": 5,
+            "deltaFoco": -20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "El pico de adrenalina y dopamina de las partidas competitivas mantiene el ritmo cardíaco elevado e impide conciliar el sueño por más de una hora."
+          },
+          "opcionB": {
+            "texto": "Apagar los dispositivos y acostarse con música relajante o a oscuras.",
+            "deltaEnergia": 20,
+            "deltaAnimo": 10,
+            "deltaFoco": 15,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Garantizar las 8 horas de sueño antes del lunes es la inversión más inteligente para rendir y sentirte de buen humor toda la semana."
+          }
+        },
+        {
+          "franjaId": "MADRUGADA_0145",
+          "horaLabel": "01:45 AM",
+          "etapaLabel": "MADRUGADA",
+          "estadoFomo": "PRUEBA DE FUEGO",
+          "appOrigen": "TIKTOK",
+          "remitenteNotificacion": "Alerta de Video Viral",
+          "mensajeNotificacion": "¡Último minuto! Este video tiene 2M de visualizaciones en 1 hora. Toca para ver.",
+          "tiempoRelativo": "hace 2 min",
+          "contextoNarrativo": "ÚLTIMO DILEMA DE LA SEMANA: Es la 01:45 AM del domingo a la noche. Tu teléfono titila en la mesa: un video viral que 'todos están comentando'.",
+          "opcionA": {
+            "texto": "Desbloquear el teléfono y meterse a comentar.",
+            "deltaEnergia": -30,
+            "deltaAnimo": -10,
+            "deltaFoco": -25,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "Caer en la última tentación destruye el descanso del lunes. Arrancarás el ciclo escolar en déficit crítico de Energía y Foco."
+          },
+          "opcionB": {
+            "texto": "No tocar el teléfono, respirar hondo y descansar.",
+            "deltaEnergia": 20,
+            "deltaAnimo": 15,
+            "deltaFoco": 20,
+            "tagEfectoEco": null,
+            "feedbackReflexivo": "¡Victoria de autodefensa digital! Demostraste que el control sobre tu atención te pertenece a vos y no al algoritmo."
+          }
+        }
+      ]
+    }
+  ],
+  "arquetiposFinales": [
+    {
+      "id": "ARQ_COLAPSO",
+      "nombre": "Colapso por Saturación",
+      "prioridad": 1,
+      "condicion": "Cualquier variable llega a 0%",
+      "descripcionNarrativa": "PANTALLA DE EVENTO CRÍTICO: Tu sistema psicofísico no resistió la sobrecarga. El agotamiento o la ansiedad bloquearon tu capacidad de respuesta antes de que termine el día.",
+      "tacticaNombre": "Botón de Freno de Emergencia (Modo Avión)",
+      "tacticaDescripcion": "Cuando sientas taquicardia o saturación visual, activa el Modo Avión durante 60 minutos seguidos para permitir que tu sistema nervioso se recalibre."
+    },
+    {
+      "id": "ARQ_ESTRATEGA",
+      "nombre": "Estratega Equilibrado",
+      "prioridad": 2,
+      "condicion": "Energia >= 60 && Animo >= 60 && Foco >= 60",
+      "descripcionNarrativa": "Lograste navegar las trampas de la persuasión algorítmica sin aislarte de tus pares. Comprendiste que el celular es una herramienta para tu vida y no al revés.",
+      "tacticaNombre": "Pantalla en Escala de Grises",
+      "tacticaDescripcion": "Configura tu teléfono en blanco y negro a partir de las 20:00 hs. Sin colores vibrantes, los videos y fotos pierden el 40% de su poder adictivo de dopamina."
+    },
+    {
+      "id": "ARQ_ATLETA_FOCO",
+      "nombre": "Atleta del Enfoque",
+      "prioridad": 3,
+      "condicion": "Foco >= 75 && Energia >= 50",
+      "descripcionNarrativa": "Demostraste una notable capacidad para resguardar tus tiempos de estudio y descanso ante la presión social, manteniendo claridad mental.",
+      "tacticaNombre": "Cajas de Foco (Técnica Pomodoro 25/5)",
+      "tacticaDescripcion": "Bloquea 25 minutos sin mirar el celular mientras haces tareas. Descansa 5 minutos mirando por la ventana o estirando el cuerpo, no abriendo redes sociales."
+    },
+    {
+      "id": "ARQ_BUHO_NOCTURNO",
+      "nombre": "Búho Nocturno Agotado",
+      "prioridad": 4,
+      "condicion": "Energia <= 30 && Foco <= 35",
+      "descripcionNarrativa": "El FOMO nocturno y el scroll infinito devoraron tus reservas físicas. Tu cuerpo está presente en el aula, pero tu mente experimenta la fatiga cognitiva del vamping.",
+      "tacticaNombre": "Estación de Carga Lejana",
+      "tacticaDescripcion": "Conecta el cargador a 2 metros de tu cama. Si tienes que ponerte de pie para tocar el teléfono, romperás el ciclo automático de scroll antes de dormir."
+    },
+    {
+      "id": "ARQ_NAVEGANTE_ANSIOSO",
+      "nombre": "Navegante Ansioso",
+      "prioridad": 5,
+      "condicion": "Animo <= 35 && Foco <= 40",
+      "descripcionNarrativa": "Pasaste el día comparándote con historias ajenas y respondiendo a cada estímulo de validación inmediata. La hiperconexión te dejó agotamiento emocional y vacío.",
+      "tacticaNombre": "Limpia de Notificaciones Algorítmicas",
+      "tacticaDescripcion": "Desactiva las alertas de 'X persona subió una historia' o 'Te sugerimos este reel'. Mantén activas únicamente las llamadas directas y chats de personas reales."
+    }
+  ]
+}
