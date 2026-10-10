@@ -73,6 +73,13 @@ class HubViewModel: ViewModel() {
         }
     }
 
+    // Funcion para llamar el nombre puesto en la creacion de perfil
+    fun setUserName(name: String) {
+        if(name.isNotBlank()) {
+            _uiState.update { it.copy(userName = name) }
+        }
+    }
+
     // 3. Receptor de eventos del usuario
     fun onEvent (event: HubUiEvent) {
         when (event) {
