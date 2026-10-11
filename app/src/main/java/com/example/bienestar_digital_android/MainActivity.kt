@@ -24,6 +24,7 @@ import com.example.bienestar_digital_android.feature.hub.HubScreen
 import com.example.bienestar_digital_android.feature.hub.HubUiEvent
 import com.example.bienestar_digital_android.feature.hub.HubViewModel
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hScreen
+import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hViewModel.Organizador24hViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,8 +90,14 @@ class MainActivity : ComponentActivity() {
 
                         // 5. Organizador 24h
                         composable(route = Screen.Organizador24h.route) {
+                            val viewModel: Organizador24hViewModel = viewModel()
+                            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
                             Organizador24hScreen(
-                                onNavigateBack = { navController.popBackStack() }
+                                uiState = uiState,
+                                onCambiarHoras = { actividad, delta -> viewModel.cambiarHoras(actividad, delta) },
+                                onSimularClick = { viewModel.simularJornada() },
+                                onBackClick = { navController.popBackStack() }
                             )
                         }
                     }
