@@ -13,38 +13,51 @@ class Organizador24hViewModel : ViewModel() {
     val uiState: StateFlow<Organizador24hUiState> = _uiState.asStateFlow()
 
     // Actualizar el estado del ViewModel
-    fun cambiarHoras(actividad: String, delta: Int){
+    fun cambiarHoras(actividad: String, delta: Int) {
         _uiState.update { currentState ->
             var suenio = currentState.horasSuenio
-            var estudio = currentState.horasEstudio
-            var pantalla = currentState.horasPantalla
-            var social = currentState.horasSocial
-            var deporte = currentState.horasDeporte
             var escuela = currentState.horasEscuela
+            var pantalla = currentState.horasPantalla
+            var deporte = currentState.horasDeporte
+            var comidas = currentState.horasComidas
 
             when (actividad) {
-                "suenio" -> suenio = (suenio + delta).coerceIn(0, 24)
-                "estudio" -> estudio = (estudio + delta).coerceIn(0, 24)
-                "pantalla" -> pantalla = (pantalla + delta).coerceIn(0, 24)
-                "social" -> social = (social + delta).coerceIn(0, 24)
-                "deporte" -> deporte = (deporte + delta).coerceIn(0, 24)
-                "escuela" -> escuela = (escuela + delta).coerceIn(0, 24)
+                "suenio", "sleep" -> suenio = (suenio + delta).coerceIn(0, 24)
+                "escuela", "school" -> escuela = (escuela + delta).coerceIn(0, 24)
+                "pantalla", "screens" -> pantalla = (pantalla + delta).coerceIn(0, 24)
+                "deporte", "social", "sport" -> deporte = (deporte + delta).coerceIn(0, 24)
+                "comidas", "leisure", "estudio" -> comidas = (comidas + delta).coerceIn(0, 24)
             }
 
-            val total = suenio + escuela + estudio + pantalla + social + deporte
+            val total = suenio + escuela + pantalla + deporte + comidas
 
-            // Calculo dinamico de bateria, foco y animo
-            val bateria = calcularBateria(suenio, pantalla)
-            val foco = if (estudio >= 3 && suenio >= 7) "Optimo" else "En riesgo"
-            val cansancio = if (suenio < 7 || pantalla >= 5) "Alto" else "Bajo"
+            // Calculo dinamico de bateria, foco y cansancio
+            val bateria = when {
+                suenio >= 8 && pantalla <= 3 -> 95
+                suenio >= 7 && pantalla <= 5 -> 80
+                suenio < 7 -> 45
+                else -> 60
+            }
+            val foco = when {
+                suenio >= 8 && pantalla <= 3 -> "Máximo"
+                suenio >= 7 && pantalla <= 5 -> "Óptimo"
+                suenio < 7 -> "Brumoso"
+                else -> "Regular"
+            }
+            val cansancio = when {
+                suenio >= 8 && pantalla <= 3 -> "Nulo"
+                suenio >= 7 && pantalla <= 5 -> "Bajo"
+                suenio < 7 -> "Alto"
+                else -> "Medio"
+            }
 
-            // Actualizar el estado del ViewModel
             currentState.copy(
                 horasSuenio = suenio,
-                horasEstudio = estudio,
+                horasEscuela = escuela,
                 horasPantalla = pantalla,
-                horasSocial = social,
                 horasDeporte = deporte,
+                horasComidas = comidas,
+                horasSocial = deporte,
                 totalAsignadas = total,
                 esSumaValida = total == 24,
                 bateriaDiurna = bateria,
@@ -52,12 +65,6 @@ class Organizador24hViewModel : ViewModel() {
                 cansancioEstado = cansancio
             )
         }
-    }
-    // Funcion para calcular la bateria
-    private fun calcularBateria(suenio: Int, pantalla: Int): Int {
-        var bateriaDiurna = suenio * 10
-        if (pantalla > 3) bateriaDiurna -= (pantalla * 5)
-        return bateriaDiurna.coerceIn(10, 100)
     }
 
     // Funcion para simular la jornada
@@ -71,12 +78,12 @@ class Organizador24hViewModel : ViewModel() {
                     alerta = "ALERTA: VAMPING CRÍTICO ACTIVADO"
                     reflex = "Fuente SAP/UNICEF: Quitar horas de sueño para navegar a oscuras fragmenta el descanso profundo y afecta tu memoria."
                 }
-                state.horasPantalla >= 4 && state.horasEstudio == 0 -> {
-                    alerta = "ALERTA: PROCRASTINACIÓN COMPULSIVA"
-                    reflex = "Fuente CHT: Postergar responsabilidades escolares traslada la ansiedad hacia la noche."
+                state.horasPantalla >= 4 || state.horasSuenio < 8 -> {
+                    alerta = "¡Ojo! Las pantallas están canibalizando tu tiempo de descanso profundo."
+                    reflex = "Fuente SAP: Superar las 2 horas de pantallas recreativas diarias canibaliza horas de descanso REM y reduce la consolidación de la memoria escolar."
                 }
-                state.horasPantalla <= 2 && state.horasSuenio >= 8 -> {
-                    alerta = "DÍA EQUILIBRADO: BIENESTAR LOGRADO"
+                state.horasPantalla <= 2 -> {
+                    alerta = "¡DÍA EQUILIBRADO: BIENESTAR LOGRADO!"
                     reflex = "Fuente SAP: Acotar el ocio digital a menos de 2 horas protege la salud mental y previene la fatiga diurna."
                 }
                 else -> {
