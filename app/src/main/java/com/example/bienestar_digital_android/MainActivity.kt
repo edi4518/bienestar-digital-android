@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bienestar_digital_android.core.common.Screen
 import com.example.bienestar_digital_android.core.designsystem.BienestardigitalandroidTheme
 import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesScreen
+import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesViewModel
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasView
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasViewModel
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesViewModelFactory
@@ -123,8 +124,11 @@ class MainActivity : ComponentActivity() {
 
                         // 3. Caza de Notificaciones
                         composable(route = Screen.CazaNotificaciones.route) {
+                            val viewModel: CazaNotificacionesViewModel = viewModel()
+
                             CazaNotificacionesScreen(
-                                onNavigateBack = { navController.popBackStack() }
+                                viewModel = viewModel,
+                                onBackToMenu = { navController.popBackStack() }
                             )
                         }
 
