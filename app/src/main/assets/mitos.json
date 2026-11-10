@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "categoria": "MITO POPULAR #01",
+    "afirmacion": "Usar el celular justo antes de dormir no afecta en nada a la calidad del descanso nocturno.",
+    "esVerdad": false,
+    "explicacion": "Según estudios neurobiológicos, la luz azul de las pantallas inhibe hasta un 50% la segregación de melatonina, alterando el ritmo circadiano y retrasando la fase de sueño profundo.",
+    "xp": 50
+  },
+  {
+    "id": 2,
+    "categoria": "MITO POPULAR #02",
+    "afirmacion": "La multitarea digital mejora la agilidad mental y la velocidad para resolver problemas complejos.",
+    "esVerdad": false,
+    "explicacion": "Investigaciones de la Universidad de Stanford demuestran que la multitarea continua aumenta los errores hasta un 40% y sobrecarga la memoria de trabajo, reduciendo el coeficiente intelectual efectivo temporalmente.",
+    "xp": 50
+  },
+  {
+    "id": 3,
+    "categoria": "MITO POPULAR #03",
+    "afirmacion": "El uso continuo del celular es un ocio inofensivo y los adolescentes podemos autorregularnos sin problema cuando queremos.",
+    "esVerdad": false,
+    "explicacion": "Según informes de UNICEF Argentina y estudios neurocognitivos, 1 de cada 2 adolescentes reporta uso problemático y el 24% intentó sin éxito reducir su tiempo de conexión debido al diseño persuasivo e infinito de los algoritmos.",
+    "xp": 50
+  },
+  {
+    "id": 4,
+    "categoria": "CIENCIA DIGITAL #04",
+    "afirmacion": "Activar el modo escala de grises en la pantalla disminuye significativamente el tiempo de uso involuntario del teléfono.",
+    "esVerdad": true,
+    "explicacion": "Estudios comportamentales confirman que al eliminar la estimulación de los colores neón, el cerebro reduce las descargas automáticas de dopamina, disminuyendo el tiempo de pantalla hasta en un 38%.",
+    "xp": 50
+  },
+  {
+    "id": 5,
+    "categoria": "MITO POPULAR #05",
+    "afirmacion": "Tener el celular boca abajo en la mesa silenciado elimina por completo la distracción cognitiva.",
+    "esVerdad": false,
+    "explicacion": "El fenómeno conocido como 'Brain Drain' demuestra que la sola presencia física del teléfono inteligente cercano consume recursos de la memoria de trabajo por la constante inhibición consciente de revisarlo.",
+    "xp": 50
+  },
+  {
+    "id": 6,
+    "categoria": "CIENCIA DIGITAL #06",
+    "afirmacion": "Las notificaciones impredecibles activan el mismo circuito de recompensa dopaminérgica que las máquinas tragamonedas.",
+    "esVerdad": true,
+    "explicacion": "Las 'recompensas variables' intercaladas generan mayores picos de dopamina que los incentivos fijos, creando un bucle de hábito compulsivo difícil de romper sin límites externos.",
+    "xp": 50
+  },
+  {
+    "id": 7,
+    "categoria": "MITO POPULAR #07",
+    "afirmacion": "Revisar las redes sociales durante descansos de estudio ayuda al cerebro a recuperar energías más rápido.",
+    "esVerdad": false,
+    "explicacion": "Experimentos en psicología cognitiva muestran que consumir micro-contenidos rápidos durante pausas mantiene activa la corteza prefrontal, impidiendo el descanso de la red neuronal por defecto.",
+    "xp": 50
+  },
+  {
+    "id": 8,
+    "categoria": "CIENCIA DIGITAL #08",
+    "afirmacion": "Establecer zonas libres de pantallas (como la mesa de comer o el dormitorio) mejora la convivencia y el bienestar emocional.",
+    "esVerdad": true,
+    "explicacion": "La desconexión intencionada en espacios comunes fortalece el apego seguro, mejora la atención plena y reduce los niveles de cortisol vinculados al estrés digital diario.",
+    "xp": 50
+  },
+  {
+    "id": 9,
+    "categoria": "MITO POPULAR #09",
+    "afirmacion": "Cuantas más notificaciones sonoras tengamos activas, mayor es nuestra capacidad de respuesta e interacción social.",
+    "esVerdad": false,
+    "explicacion": "El exceso de alertas sonoras genera 'fatiga por alarma' y fragmentación de la atención, elevando los niveles de ansiedad y reduciendo la empatía en interacciones presenciales.",
+    "xp": 50
+  },
+  {
+    "id": 10,
+    "categoria": "CIENCIA DIGITAL #10",
+    "afirmacion": "Configurar límites diarios de tiempo por aplicación mediante herramientas de Bienestar Digital ayuda a recuperar el control del tiempo libre.",
+    "esVerdad": true,
+    "explicacion": "Los recordatorios friccionales de tiempo intervienen en el momento justo del hábito automático, otorgando al usuario la pausa consciente necesaria para decidir si continuar o desconectar.",
+    "xp": 50
+  }
+]
