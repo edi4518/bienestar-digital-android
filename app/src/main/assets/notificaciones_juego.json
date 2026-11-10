@@ -1,0 +1,110 @@
+{
+  "notificaciones": [
+    {
+      "id": "1",
+      "remitente": "Mamá",
+      "mensaje": "Avisame cuando salgas del colegio para esperarte.",
+      "tipo": "PRIORITARIA",
+      "puntos": 100
+    },
+    {
+      "id": "2",
+      "remitente": "Instagram",
+      "mensaje": "A 15 personas les gustó tu última publicación.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "3",
+      "remitente": "Grupo del TP",
+      "mensaje": "Acuérdense de llevar los afiches para mañana.",
+      "tipo": "PRIORITARIA",
+      "puntos": 100
+    },
+    {
+      "id": "4",
+      "remitente": "Streamer VIVO",
+      "mensaje": "URGENTE: ¡No vas a creer lo que dijo en su vivo!",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "5",
+      "remitente": "Bienestar Digital",
+      "mensaje": "Llevás 45 min seguidos en pantalla. Hora de estirar.",
+      "tipo": "PRIORITARIA",
+      "puntos": 100
+    },
+    {
+      "id": "6",
+      "remitente": "Joaco (Amigo)",
+      "mensaje": "Te mandó un TikTok gracioso: Miralo antes de que lo borre.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "7",
+      "remitente": "FreeGamerApp",
+      "mensaje": "¡Evento relámpago! 500 gemas gratis si entrás YA.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "8",
+      "remitente": "Papá",
+      "mensaje": "Vení a cenar que ya está lista la comida.",
+      "tipo": "PRIORITARIA",
+      "puntos": 100
+    },
+    {
+      "id": "9",
+      "remitente": "Sorteo Online",
+      "mensaje": "¡GANASTE! Sos el usuario número 1.000. Toca para reclamar.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "10",
+      "remitente": "Preceptor",
+      "mensaje": "Recordá entregar la ficha médica firmada mañana.",
+      "tipo": "PRIORITARIA",
+      "puntos": 100
+    },
+    {
+      "id": "11",
+      "remitente": "TikTok",
+      "mensaje": "Alguien comenzó a seguirte. Descubrí quién es.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "12",
+      "remitente": "Profe de Ed. Física",
+      "mensaje": "Mañana traigan botella de agua individual.",
+      "tipo": "PRIORITARIA",
+      "puntos": 100
+    },
+    {
+      "id": "13",
+      "remitente": "Trivia Viral",
+      "mensaje": "Descubrí qué personaje de serie sos respondiendo esto.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "14",
+      "remitente": "Grupo de Amigos",
+      "mensaje": "Se picó el chat, miren la foto de recién.",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    },
+    {
+      "id": "15",
+      "remitente": "Discord",
+      "mensaje": "Tu grupo inició una partida. ¡Sumate ahora o te la perdés!",
+      "tipo": "TRAMPA",
+      "puntos": -50
+    }
+  ]
+}
+
