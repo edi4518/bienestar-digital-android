@@ -19,5 +19,18 @@ Aplicación móvil nativa desarrollada para **Android (Kotlin)** bajo una arquit
 3. **Mito o Verdad (Desmitificador):** Mecánica de tarjetas deslizables (*Swipe Cards*) para contrastar mitos populares con evidencia científica.
 4. **Organizador de las 24 Horas:** Puzzle de distribución del tiempo diario que evidencia cómo el exceso de pantalla desplaza las horas esenciales de descanso y sueño.
 
+Juegos funcionales:
+Decisiones Conectadas: Simulador narrativo de dilemas que gestiona las barras de Energía, Ánimo y Foco.
+Organizador de las 24 Horas: Puzzle de distribución del tiempo diario.
+
+Estructura de la Aplicación: Creacion de Perfil → Inicio/Menú Principal → Selección de Minijuego (Decisiones Conectadas / Organizador 24hs) → Interacción / Decisiones → Resultado y Arquetipo final.
+
+Implementación Técnica
+MVVM + UiState: Arquitectura limpia con separación de responsabilidades y única fuente de verdad por pantalla.
+
+Ciclo de vida: Manejo de corrutinas mediante viewModelScope y limpieza en onCleared().
+
+Componentes y Librerías: Jetpack Compose, Material 3, Navigation Compose, Gson para parseo de datos y Room KTX.
+
 ## Enlace al Diseño Figma
 * [Ver diseño y wireframes en Figma/Whimsical (Abierto y compartido)](https://www.figma.com/design/gE3TChhbK9qyFzihSiWQEy/Sin-t%C3%ADtulo?node-id=1-6&t=zU9kfgbvmdPeJBXT-1)

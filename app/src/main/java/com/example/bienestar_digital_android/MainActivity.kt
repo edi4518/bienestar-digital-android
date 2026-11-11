@@ -1,6 +1,7 @@
 package com.example.bienestar_digital_android
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bienestar_digital_android.core.common.Screen
 import com.example.bienestar_digital_android.core.designsystem.BienestardigitalandroidTheme
 import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesScreen
+import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesViewModel
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasView
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasViewModel
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesViewModelFactory
@@ -33,10 +35,13 @@ import com.example.bienestar_digital_android.feature.onboarding.OnboardingEvent
 import com.example.bienestar_digital_android.feature.onboarding.OnboardingViewModel
 import com.example.bienestar_digital_android.feature.onboarding.ProfileScreen
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hScreen
+import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hViewModel.Organizador24hViewModel
 
 class MainActivity : ComponentActivity() {
+    private val tag = "CicloDeVida_MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d((tag), "onCreate: Actividad creada. Inicializando navegación y vistas.")
         enableEdgeToEdge()
         setContent {
             BienestardigitalandroidTheme {
@@ -60,8 +65,8 @@ class MainActivity : ComponentActivity() {
 
                                     // Cuando completa el perfil, pasamos el gamertag a la ruta del Hub
                                     if (event is OnboardingEvent.OnSubmitProfile) {
-                                        val userTag = uiState.gamertag.ifBlank { "Recluta" }
-                                        navController.navigate("${Screen.Hub.route}/$userTag") {
+                                        val usertag = uiState.gamertag.ifBlank { "Recluta" }
+                                        navController.navigate("${Screen.Hub.route}/$usertag") {
                                             popUpTo("profile_route") { inclusive = true }
                                         }
                                     }
@@ -73,7 +78,8 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = "${Screen.Hub.route}/{gamertag}"
                         ) { backStackEntry ->
-                            val gamertag = backStackEntry.arguments?.getString("gamertag") ?: "Recluta"
+                            val gamertag =
+                                backStackEntry.arguments?.getString("gamertag") ?: "Recluta"
                             val viewModel: HubViewModel = viewModel()
 
                             // Actualizar el nombre en el ViewModel del Hub con el que se trajo del perfil
@@ -118,8 +124,11 @@ class MainActivity : ComponentActivity() {
 
                         // 3. Caza de Notificaciones
                         composable(route = Screen.CazaNotificaciones.route) {
+                            val viewModel: CazaNotificacionesViewModel = viewModel()
+
                             CazaNotificacionesScreen(
-                                onNavigateBack = { navController.popBackStack() }
+                                viewModel = viewModel,
+                                onBackToMenu = { navController.popBackStack() }
                             )
                         }
 
@@ -138,8 +147,14 @@ class MainActivity : ComponentActivity() {
 
                         // 5. Organizador 24 hs
                         composable(route = Screen.Organizador24h.route) {
+                            val viewModel: Organizador24hViewModel = viewModel()
+                            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
                             Organizador24hScreen(
-                                onNavigateBack = { navController.popBackStack() }
+                                uiState = uiState,
+                                onCambiarHoras = { actividad, delta -> viewModel.cambiarHoras(actividad, delta) },
+                                onSimularClick = { viewModel.simularJornada() },
+                                onBackClick = { navController.popBackStack() }
                             )
                         }
                     }
@@ -147,4 +162,37 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    // 2. onStart: La Activity pasa a ser visible para el usuario en pantalla.
+    override fun onStart() {
+        super.onStart()
+        Log.d(tag, "onStart: La aplicación se vuelve visible.")
+    }
+
+    // 3. onResume: La Activity toma el foco interactivo (primer plano activo).
+    override fun onResume() {
+        super.onResume()
+        Log.d(tag, "onResume: La aplicación está activa y lista para recibir entradas.")
+    }
+
+    // 4. onPause: La Activity pierde el foco directo (ej. multi ventana o diálogo del sistema).
+    override fun onPause() {
+        super.onPause()
+        Log.d(tag, "onPause: La aplicación pierde el foco interactivo.")
+    }
+
+    // 5. onStop: La Activity deja de ser visible por completo (ej. el usuario minimiza la app).
+    override fun onStop() {
+        super.onStop()
+        Log.d(tag, "onStop: La aplicación pasa a segundo plano.")
+    }
+
+    // 6. onDestroy: La Activity finaliza su ciclo de vida y libera recursos.
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(tag, "onDestroy: Actividad destruida.")
+    }
 }
+
+
+
