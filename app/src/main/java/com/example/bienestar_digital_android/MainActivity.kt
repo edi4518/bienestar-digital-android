@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+
 import com.example.bienestar_digital_android.core.common.Screen
 import com.example.bienestar_digital_android.core.designsystem.BienestardigitalandroidTheme
 import com.example.bienestar_digital_android.feature.cazanotificaciones.CazaNotificacionesScreen
@@ -25,6 +27,7 @@ import com.example.bienestar_digital_android.feature.decisionesconectadas.Decisi
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesConectadasViewModel
 import com.example.bienestar_digital_android.feature.decisionesconectadas.DecisionesViewModelFactory
 import com.example.bienestar_digital_android.feature.desmitificador.DesmitificadorScreen
+import com.example.bienestar_digital_android.feature.desmitificador.DesmitificadorView
 import com.example.bienestar_digital_android.feature.hub.HubScreen
 import com.example.bienestar_digital_android.feature.hub.HubUiEvent
 import com.example.bienestar_digital_android.feature.hub.HubViewModel
@@ -71,7 +74,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-// 1. Pantalla Principal (Hub) recibiendo el parámetro del nombre
+                        // 1. Pantalla Principal (Hub) recibiendo el parámetro del nombre
                         composable(
                             route = "${Screen.Hub.route}/{gamertag}"
                         ) { backStackEntry ->
@@ -88,9 +91,6 @@ class MainActivity : ComponentActivity() {
                                 uiState = uiState,
                                 onEvent = { event ->
                                     // Notificamos al ViewModel para que procese el evento
-                                    viewModel.onEvent(event)
-
-                                    // Gestionamos la navegación correspondiente
                                     viewModel.onEvent(event)
 
                                     when (event) {
