@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.PhonelinkLock
 import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.Button
@@ -47,6 +48,8 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.delay
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -89,14 +92,27 @@ fun DesmitificadorScreen(
     onNavigateBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val mitos = remember(context) { MitoLoader.cargarMitosDesdeAssets(context) }
+    var mitos by remember(context) { mutableStateOf(MitoLoader.cargarMitosDesdeAssets(context).shuffled()) }
 
     var currentIndex by remember { mutableIntStateOf(0) }
     var aciertos by remember { mutableIntStateOf(0) }
-    var totalXp by remember { mutableIntStateOf(180) }
-    var multiplicador by remember { mutableIntStateOf(4) }
+    var totalXp by remember { mutableIntStateOf(0) }
+    var tiempoRestante by remember { mutableIntStateOf(60) }
     var respuestaSeleccionada by remember { mutableStateOf<Boolean?>(null) }
     var juegoFinalizado by remember { mutableStateOf(false) }
+
+    // Temporizador de 60 segundos por sesión según especificación
+    LaunchedEffect(juegoFinalizado) {
+        if (!juegoFinalizado) {
+            while (tiempoRestante > 0 && !juegoFinalizado) {
+                delay(1000)
+                tiempoRestante--
+            }
+            if (tiempoRestante <= 0 && !juegoFinalizado) {
+                juegoFinalizado = true
+            }
+        }
+    }
 
     val scrollState = rememberScrollState()
 
@@ -116,11 +132,13 @@ fun DesmitificadorScreen(
                     aciertos = aciertos,
                     total = mitos.size,
                     totalXp = totalXp,
+                    tiempoRestante = tiempoRestante,
                     onReiniciar = {
+                        mitos = MitoLoader.cargarMitosDesdeAssets(context).shuffled()
                         currentIndex = 0
                         aciertos = 0
-                        totalXp = 180
-                        multiplicador = 4
+                        totalXp = 0
+                        tiempoRestante = 60
                         respuestaSeleccionada = null
                         juegoFinalizado = false
                     },
@@ -130,11 +148,11 @@ fun DesmitificadorScreen(
                 val mitoActual = mitos[currentIndex]
 
                 Column {
-                    // 1. Header (Atrás, Ronda, Multiplicador, XP y Barra Segmentada)
+                    // 1. Header (Atrás, Ronda, Tiempo Restante, XP y Barra Segmentada)
                     HeaderDesmitificador(
                         rondaActual = currentIndex + 1,
                         totalRondas = mitos.size,
-                        multiplicador = multiplicador,
+                        tiempoRestante = tiempoRestante,
                         xp = totalXp,
                         onNavigateBack = onNavigateBack
                     )
@@ -203,6 +221,9 @@ fun DesmitificadorScreen(
                                     if (currentIndex + 1 < mitos.size) {
                                         currentIndex++
                                     } else {
+                                        // Bonus por tiempo restante (+10 XP por segundo)
+                                        val bonusTiempo = tiempoRestante * 10
+                                        totalXp += bonusTiempo
                                         juegoFinalizado = true
                                     }
                                 }
@@ -226,7 +247,7 @@ fun DesmitificadorScreen(
 fun HeaderDesmitificador(
     rondaActual: Int,
     totalRondas: Int,
-    multiplicador: Int,
+    tiempoRestante: Int,
     xp: Int,
     onNavigateBack: () -> Unit
 ) {
@@ -252,17 +273,17 @@ fun HeaderDesmitificador(
                 )
             }
 
-            // Badge Ronda "RONDA 03/10"
+            // Badge Ronda "TARJETA 03/15"
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
                     .background(Color(0xFF1B1B26))
                     .border(1.dp, BorderDark, RoundedCornerShape(50))
-                    .padding(horizontal = 14.dp, vertical = 6.dp)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "RONDA ",
+                        text = "TARJETA ",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF8E8E9F)
@@ -276,7 +297,7 @@ fun HeaderDesmitificador(
                 }
             }
 
-            // Multiplicador "x4"
+            // Temporizador "60s"
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
@@ -286,17 +307,17 @@ fun HeaderDesmitificador(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Whatshot,
-                        contentDescription = "Multiplicador",
-                        tint = AccentPink,
+                        imageVector = Icons.Default.Schedule,
+                        contentDescription = "Tiempo",
+                        tint = AccentCyan,
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "x$multiplicador",
+                        text = "${tiempoRestante}s",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = AccentCyan
                     )
                 }
             }
@@ -672,7 +693,7 @@ fun FeedbackCardEvidencia(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(containerColor = BgDarkCard),
         border = BorderStroke(
             width = 1.5.dp,
@@ -682,9 +703,9 @@ fun FeedbackCardEvidencia(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(14.dp)
         ) {
-            // Header del Feedback (Icono, Título y Badge +50 XP)
+            // Header del Feedback (Icono, Título y Badge +100 XP)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -693,7 +714,7 @@ fun FeedbackCardEvidencia(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
-                            .size(38.dp)
+                            .size(32.dp)
                             .clip(CircleShape)
                             .background(if (!mito.esVerdad) AccentPink.copy(alpha = 0.2f) else AccentCyan.copy(alpha = 0.2f)),
                         contentAlignment = Alignment.Center
@@ -702,44 +723,44 @@ fun FeedbackCardEvidencia(
                             imageVector = if (!mito.esVerdad) Icons.Default.Close else Icons.Default.Check,
                             contentDescription = null,
                             tint = if (!mito.esVerdad) AccentPink else AccentCyan,
-                            modifier = Modifier.size(22.dp)
+                            modifier = Modifier.size(18.dp)
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
 
                     Column {
                         Text(
                             text = if (!mito.esVerdad) "¡ES UN MITO!" else "¡ES VERDADERO!",
-                            fontSize = 18.sp,
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color.White
                         )
                         Text(
                             text = if (esCorrecto) "Respuesta correcta confirmada" else "Revisión empírica de la respuesta",
-                            fontSize = 11.sp,
+                            fontSize = 10.sp,
                             color = Color(0xFF8E8E9F)
                         )
                     }
                 }
 
-                // Badge +50 XP
+                // Badge +100 XP
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
                         .background(AccentLime)
-                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                        .padding(horizontal = 8.dp, vertical = 3.dp)
                 ) {
                     Text(
                         text = "+${mito.xp} XP",
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color(0xFF0F0F14)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Subtítulo EVIDENCIA EMPÍRICA
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -747,38 +768,42 @@ fun FeedbackCardEvidencia(
                     imageVector = Icons.AutoMirrored.Filled.MenuBook,
                     contentDescription = null,
                     tint = AccentLime,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(14.dp)
                 )
-                Spacer(modifier = Modifier.width(6.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = "EVIDENCIA EMPÍRICA",
-                    fontSize = 11.sp,
+                    fontSize = 10.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = AccentLime,
-                    letterSpacing = 1.sp
+                    letterSpacing = 0.8.sp
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
-            // Texto de Evidencia Empírica del JSON
+            // Texto de Evidencia Empírica recabada de las fuentes
+            val evidenciaTexto = mito.evidenciaEmpirica.ifBlank {
+                "Fuente SAP / OMS: Según investigaciones neurocognitivas sobre hábitos digitales, la estimulación continua de pantallas e interacción constante altera los patrones de atención y el descanso profundo."
+            }
+
             Text(
-                text = mito.evidenciaEmpirica,
-                fontSize = 13.sp,
+                text = evidenciaTexto,
+                fontSize = 12.sp,
                 color = Color.White.copy(alpha = 0.95f),
-                lineHeight = 19.sp
+                lineHeight = 16.sp
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Botón Verde Neón "SIGUIENTE TARJETA →"
+            // Botón Verde Neón Compacto "SIGUIENTE TARJETA →"
             Button(
                 onClick = onSiguienteTarjeta,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(52.dp),
+                    .height(46.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = AccentLime),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Center,
@@ -786,7 +811,7 @@ fun FeedbackCardEvidencia(
                 ) {
                     Text(
                         text = "SIGUIENTE TARJETA →",
-                        fontSize = 14.sp,
+                        fontSize = 13.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color(0xFF0F0F14),
                         letterSpacing = 0.5.sp
@@ -802,9 +827,28 @@ fun PantallaResultadosFinales(
     aciertos: Int,
     total: Int,
     totalXp: Int,
+    tiempoRestante: Int,
     onReiniciar: () -> Unit,
     onVolver: () -> Unit
 ) {
+    val (arquetipoTitulo, diagnostico, tactica) = when (aciertos) {
+        in 13..15 -> Triple(
+            "ARQUETIPO: DESARMADOR ALGORÍTMICO",
+            "Excelente nivel de discernimiento sobre las trampas de diseño persuasivo y el impacto cognitivo de los dispositivos.",
+            "TÁCTICA DE AUTODEFENSA DIGITAL: ACTIVACIÓN DE LA ESCALA DE GRISES\n\nVe a Ajustes ➔ Accesibilidad ➔ Visión ➔ Corrección de color y activa la escala de grises. Esto neutraliza las recompensas visuales diseñadas para llamar tu atención y reduce la fricción de uso."
+        )
+        in 8..12 -> Triple(
+            "ARQUETIPO: NAVEGANTE EN OBSERVACIÓN",
+            "Reconoces los mitos más evidentes, pero aún mantienes algunas creencias erróneas sobre la multitarea digital y los efectos de las pantallas en el descanso.",
+            "TÁCTICA DE AUTODEFENSA DIGITAL: CREACIÓN DE ZONAS DE FRICCIÓN\n\nEstablece el hábito de poner a cargar el teléfono celular fuera del dormitorio al menos 45 minutos antes de acostarte. Utiliza un reloj despertador analógico para evitar la tentación del uso nocturno (vamping)."
+        )
+        else -> Triple(
+            "ARQUETIPO: PRESA DE LA HIPERCONEXIÓN",
+            "Presentas una alta vulnerabilidad a las falacias populares de la tecnología, sobreestimando la capacidad de atención del cerebro y minimizando los efectos de la sobreestimulación.",
+            "TÁCTICA DE AUTODEFENSA DIGITAL: DESACTIVACIÓN DE DISPARADORES VISUALES\n\nIngresa a Ajustes ➔ Notificaciones y deshabilita los globos de notificación o badges numéricos rojos. De esta forma, serás tú quien decida cuándo revisar las aplicaciones sin responder a impulsos visuales automáticos."
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -832,7 +876,7 @@ fun PantallaResultadosFinales(
 
         Text(
             text = "¡Desmitificación Completada!",
-            fontSize = 24.sp,
+            fontSize = 22.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color.White,
             textAlign = TextAlign.Center
@@ -850,27 +894,55 @@ fun PantallaResultadosFinales(
         Spacer(modifier = Modifier.height(6.dp))
 
         Text(
-            text = "Total ganado: +$totalXp XP",
+            text = "Puntaje total: +$totalXp XP",
             fontSize = 14.sp,
             fontWeight = FontWeight.ExtraBold,
             color = AccentLime
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(18.dp))
 
-        Text(
-            text = when {
-                aciertos == total -> "¡Nivel Experto en Ciencia Digital! Dominas los principios científicos del comportamiento y la tecnología."
-                aciertos >= total / 2 -> "¡Excelente Trabajo! Conoces la mayoría de los mitos del bienestar digital."
-                else -> "¡Buen intento! Reconocer estos mitos te ayudará a tomar el control de tu tiempo en pantalla."
-            },
-            fontSize = 13.sp,
-            color = Color(0xFFA0A0B2),
-            textAlign = TextAlign.Center,
-            lineHeight = 19.sp
-        )
+        // Tarjeta de Arquetipo Resultante
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(18.dp))
+                .background(Color(0xFF1B1B26))
+                .border(1.5.dp, AccentLime, RoundedCornerShape(18.dp))
+                .padding(16.dp)
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text(
+                    text = arquetipoTitulo,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Black,
+                    color = AccentLime
+                )
+                Text(
+                    text = diagnostico,
+                    fontSize = 12.sp,
+                    color = Color.White,
+                    lineHeight = 17.sp
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color(0xFF12121A))
+                        .border(1.dp, BorderDark, RoundedCornerShape(12.dp))
+                        .padding(12.dp)
+                ) {
+                    Text(
+                        text = tactica,
+                        fontSize = 12.sp,
+                        color = AccentCyan,
+                        lineHeight = 17.sp
+                    )
+                }
+            }
+        }
 
-        Spacer(modifier = Modifier.height(28.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = onReiniciar,

@@ -1,82 +1,152 @@
 [
   {
     "id": 1,
-    "categoria": "MITO POPULAR #01",
-    "afirmacion": "Usar el celular justo antes de dormir no afecta en nada a la calidad del descanso nocturno.",
+    "categoria": "CARD-01 | CHT",
+    "afirmacion": "Responder mensajes de WhatsApp mientras resuelves la tarea de matemáticas no afecta tu rendimiento escolar.",
     "esVerdad": false,
-    "explicacion": "Según estudios neurobiológicos, la luz azul de las pantallas inhibe hasta un 50% la segregación de melatonina, alterando el ritmo circadiano y retrasando la fase de sueño profundo.",
-    "xp": 50
+    "explicacion": "Fuente CHT (Center for Humane Technology): El cerebro no procesa dos tareas complejas a la vez; realiza 'switch tasking', una alternancia rápida que aumenta hasta un 40% el tiempo necesario para terminar la tarea y genera más errores.",
+    "evidenciaEmpirica": "Fuente CHT (Center for Humane Technology): El cerebro no procesa dos tareas complejas a la vez; realiza 'switch tasking', una alternancia rápida que aumenta hasta un 40% el tiempo necesario para terminar la tarea y genera más errores.",
+    "fuente": "CHT",
+    "xp": 100
   },
   {
     "id": 2,
-    "categoria": "MITO POPULAR #02",
-    "afirmacion": "La multitarea digital mejora la agilidad mental y la velocidad para resolver problemas complejos.",
-    "esVerdad": false,
-    "explicacion": "Investigaciones de la Universidad de Stanford demuestran que la multitarea continua aumenta los errores hasta un 40% y sobrecarga la memoria de trabajo, reduciendo el coeficiente intelectual efectivo temporalmente.",
-    "xp": 50
+    "categoria": "CARD-02 | CHT",
+    "afirmacion": "Tener el celular boca abajo sobre el escritorio mientras estudias consume parte de tu capacidad de atención.",
+    "esVerdad": true,
+    "explicacion": "Fuente CHT (Brain Drain): Fenómeno conocido como 'brain drain': el cerebro gasta energía de forma inconsciente en inhibir la tentación de mirar la pantalla simplemente por saber que el dispositivo está al alcance visual.",
+    "evidenciaEmpirica": "Fuente CHT (Brain Drain): Fenómeno conocido como 'brain drain': el cerebro gasta energía de forma inconsciente en inhibir la tentación de mirar la pantalla simplemente por saber que el dispositivo está al alcance visual.",
+    "fuente": "CHT",
+    "xp": 100
   },
   {
     "id": 3,
-    "categoria": "MITO POPULAR #03",
-    "afirmacion": "El uso continuo del celular es un ocio inofensivo y los adolescentes podemos autorregularnos sin problema cuando queremos.",
+    "categoria": "CARD-03 | SAP",
+    "afirmacion": "Si pones la pantalla en modo noche o filtro cálido, puedes usar redes en la cama sin afectar tu calidad de sueño.",
     "esVerdad": false,
-    "explicacion": "Según informes de UNICEF Argentina y estudios neurocognitivos, 1 de cada 2 adolescentes reporta uso problemático y el 24% intentó sin éxito reducir su tiempo de conexión debido al diseño persuasivo e infinito de los algoritmos.",
-    "xp": 50
+    "explicacion": "Fuente SAP (Sociedad Argentina de Pediatría): Aunque la luz cálida reduce el impacto, el estímulo cognitivo y la interacción con contenidos interactivos frenan la segregación natural de melatonina y mantienen el cerebro en alerta.",
+    "evidenciaEmpirica": "Fuente SAP (Sociedad Argentina de Pediatría): Aunque la luz cálida reduce el impacto, el estímulo cognitivo y la interacción con contenidos interactivos frenan la segregación natural de melatonina y mantienen el cerebro en alerta.",
+    "fuente": "SAP",
+    "xp": 100
   },
   {
     "id": 4,
-    "categoria": "CIENCIA DIGITAL #04",
-    "afirmacion": "Activar el modo escala de grises en la pantalla disminuye significativamente el tiempo de uso involuntario del teléfono.",
-    "esVerdad": true,
-    "explicacion": "Estudios comportamentales confirman que al eliminar la estimulación de los colores neón, el cerebro reduce las descargas automáticas de dopamina, disminuyendo el tiempo de pantalla hasta en un 38%.",
-    "xp": 50
+    "categoria": "CARD-04 | CHT",
+    "afirmacion": "No caer en las redes sociales es solo una cuestión de voluntad y disciplina personal.",
+    "esVerdad": false,
+    "explicacion": "Fuente CHT (Center for Humane Technology): Las aplicaciones están diseñadas con algoritmos de recompensa variable intermitente basados en neurociencia para capturar la atención involuntaria, compitiendo contra tu fuerza de voluntad.",
+    "evidenciaEmpirica": "Fuente CHT (Center for Humane Technology): Las aplicaciones están diseñadas con algoritmos de recompensa variable intermitente basados en neurociencia para capturar la atención involuntaria, compitiendo contra tu fuerza de voluntad.",
+    "fuente": "CHT",
+    "xp": 100
   },
   {
     "id": 5,
-    "categoria": "MITO POPULAR #05",
-    "afirmacion": "Tener el celular boca abajo en la mesa silenciado elimina por completo la distracción cognitiva.",
-    "esVerdad": false,
-    "explicacion": "El fenómeno conocido como 'Brain Drain' demuestra que la sola presencia física del teléfono inteligente cercano consume recursos de la memoria de trabajo por la constante inhibición consciente de revisarlo.",
-    "xp": 50
+    "categoria": "CARD-05 | UNICEF",
+    "afirmacion": "Escuchar música instrumental o tranquila sin letra puede ayudar a mantener la concentración mientras lees.",
+    "esVerdad": true,
+    "explicacion": "Fuente UNICEF Argentina: A diferencia de las notificaciones o audios con voz humana, la música instrumental no satura el bucle fonológico del cerebro, permitiendo procesar la lectura sin distracciones competitivas.",
+    "evidenciaEmpirica": "Fuente UNICEF Argentina: A diferencia de las notificaciones o audios con voz humana, la música instrumental no satura el bucle fonológico del cerebro, permitiendo procesar la lectura sin distracciones competitivas.",
+    "fuente": "UNICEF",
+    "xp": 100
   },
   {
     "id": 6,
-    "categoria": "CIENCIA DIGITAL #06",
-    "afirmacion": "Las notificaciones impredecibles activan el mismo circuito de recompensa dopaminérgica que las máquinas tragamonedas.",
-    "esVerdad": true,
-    "explicacion": "Las 'recompensas variables' intercaladas generan mayores picos de dopamina que los incentivos fijos, creando un bucle de hábito compulsivo difícil de romper sin límites externos.",
-    "xp": 50
+    "categoria": "CARD-06 | SAP",
+    "afirmacion": "Revisar el celular apenas te despiertas prepara tu cerebro para estar más alerta durante las clases.",
+    "esVerdad": false,
+    "explicacion": "Fuente SAP (Sociedad Argentina de Pediatría): Provoca un pico repentino de dopamina y cortisol por sobreestímulo, lo que incrementa los niveles de ansiedad residual durante el resto de la mañana escolar.",
+    "evidenciaEmpirica": "Fuente SAP (Sociedad Argentina de Pediatría): Provoca un pico repentino de dopamina y cortisol por sobreestímulo, lo que incrementa los niveles de ansiedad residual durante el resto de la mañana escolar.",
+    "fuente": "SAP",
+    "xp": 100
   },
   {
     "id": 7,
-    "categoria": "MITO POPULAR #07",
-    "afirmacion": "Revisar las redes sociales durante descansos de estudio ayuda al cerebro a recuperar energías más rápido.",
-    "esVerdad": false,
-    "explicacion": "Experimentos en psicología cognitiva muestran que consumir micro-contenidos rápidos durante pausas mantiene activa la corteza prefrontal, impidiendo el descanso de la red neuronal por defecto.",
-    "xp": 50
+    "categoria": "CARD-07 | CHT",
+    "afirmacion": "Si configuras la pantalla de tu celular en escala de grises, pierdes parte del interés compulsivo por abrir aplicaciones.",
+    "esVerdad": true,
+    "explicacion": "Fuente CHT (Center for Humane Technology): Al eliminar los colores brillantes y llamativos creados para llamar tu atención, el diseño persuasivo pierde efectividad y disminuye la búsqueda compulsiva de novedades.",
+    "evidenciaEmpirica": "Fuente CHT (Center for Humane Technology): Al eliminar los colores brillantes y llamativos creados para llamar tu atención, el diseño persuasivo pierde efectividad y disminuye la búsqueda compulsiva de novedades.",
+    "fuente": "CHT",
+    "xp": 100
   },
   {
     "id": 8,
-    "categoria": "CIENCIA DIGITAL #08",
-    "afirmacion": "Establecer zonas libres de pantallas (como la mesa de comer o el dormitorio) mejora la convivencia y el bienestar emocional.",
-    "esVerdad": true,
-    "explicacion": "La desconexión intencionada en espacios comunes fortalece el apego seguro, mejora la atención plena y reduce los niveles de cortisol vinculados al estrés digital diario.",
-    "xp": 50
+    "categoria": "CARD-08 | UNICEF",
+    "afirmacion": "Hacer 'doomscrolling' (mirar noticias negativas o chismes sin parar) ayuda a liberar el estrés acumulado del colegio.",
+    "esVerdad": false,
+    "explicacion": "Fuente UNICEF Argentina: La exposición continua a contenido hiperestimulante o alarmante activa el sistema de respuesta al estrés del cuerpo, elevando la tensión fisiológica.",
+    "evidenciaEmpirica": "Fuente UNICEF Argentina: La exposición continua a contenido hiperestimulante o alarmante activa el sistema de respuesta al estrés del cuerpo, elevando la tensión fisiológica.",
+    "fuente": "UNICEF",
+    "xp": 100
   },
   {
     "id": 9,
-    "categoria": "MITO POPULAR #09",
-    "afirmacion": "Cuantas más notificaciones sonoras tengamos activas, mayor es nuestra capacidad de respuesta e interacción social.",
-    "esVerdad": false,
-    "explicacion": "El exceso de alertas sonoras genera 'fatiga por alarma' y fragmentación de la atención, elevando los niveles de ansiedad y reduciendo la empatía en interacciones presenciales.",
-    "xp": 50
+    "categoria": "CARD-09 | SAP",
+    "afirmacion": "Un adolescente necesita entre 8 y 10 horas de sueño continuo para fijar lo aprendido durante el día escolar.",
+    "esVerdad": true,
+    "explicacion": "Fuente SAP (Sociedad Argentina de Pediatría): Durante las fases de sueño profundo y REM se consolida la memoria de largo plazo y se depuran toxinas cerebrales, procesos clave para el aprendizaje.",
+    "evidenciaEmpirica": "Fuente SAP (Sociedad Argentina de Pediatría): Durante las fases de sueño profundo y REM se consolida la memoria de largo plazo y se depuran toxinas cerebrales, procesos clave para el aprendizaje.",
+    "fuente": "SAP",
+    "xp": 100
   },
   {
     "id": 10,
-    "categoria": "CIENCIA DIGITAL #10",
-    "afirmacion": "Configurar límites diarios de tiempo por aplicación mediante herramientas de Bienestar Digital ayuda a recuperar el control del tiempo libre.",
+    "categoria": "CARD-10 | SAP",
+    "afirmacion": "Si estás acostumbrado a usar el celular hasta tarde, tu cuerpo se adapta y ya no necesita tantas horas de sueño.",
+    "esVerdad": false,
+    "explicacion": "Fuente SAP (Sociedad Argentina de Pediatría): La necesidad biológica de descanso en la adolescencia no cambia. La privación sostenida de sueño acumula una deuda de fatiga que altera la memoria y el estado de ánimo.",
+    "evidenciaEmpirica": "Fuente SAP (Sociedad Argentina de Pediatría): La necesidad biológica de descanso en la adolescencia no cambia. La privación sostenida de sueño acumula una deuda de fatiga que altera la memoria y el estado de ánimo.",
+    "fuente": "SAP",
+    "xp": 100
+  },
+  {
+    "id": 11,
+    "categoria": "CARD-11 | CHT",
+    "afirmacion": "Silenciar las notificaciones con punto rojo (badges) disminuye la sensación de urgencia por abrir las aplicaciones.",
     "esVerdad": true,
-    "explicacion": "Los recordatorios friccionales de tiempo intervienen en el momento justo del hábito automático, otorgando al usuario la pausa consciente necesaria para decidir si continuar o desconectar.",
-    "xp": 50
+    "explicacion": "Fuente CHT (Center for Humane Technology): Los indicadores rojos aprovechan los disparadores visuales de alerta biológica. Al eliminarlos, se recupera el control sobre cuándo abrir una app.",
+    "evidenciaEmpirica": "Fuente CHT (Center for Humane Technology): Los indicadores rojos aprovechan los disparadores visuales de alerta biológica. Al eliminarlos, se recupera el control sobre cuándo abrir una app.",
+    "fuente": "CHT",
+    "xp": 100
+  },
+  {
+    "id": 12,
+    "categoria": "CARD-12 | SAP",
+    "afirmacion": "Mirar videos breves de manera continua antes de dormir ayuda a que los ojos se cansen y sea más fácil conciliar el sueño.",
+    "esVerdad": false,
+    "explicacion": "Fuente SAP (Sociedad Argentina de Pediatría): La luz azul emitida a corta distancia simula luz diurna, suprimiendo la síntesis de melatonina y retrasando el inicio del sueño hasta en 2 horas.",
+    "evidenciaEmpirica": "Fuente SAP (Sociedad Argentina de Pediatría): La luz azul emitida a corta distancia simula luz diurna, suprimiendo la síntesis de melatonina y retrasando el inicio del sueño hasta en 2 horas.",
+    "fuente": "SAP",
+    "xp": 100
+  },
+  {
+    "id": 13,
+    "categoria": "CARD-13 | SAP",
+    "afirmacion": "El hábito de revisar el celular a mitad de la noche fragmenta el descanso aunque te vuelvas a dormir rápido.",
+    "esVerdad": true,
+    "explicacion": "Fuente SAP (Sociedad Argentina de Pediatría): Interrumpir el ciclo del sueño altera la arquitectura biológica del descanso, reduciendo el tiempo en las fases de reparación profunda necesarias para la salud.",
+    "evidenciaEmpirica": "Fuente SAP (Sociedad Argentina de Pediatría): Interrumpir el ciclo del sueño altera la arquitectura biológica del descanso, reduciendo el tiempo en las fases de reparación profunda necesarias para la salud.",
+    "fuente": "SAP",
+    "xp": 100
+  },
+  {
+    "id": 14,
+    "categoria": "CARD-14 | CHT",
+    "afirmacion": "Dejar el celular en otra habitación mientras estudias mejora la retención de lo que estás leyendo.",
+    "esVerdad": true,
+    "explicacion": "Fuente CHT (Center for Humane Technology): Al eliminar el objeto del campo visual y de la cercanía física, el cerebro libera recursos de atención ejecutiva para enfocar el 100% de la memoria de trabajo en la lectura.",
+    "evidenciaEmpirica": "Fuente CHT (Center for Humane Technology): Al eliminar el objeto del campo visual y de la cercanía física, el cerebro libera recursos de atención ejecutiva para enfocar el 100% de la memoria de trabajo en la lectura.",
+    "fuente": "CHT",
+    "xp": 100
+  },
+  {
+    "id": 15,
+    "categoria": "CARD-15 | CHT",
+    "afirmacion": "Las aplicaciones de redes sociales están programadas para enviarte alertas en los momentos en que estás menos activo.",
+    "esVerdad": true,
+    "explicacion": "Fuente CHT (Center for Humane Technology): Los sistemas predictivos detectan tus patrones de inactividad e introducen notificaciones gancho para invitarte a ingresar de nuevo a la aplicación.",
+    "evidenciaEmpirica": "Fuente CHT (Center for Humane Technology): Los sistemas predictivos detectan tus patrones de inactividad e introducen notificaciones gancho para invitarte a ingresar de nuevo a la aplicación.",
+    "fuente": "CHT",
+    "xp": 100
   }
 ]

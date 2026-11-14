@@ -10,6 +10,7 @@ data class OnboardingUiState(
     val age: Int = 16,
     val gender: GenderOption = GenderOption.MASCULINE,
     val avatarResId: Int = 1,
+    val customAvatarUri: String? = null,
     val levelTitle: String = "Nivel 1 - Recluta Digital",
     val isTargetAge: Boolean = true, // Valida si la edad está en el rango objetivo (13 a 16 años)
     val isFormValid: Boolean = true
@@ -22,6 +23,6 @@ sealed interface OnboardingEvent {
     data class OnGamertagChanged(val gamertag: String) : OnboardingEvent
     data class OnAgeChanged(val age: Int) : OnboardingEvent // Parámetro numérico de edad
     data class OnGenderSelected(val gender: GenderOption) : OnboardingEvent
-    data class OnAvatarChanged(val avatarResId: Int) : OnboardingEvent
+    data class OnAvatarChanged(val avatarResId: Int, val customUri: String? = null) : OnboardingEvent
     object OnSubmitProfile : OnboardingEvent
 }

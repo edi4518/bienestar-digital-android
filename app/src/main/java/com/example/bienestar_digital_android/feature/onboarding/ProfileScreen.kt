@@ -1,8 +1,11 @@
 package com.example.bienestar_digital_android.feature.onboarding
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -12,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Shield
@@ -21,10 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.bienestar_digital_android.domain.model.GenderOption
 
 // --- Paleta de colores ---
@@ -36,12 +42,45 @@ val NeonGreenText = Color(0xFF00FFC2)
 val BorderDark = Color(0xFF2A2E39)
 val TextGray = Color(0xFF9E9E9E)
 
+data class PresetAvatarItem(
+    val id: Int,
+    val emoji: String,
+    val label: String
+)
+
+val presetAvatarsList = listOf(
+    PresetAvatarItem(1, "🎮", "Gamer"),
+    PresetAvatarItem(2, "🚀", "Explorador"),
+    PresetAvatarItem(3, "⚡", "Foco Neón"),
+    PresetAvatarItem(4, "🦊", "Audaz"),
+    PresetAvatarItem(5, "🦉", "Sabio"),
+    PresetAvatarItem(6, "🤖", "Cyber Bot"),
+    PresetAvatarItem(7, "👑", "Líder"),
+    PresetAvatarItem(8, "🎨", "Creador")
+)
+
+fun getEmojiForAvatarId(id: Int): String {
+    return presetAvatarsList.find { it.id == id }?.emoji ?: "🎮"
+}
+
 @Composable
 fun ProfileScreen(
     uiState: OnboardingUiState,
     onEvent: (OnboardingEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var mostrarSelectorAvatar by remember { mutableStateOf(false) }
+
+    // Launcher para abrir la galería del dispositivo y elegir una foto
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let {
+            onEvent(OnboardingEvent.OnAvatarChanged(uiState.avatarResId, it.toString()))
+            mostrarSelectorAvatar = false
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -113,17 +152,29 @@ fun ProfileScreen(
                             .border(3.dp, NeonYellow, CircleShape)
                             .padding(4.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFF1E3A3A)),
+                            .background(Color(0xFF1E3A3A))
+                            .clickable { mostrarSelectorAvatar = true },
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "🎮",
-                            fontSize = 35.sp
-                        )
+                        if (!uiState.customAvatarUri.isNullOrBlank()) {
+                            AsyncImage(
+                                model = uiState.customAvatarUri,
+                                contentDescription = "Foto de perfil",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Text(
+                                text = getEmojiForAvatarId(uiState.avatarResId),
+                                fontSize = 42.sp
+                            )
+                        }
                     }
 
                     Surface(
-                        onClick = { onEvent(OnboardingEvent.OnAvatarChanged(uiState.avatarResId + 1)) },
+                        onClick = { mostrarSelectorAvatar = true },
                         color = NeonYellow,
                         shape = RoundedCornerShape(50),
                         modifier = Modifier.offset(y = 10.dp)
@@ -349,50 +400,9 @@ fun ProfileScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
-        GenderChip(
-            text = "PREFIERO NO DECIR / OTRO",
-            isSelected = uiState.gender == GenderOption.PREFER_NOT_TO_SAY,
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { onEvent(OnboardingEvent.OnGenderSelected(GenderOption.PREFER_NOT_TO_SAY)) }
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        // --- TARJETA DE PRIVACIDAD / AVISO ---
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(1.dp, BorderDark, RoundedCornerShape(12.dp)),
-            colors = CardDefaults.cardColors(containerColor = CardDarkBg),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Row(
-                modifier = Modifier.padding(14.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .background(InputDarkBg, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "🛡️", fontSize = 14.sp)
-                }
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(
-                    text = "Sin rastreo invasivo: Tus datos quedan solo en tu teléfono para adaptar los desafíos a tus hábitos diarios.",
-                    color = TextGray,
-                    fontSize = 11.sp,
-                    lineHeight = 15.sp
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // --- BOTÓN COMENZAR LA AVENTURA ---
+        // --- BOTÓN PRINCIPAL: COMENZAR LA AVENTURA ---
         Button(
             onClick = { onEvent(OnboardingEvent.OnSubmitProfile) },
             enabled = uiState.isFormValid,
@@ -418,6 +428,106 @@ fun ProfileScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    // --- DIÁLOGO PARA SELECCIONAR FOTO O AVATAR ---
+    if (mostrarSelectorAvatar) {
+        AlertDialog(
+            onDismissRequest = { mostrarSelectorAvatar = false },
+            title = {
+                Text(
+                    text = "SELECCIONA TU FOTO O AVATAR",
+                    fontWeight = FontWeight.Black,
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+            },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // 1. Botón para elegir foto desde Galería
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(NeonYellow)
+                            .clickable { galleryLauncher.launch("image/*") },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Image,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(
+                                text = "ELEGIR FOTO DE LA GALERÍA",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Black,
+                                color = Color.Black
+                            )
+                        }
+                    }
+
+                    Text(
+                        text = "O elige uno de nuestros avatares:",
+                        fontSize = 12.sp,
+                        color = TextGray
+                    )
+
+                    // 2. Grilla de Avatares Predefinidos
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        presetAvatarsList.chunked(4).forEach { rowItems ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
+                            ) {
+                                rowItems.forEach { item ->
+                                    val isSelected = uiState.customAvatarUri == null && uiState.avatarResId == item.id
+                                    Box(
+                                        modifier = Modifier
+                                            .size(54.dp)
+                                            .clip(CircleShape)
+                                            .background(if (isSelected) NeonYellow.copy(alpha = 0.3f) else InputDarkBg)
+                                            .border(
+                                                width = if (isSelected) 2.5.dp else 1.dp,
+                                                color = if (isSelected) NeonYellow else BorderDark,
+                                                shape = CircleShape
+                                            )
+                                            .clickable {
+                                                onEvent(OnboardingEvent.OnAvatarChanged(item.id, null))
+                                                mostrarSelectorAvatar = false
+                                            },
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(text = item.emoji, fontSize = 24.sp)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { mostrarSelectorAvatar = false }) {
+                    Text("CANCELAR", color = TextGray, fontWeight = FontWeight.Bold)
+                }
+            },
+            containerColor = CardDarkBg,
+            titleContentColor = Color.White
+        )
     }
 }
 
@@ -494,7 +604,10 @@ fun ProfileScreenPreview() {
                     state = state.copy(gender = event.gender)
                 }
                 is OnboardingEvent.OnAvatarChanged -> {
-                    state = state.copy(avatarResId = event.avatarResId)
+                    state = state.copy(
+                        avatarResId = event.avatarResId,
+                        customAvatarUri = event.customUri
+                    )
                 }
                 is OnboardingEvent.OnSubmitProfile -> {
                     // Acción de prueba en preview

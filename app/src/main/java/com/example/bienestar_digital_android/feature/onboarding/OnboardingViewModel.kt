@@ -48,7 +48,10 @@ class OnboardingViewModel : ViewModel() {
 
             is OnboardingEvent.OnAvatarChanged -> {
                 _uiState.update { currentState ->
-                    currentState.copy(avatarResId = event.avatarResId)
+                    currentState.copy(
+                        avatarResId = event.avatarResId,
+                        customAvatarUri = event.customUri
+                    )
                 }
             }
 

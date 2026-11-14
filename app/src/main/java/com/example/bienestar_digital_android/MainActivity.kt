@@ -36,6 +36,7 @@ import com.example.bienestar_digital_android.feature.onboarding.OnboardingViewMo
 import com.example.bienestar_digital_android.feature.onboarding.ProfileScreen
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hScreen
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hViewModel.Organizador24hViewModel
+import com.example.bienestar_digital_android.feature.welcome.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     private val tag = "CicloDeVida_MainActivity"
@@ -50,11 +51,31 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "profile_route",
+                        startDestination = Screen.Welcome.route,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        // 0. Pantalla de Creación de Perfil / Onboarding
+                        // 0. Pantalla de Bienvenida / Presentación
+                        composable(route = Screen.Welcome.route) {
+                            WelcomeScreen(
+                                onCreateProfileClick = {
+                                    navController.navigate("profile_route")
+                                },
+                                onLoginClick = {
+                                    navController.navigate("${Screen.Hub.route}/Recluta") {
+                                        popUpTo(Screen.Welcome.route) { inclusive = true }
+                                    }
+                                },
+                                onContinueAsUserClick = { gamertag ->
+                                    navController.navigate("${Screen.Hub.route}/$gamertag") {
+                                        popUpTo(Screen.Welcome.route) { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+
+                        // 1. Pantalla de Creación de Perfil / Onboarding
                         composable(route = "profile_route") {
+                            val context = LocalContext.current
                             val viewModel: OnboardingViewModel = viewModel()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -63,9 +84,12 @@ class MainActivity : ComponentActivity() {
                                 onEvent = { event ->
                                     viewModel.onEvent(event)
 
-                                    // Cuando completa el perfil, pasamos el gamertag a la ruta del Hub
+                                    // Cuando completa el perfil, guardamos la preferencia y pasamos al Hub
                                     if (event is OnboardingEvent.OnSubmitProfile) {
                                         val usertag = uiState.gamertag.ifBlank { "Recluta" }
+                                        com.example.bienestar_digital_android.data.local.UserPreferencesManager(context)
+                                            .guardarPerfilUsuario(usertag)
+
                                         navController.navigate("${Screen.Hub.route}/$usertag") {
                                             popUpTo("profile_route") { inclusive = true }
                                         }
