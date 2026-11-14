@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bienestar_digital_android.core.designsystem.*
-import androidx.compose.ui.platform.LocalLocale
+import java.util.Locale
 import com.example.bienestar_digital_android.R
 
 @Composable
@@ -111,7 +111,7 @@ fun CazaNotificacionesStatsBar(
 ) {
     val minutes = timeLeft / 60
     val seconds = timeLeft % 60
-    val timeFormatted = String.format(LocalLocale.current.platformLocale,"%02d:%02d", minutes, seconds)
+    val timeFormatted = String.format(Locale.getDefault(),"%02d:%02d", minutes, seconds)
 
     Box(
         modifier = modifier
