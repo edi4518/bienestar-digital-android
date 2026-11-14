@@ -2,12 +2,14 @@ package com.example.bienestar_digital_android.feature.organizador24h.Organizador
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bienestar_digital_android.data.repository.UsageStatsRepository
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import com.example.bienestar_digital_android.data.repository.UserProgressRepository
 
 class Organizador24hViewModel : ViewModel() {
@@ -223,6 +225,22 @@ class Organizador24hViewModel : ViewModel() {
                 numeroCapitulo = 1,
                 indiceFranja = 0
             )
+
+            // Persistencia permanente en SQLite con Room
+            val db = com.example.bienestar_digital_android.data.local.db.BienestarDatabase.getDatabase(context)
+            viewModelScope.launch {
+                val hoyFecha = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+                val auditoria = com.example.bienestar_digital_android.data.local.db.AuditoriaDiariaEntity(
+                    fecha = hoyFecha,
+                    totalPantallaMinutos = summary.totalScreenTimeMinutes,
+                    redesSocialesMinutos = summary.socialMediaTimeMinutes,
+                    desconexionMinutos = summary.disconnectionTimeMinutes,
+                    metaPantallaHoras = current.horasPantalla,
+                    metaCumplida = (summary.totalScreenTimeHours <= current.horasPantalla),
+                    bateriaDiurna = current.bateriaDiurna
+                )
+                db.auditoriaDao().guardarAuditoria(auditoria)
+            }
         } else {
             cerrarModalAuditoria()
         }

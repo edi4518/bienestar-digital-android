@@ -42,8 +42,8 @@ class HubViewModel : ViewModel() {
                         id = "mision_narrativa_1",
                         titulo = "Decisiones Conectadas",
                         descripcion = "Cada elección nocturna cuenta.",
-                        capituloActual = 2,
-                        totalCapitulos = 4
+                        capituloActual = UserProgressRepository.estadoGlobal.value.numeroCapituloGuardado,
+                        totalCapitulos = 7
                     ),
                     miniMisiones = listOf(
                         MiniMisionState(
@@ -92,6 +92,9 @@ class HubViewModel : ViewModel() {
                             energia = estado.energia,
                             foco = estado.foco,
                             animo = estado.animo
+                        ),
+                        misionNarrativa = actual.misionNarrativa.copy(
+                            capituloActual = estado.numeroCapituloGuardado
                         )
                     )
                 }
@@ -104,6 +107,13 @@ class HubViewModel : ViewModel() {
         if(name.isNotBlank()) {
             _uiState.update { it.copy(userName = name) }
         }
+    }
+
+    // Inicializa la racha dinámica de días consecutivos que se conecta el usuario
+    fun inicializarPreferenciasRacha(context: android.content.Context) {
+        val prefs = com.example.bienestar_digital_android.data.local.UserPreferencesManager(context)
+        val rachaCalculada = prefs.actualizarRachaConsecutiva()
+        _uiState.update { it.copy(userRacha = rachaCalculada) }
     }
 
     // 3. Receptor de eventos del usuario

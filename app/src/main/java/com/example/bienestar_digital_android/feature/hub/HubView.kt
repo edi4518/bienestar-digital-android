@@ -86,34 +86,47 @@ fun HubScreen(
             }
         }
 
-        // Barra de estado del jugador
-        Row(
+        // Barra de estado del jugador (Contenedor estilo tarjeta con el diseño exacto de la Imagen 2)
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .padding(vertical = 12.dp)
+                .background(Color(0xFF1B1B24), RoundedCornerShape(20.dp))
+                .border(1.5.dp, Color(0xFF2E2E3E), RoundedCornerShape(20.dp))
+                .padding(horizontal = 14.dp, vertical = 14.dp)
         ) {
-            // 1. Barra de Energía
-            StatBarItem(
-                icon = R.drawable.energia,
-                value = uiState.stats.energia,
-                barColor = Color(0xFFCCFF00)
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // 1. Barra de Energía
+                StatBarItem(
+                    icon = R.drawable.energia,
+                    name = "Energía",
+                    value = uiState.stats.energia,
+                    barColor = Color(0xFFCCFF00),
+                    modifier = Modifier.weight(1f)
+                )
 
-            // 2. Barra de Foco
-            StatBarItem(
-                icon = R.drawable.foco,
-                value = uiState.stats.foco,
-                barColor = Color(0xFF00F5D4)
-            )
+                // 2. Barra de Foco
+                StatBarItem(
+                    icon = R.drawable.foco,
+                    name = "Foco",
+                    value = uiState.stats.foco,
+                    barColor = Color(0xFF00F5D4),
+                    modifier = Modifier.weight(1f)
+                )
 
-            // 3. Barra de Ánimo
-            StatBarItem(
-                icon = R.drawable.animo,
-                value = uiState.stats.animo,
-                barColor = Color(0xFF9D4EDD)
-            )
+                // 3. Barra de Ánimo
+                StatBarItem(
+                    icon = R.drawable.animo,
+                    name = "Ánimo",
+                    value = uiState.stats.animo,
+                    barColor = Color(0xFF9D4EDD),
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
 
 
@@ -150,12 +163,35 @@ fun HubScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "NARRATIVA",
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF00F5D4)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "NARRATIVA",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF00F5D4)
+                    )
+
+                    // Badge de capítulo guardado (ejemplo: "Cap. 2/7")
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                color = Color(0xFF262634),
+                                shape = RoundedCornerShape(9999.dp)
+                            )
+                            .padding(horizontal = 8.dp, vertical = 3.dp)
+                    ) {
+                        Text(
+                            text = "Cap. ${uiState.misionNarrativa.capituloActual}/${uiState.misionNarrativa.totalCapitulos}",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
                 Text(
                     text = uiState.misionNarrativa.titulo,
                     fontSize = 16.sp,
@@ -372,28 +408,37 @@ fun HubScreen(
 @Composable
 fun StatBarItem(
     icon: Int,
+    name: String,
     value: Int,
     barColor: Color,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.width(90.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(3.dp)
         ) {
             Image(
                 painter = painterResource(id = icon),
-                contentDescription = null,
-                modifier = Modifier.size(16.dp)
+                contentDescription = name,
+                modifier = Modifier.size(15.dp)
             )
             Text(
-                text = "$value",
-                fontSize = 14.sp,
+                text = name,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = barColor
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = "${value.coerceIn(0, 100)}%",
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFE2E8F0)
             )
         }
 
@@ -404,9 +449,10 @@ fun StatBarItem(
                 .height(6.dp)
                 .background(Color(0xFF2E2E3E), RoundedCornerShape(3.dp))
         ) {
+            val progressFrac = (value.coerceIn(0, 100) / 100f).coerceAtLeast(0.04f)
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(fraction = (value.coerceIn(0, 100) / 100f))
+                    .fillMaxWidth(fraction = progressFrac)
                     .fillMaxHeight()
                     .background(barColor, RoundedCornerShape(3.dp))
             )

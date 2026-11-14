@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -102,12 +103,15 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = "${Screen.Hub.route}/{gamertag}"
                         ) { backStackEntry ->
+                            val context = LocalContext.current
                             val gamertag =
                                 backStackEntry.arguments?.getString("gamertag") ?: "Recluta"
                             val viewModel: HubViewModel = viewModel()
 
-                            // Actualizar el nombre en el ViewModel del Hub con el que se trajo del perfil
-                            viewModel.setUserName(gamertag)
+                            LaunchedEffect(Unit) {
+                                viewModel.setUserName(gamertag)
+                                viewModel.inicializarPreferenciasRacha(context)
+                            }
 
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
