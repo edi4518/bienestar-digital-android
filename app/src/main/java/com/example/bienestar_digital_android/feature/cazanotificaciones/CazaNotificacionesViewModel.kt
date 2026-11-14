@@ -140,15 +140,39 @@ class CazaNotificacionesViewModel : ViewModel() {
     }
 
     fun onNotificationClicked(item: CazaNotificacionesItem) {
-        _uiState.update { state ->
-            val pointsToAdd = if (item.tipo == "PRIORITARIA") 100 else -50
-            val newScore = state.score + pointsToAdd
-            val filteredList = state.activeNotifications.filter { it.instanceId != item.instanceId }
+        val isCorrect = item.tipo == "PRIORITARIA"
 
-            state.copy(
-                score = newScore.coerceAtLeast(0),
-                activeNotifications = filteredList
-            )
+        if (isCorrect) {
+            _uiState.update { state ->
+                val filteredList = state.activeNotifications.filter { it.instanceId != item.instanceId }
+                state.copy(
+                    score = state.score + 100,
+                    activeNotifications = filteredList
+                )
+            }
+        } else {
+            // Click incorrecto (TRAMPA/CEBO): Resta 50 puntos y consume 1 vida (corazón)
+            var shouldEndGame = false
+
+            _uiState.update { state ->
+                val newLives = (state.lives - 1).coerceAtLeast(0)
+                val newScore = (state.score - 50).coerceAtLeast(0)
+                val filteredList = state.activeNotifications.filter { it.instanceId != item.instanceId }
+
+                if (newLives <= 0) {
+                    shouldEndGame = true
+                }
+
+                state.copy(
+                    score = newScore,
+                    lives = newLives,
+                    activeNotifications = filteredList
+                )
+            }
+
+            if (shouldEndGame) {
+                endGame()
+            }
         }
     }
 

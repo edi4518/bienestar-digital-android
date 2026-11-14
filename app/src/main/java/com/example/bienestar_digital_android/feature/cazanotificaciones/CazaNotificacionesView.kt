@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Star
@@ -106,6 +108,7 @@ fun CazaNotificacionesTopBar(
 @Composable
 fun CazaNotificacionesStatsBar(
     score: Int,
+    lives: Int,
     timeLeft: Int,
     modifier: Modifier = Modifier
 ) {
@@ -119,13 +122,14 @@ fun CazaNotificacionesStatsBar(
             .padding(horizontal = 16.dp)
             .background(BgDarkCard, RoundedCornerShape(16.dp))
             .border(1.dp, BorderDark, RoundedCornerShape(16.dp))
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // 1. PUNTAJE
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
@@ -140,29 +144,46 @@ fun CazaNotificacionesStatsBar(
                         modifier = Modifier.size(18.dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 Column {
-                    Text(text = "PUNTAJE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color(0xFF94A3B8))
-                    Text(text = "$score pts", fontSize = 16.sp, fontWeight = FontWeight.Black, color = AccentLime)
+                    Text(text = "PUNTAJE", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color(0xFF94A3B8))
+                    Text(text = "$score", fontSize = 15.sp, fontWeight = FontWeight.Black, color = AccentLime)
                 }
             }
 
+            // 2. VIDAS (3 CORAZONES)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                for (i in 1..3) {
+                    val isFull = i <= lives
+                    Icon(
+                        imageVector = if (isFull) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Vida $i",
+                        tint = if (isFull) Color(0xFFFF3366) else Color(0xFF475569),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+
+            // 3. TIEMPO RESTANTE
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
-                        text = "TIEMPO RESTANTE",
-                        fontSize = 10.sp,
+                        text = "TIEMPO",
+                        fontSize = 9.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF94A3B8)
                     )
                     Text(
                         text = timeFormatted,
-                        fontSize = 16.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Black,
                         color = AccentCyan
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 Box(
                     modifier = Modifier
                         .size(32.dp)
@@ -235,6 +256,7 @@ fun CazaNotificacionesContent(
 
             CazaNotificacionesStatsBar(
                 score = state.score,
+                lives = state.lives,
                 timeLeft = state.timeLeft
             )
 
@@ -282,7 +304,7 @@ fun CazaNotificacionesContent(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Atrapá las notificaciones prioritarias de familia y estudio (+100 pts), pero esquivá los cebos algorítmicos y redes sociales (-50 pts).",
+                            text = "Atrapá las notificaciones prioritarias de familia y estudio (+100 pts), pero esquivá los cebos algorítmicos (-50 pts). ¡Tenés 3 corazones de vida!",
                             fontSize = 13.sp,
                             color = Color.LightGray,
                             textAlign = TextAlign.Center,
