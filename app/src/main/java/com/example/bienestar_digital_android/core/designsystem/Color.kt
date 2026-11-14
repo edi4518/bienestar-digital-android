@@ -23,3 +23,4 @@ val AccentLime = Color(0xFFCCFF00)     // Energía / Nivel / Éxito
 val AccentCyan = Color(0xFF00F5D4)     // Foco / Badges interactivos
 val AccentPurple = Color(0xFF9D4EDD)   // Ánimo / Avatares
 val AccentPink = Color(0xFFFF3366)     // Alertas (FOMO / Pérdida crítica)
+val DangerRed = Color(0xFFF87171)      // Exceso sobre límite permitido (SAP / OMS)

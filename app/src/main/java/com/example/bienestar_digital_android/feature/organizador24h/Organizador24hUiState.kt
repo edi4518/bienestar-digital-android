@@ -23,4 +23,23 @@ data class Organizador24hUiState (
     val estadoEquilibrioTexto: String = "Equilibrado",
     val alertaActiva: String? = null,
     val feedbackReflexivo: String? = null,
+
+    // Datos del uso real del dispositivo
+    val tienePermisoUso: Boolean = false,
+    val usoRealPantallaMinutos: Long? = null,
+    val usoRealRedesSocialesMinutos: Long? = null,
+    val comparativaFeedback: String? = null,
+    val mostrarDialogoPermiso: Boolean = false,
+
+    // Modal de Auditoría Digital (24H)
+    val mostrarModalAuditoria: Boolean = false,
+    val redesPlaneadoMinutos: Long = 45L,
+    val redesRealMinutos: Long = 0L,
+    val ocioPlaneadoMinutos: Long = 60L,
+    val ocioRealMinutos: Long = 0L,
+    val estudioPlaneadoMinutos: Long = 180L,
+    val estudioRealMinutos: Long = 0L,
+    val desconexionPlaneadoMinutos: Long = 360L,
+    val desconexionRealMinutos: Long = 0L,
+    val feedbackSistemaModal: String = ""
 )

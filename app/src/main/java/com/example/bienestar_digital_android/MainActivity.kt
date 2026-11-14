@@ -147,6 +147,7 @@ class MainActivity : ComponentActivity() {
 
                         // 5. Organizador 24 hs
                         composable(route = Screen.Organizador24h.route) {
+                            val context = LocalContext.current
                             val viewModel: Organizador24hViewModel = viewModel()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -154,6 +155,11 @@ class MainActivity : ComponentActivity() {
                                 uiState = uiState,
                                 onCambiarHoras = { actividad, delta -> viewModel.cambiarHoras(actividad, delta) },
                                 onSimularClick = { viewModel.simularJornada() },
+                                onAnalizarUsoRealClick = { viewModel.verificarYAnalizarUsoReal(context) },
+                                onSolicitarPermisoClick = { viewModel.solicitarPermisoUso(context) },
+                                onDismissDialogoPermiso = { viewModel.ocultarDialogoPermiso() },
+                                onCerrarModalAuditoria = { viewModel.cerrarModalAuditoria() },
+                                onSincronizarClick = { viewModel.sincronizarYRecalcularHabitos(context) },
                                 onBackClick = { navController.popBackStack() }
                             )
                         }

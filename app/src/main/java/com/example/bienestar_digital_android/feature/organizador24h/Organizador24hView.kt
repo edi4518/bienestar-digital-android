@@ -11,8 +11,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DirectionsRun
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bienestar_digital_android.core.designsystem.BienestardigitalandroidTheme
+import com.example.bienestar_digital_android.core.designsystem.DangerRed
+import kotlin.math.abs
 
 private val BackgroundColor = Color(0xFF0E0E12)
 private val SurfaceContainer = Color(0xFF1F1F23)
@@ -50,6 +57,11 @@ fun Organizador24hScreen(
     uiState: Organizador24hUiState,
     onCambiarHoras: (String, Int) -> Unit,
     onSimularClick: () -> Unit,
+    onAnalizarUsoRealClick: () -> Unit = {},
+    onSolicitarPermisoClick: () -> Unit = {},
+    onDismissDialogoPermiso: () -> Unit = {},
+    onCerrarModalAuditoria: () -> Unit = {},
+    onSincronizarClick: () -> Unit = {},
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -498,7 +510,7 @@ fun Organizador24hScreen(
             )
         }
 
-        // 5. BOTÓN CTA & EVIDENCIA CIENTÍFICA
+        // 5. BOTÓN CTA, COMPARATIVA CON USO REAL & EVIDENCIA CIENTÍFICA
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -526,6 +538,68 @@ fun Organizador24hScreen(
                         contentDescription = null,
                         tint = OnPrimaryFixed,
                         modifier = Modifier.size(22.dp)
+                    )
+                }
+            }
+
+            // Botón secundario para analizar uso real del dispositivo
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+                    .background(SurfaceContainer, RoundedCornerShape(9999.dp))
+                    .clickable { onAnalizarUsoRealClick() },
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Analytics,
+                        contentDescription = null,
+                        tint = SecondaryFixed,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Text(
+                        text = "ANALIZAR USO REAL DEL DISPOSITIVO",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextOnSurface
+                    )
+                }
+            }
+
+            // Muestra resultado de la comparativa de uso real si existe
+            if (uiState.comparativaFeedback != null) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFF1E2638), RoundedCornerShape(12.dp))
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Insights,
+                            contentDescription = null,
+                            tint = SecondaryFixed,
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Text(
+                            text = "ESTADÍSTICAS REALES DEL DISPOSITIVO",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = SecondaryFixed
+                        )
+                    }
+                    Text(
+                        text = uiState.comparativaFeedback,
+                        fontSize = 13.sp,
+                        color = TextOnSurface
                     )
                 }
             }
@@ -581,6 +655,409 @@ fun Organizador24hScreen(
                 )
             }
         }
+    }
+
+    // Diálogo de solicitud de permiso de Acceso a Uso
+    if (uiState.mostrarDialogoPermiso) {
+        AlertDialog(
+            onDismissRequest = { onDismissDialogoPermiso() },
+            title = {
+                Text(
+                    text = "Permiso de Acceso a Uso Requerido",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+            },
+            text = {
+                Text(
+                    text = "Para comparar el consumo real de redes sociales y tiempo de pantalla con tu plan de 24 hs, la app necesita consultar las estadísticas de uso de Android.\n\n" +
+                            "La app NO funciona en segundo plano todo el tiempo. Solo consulta los ajustes del sistema cuando presionas este botón.",
+                    fontSize = 14.sp
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { onSolicitarPermisoClick() }) {
+                    Text("ABRIR AJUSTES", fontWeight = FontWeight.Bold, color = PrimaryFixed)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { onDismissDialogoPermiso() }) {
+                    Text("CANCELAR", color = GrayText)
+                }
+            },
+            containerColor = SurfaceContainer,
+            titleContentColor = TextOnSurface,
+            textContentColor = TextOnSurface
+        )
+    }
+
+    // Modal de Auditoría Digital (24H)
+    if (uiState.mostrarModalAuditoria) {
+        AuditoriaDigitalModal(
+            uiState = uiState,
+            onDismiss = { onCerrarModalAuditoria() },
+            onSincronizarClick = { onSincronizarClick() }
+        )
+    }
+}
+
+@Composable
+fun AuditoriaDigitalModal(
+    uiState: Organizador24hUiState,
+    onDismiss: () -> Unit,
+    onSincronizarClick: () -> Unit = {}
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.92f)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFF0F0F14))
+                .padding(20.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // TÍTULO MODAL
+                Text(
+                    text = "AUDITORÍA DIGITAL Y REALIDAD (24H)",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Black,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                )
+
+                // 1. FEEDBACK DEL SISTEMA (Borde Neón Cian)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFF0C1B26))
+                        .background(
+                            Brush.linearGradient(
+                                listOf(Color(0x3300E5FF), Color(0x1100E5FF))
+                            )
+                        )
+                        .padding(14.dp)
+                ) {
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "💡",
+                                fontSize = 14.sp
+                            )
+                            Text(
+                                text = "FEEDBACK DEL SISTEMA:",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF00E5FF)
+                            )
+                        }
+
+                        val feedbackTexto = uiState.feedbackSistemaModal.ifBlank {
+                            "Detectamos consumo activo de redes y pantallas hoy. ⚠️"
+                        }
+
+                        Text(
+                            text = feedbackTexto,
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+
+                // 2. RESUMEN DE PANTALLA TOTAL
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFF16161C))
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "🕒", fontSize = 13.sp)
+                        Text(
+                            text = "RESUMEN DE PANTALLA TOTAL",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF9E9EA8)
+                        )
+                    }
+
+                    val usoRealMin = uiState.usoRealPantallaMinutos ?: 0L
+                    val metaMin = uiState.horasPantalla * 60L
+                    val usoRealTexto = formatMinutosTexto(usoRealMin)
+                    val metaTexto = "${uiState.horasPantalla}h"
+
+                    // Si supera lo planeado o supera las 2 hs (120 mts) estipuladas por la SAP/OMS, usará DangerRed (0xFFF87171)
+                    val esExcesoTotal = usoRealMin > metaMin || usoRealMin > 120L
+                    val colorResumen = if (esExcesoTotal) DangerRed else Color(0xFF88F000)
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Barra de progreso (Verde o DangerRed 0xFFF87171)
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(16.dp)
+                                .clip(RoundedCornerShape(9999.dp))
+                                .background(Color(0xFF262630))
+                        ) {
+                            val progress = if (metaMin > 0) (usoRealMin.toFloat() / (metaMin * 1.5f)).coerceIn(0.1f, 1.0f) else 0.5f
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth(progress)
+                                    .clip(RoundedCornerShape(9999.dp))
+                                    .background(colorResumen)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(12.dp))
+
+                        Text(
+                            text = "$usoRealTexto Activa",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResumen
+                        )
+                    }
+
+                    Text(
+                        text = "Meta: $metaTexto",
+                        fontSize = 11.sp,
+                        color = Color(0xFF8E9379)
+                    )
+                }
+
+                // 3. COMPARATIVA: PLANEADO VS REAL
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xFF16161C))
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "📈", fontSize = 13.sp)
+                        Text(
+                            text = "COMPARATIVA: PLANEADO VS REAL",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF9E9EA8)
+                        )
+                    }
+
+                    // Fila 1: Redes Sociales
+                    ItemComparativaBarra(
+                        numero = "1.",
+                        titulo = "Redes Sociales:",
+                        planeadoMin = uiState.redesPlaneadoMinutos,
+                        realMin = uiState.redesRealMinutos
+                    )
+
+                    // Fila 2: Ocio / Streaming
+                    ItemComparativaBarra(
+                        numero = "2.",
+                        titulo = "Ocio / Streaming:",
+                        planeadoMin = uiState.ocioPlaneadoMinutos,
+                        realMin = uiState.ocioRealMinutos
+                    )
+
+                    // Fila 3: Tiempo de Desconexión / Reposo (No uso del móvil)
+                    ItemComparativaBarra(
+                        numero = "3.",
+                        titulo = "Desconexión / Reposo:",
+                        planeadoMin = uiState.desconexionPlaneadoMinutos,
+                        realMin = uiState.desconexionRealMinutos,
+                        esMetricaInversa = true
+                    )
+                }
+
+                // BOTÓN CTA GRADIENTE
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp)
+                        .clip(RoundedCornerShape(9999.dp))
+                        .background(
+                            Brush.horizontalGradient(
+                                listOf(Color(0xFF00E5FF), Color(0xFF7C4DFF))
+                            )
+                        )
+                        .clickable { onSincronizarClick() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Text(
+                            text = "Sincronizar y Recalcular Hábitos",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ItemComparativaBarra(
+    numero: String,
+    titulo: String,
+    planeadoMin: Long,
+    realMin: Long,
+    esMetricaInversa: Boolean = false
+) {
+    val difMin = realMin - planeadoMin
+
+    // Si es métrica directa (Redes/Ocio): exceso es malo (real > planeado).
+    // Si es métrica inversa (Desconexión/Reposo): déficit es malo (real < planeado).
+    val esAlerta = if (esMetricaInversa) {
+        difMin < 0
+    } else {
+        difMin > 0 || (titulo.contains("Redes", ignoreCase = true) && realMin > 120L)
+    }
+
+    val planeadoTexto = formatMinutosTexto(planeadoMin)
+    val realTexto = formatMinutosTexto(realMin)
+
+    val badgeColor = if (esAlerta) DangerRed else Color(0xFF00E5FF)
+    val badgeIcon = if (esAlerta) "⚠️" else "✅"
+    val badgeTexto = if (difMin >= 0) "+${difMin}m" else "-${abs(difMin)}m"
+
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "$numero $titulo",
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = badgeIcon, fontSize = 11.sp)
+                Text(
+                    text = badgeTexto,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = badgeColor
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Planeado: $planeadoTexto",
+                fontSize = 11.sp,
+                color = Color(0xFF9E9EA8),
+                modifier = Modifier.width(105.dp)
+            )
+
+            // Barra planeada verde
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(9999.dp))
+                    .background(Color(0xFF262630))
+            ) {
+                val maxVal = maxOf(planeadoMin, realMin, 180L).toFloat()
+                val widthFrac = (planeadoMin.toFloat() / maxVal).coerceIn(0.08f, 1.0f)
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(widthFrac)
+                        .clip(RoundedCornerShape(9999.dp))
+                        .background(Color(0xFF88F000))
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Real: $realTexto",
+                fontSize = 11.sp,
+                color = Color(0xFF9E9EA8),
+                modifier = Modifier.width(105.dp)
+            )
+
+            // Barra real: si hay alerta se usa DangerRed (0xFFF87171)
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(9999.dp))
+                    .background(Color(0xFF262630))
+            ) {
+                val maxVal = maxOf(planeadoMin, realMin, 180L).toFloat()
+                val widthFrac = (realMin.toFloat() / maxVal).coerceIn(0.08f, 1.0f)
+                val colorBarra = if (esAlerta) DangerRed else Color(0xFF88F000)
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(widthFrac)
+                        .clip(RoundedCornerShape(9999.dp))
+                        .background(colorBarra)
+                )
+            }
+        }
+    }
+}
+
+fun formatMinutosTexto(minutos: Long): String {
+    val h = minutos / 60
+    val m = minutos % 60
+    return when {
+        h > 0 && m > 0 -> "${h}h ${m}m"
+        h > 0 -> "${h}h 00m"
+        else -> "${m}m"
     }
 }
 

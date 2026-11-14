@@ -1,11 +1,14 @@
 package com.example.bienestar_digital_android.feature.organizador24h.Organizador24hViewModel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.example.bienestar_digital_android.data.repository.UsageStatsRepository
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import com.example.bienestar_digital_android.data.repository.UserProgressRepository
 
 class Organizador24hViewModel : ViewModel() {
 
@@ -96,6 +99,132 @@ class Organizador24hViewModel : ViewModel() {
                 feedbackReflexivo = reflex,
                 estadoEquilibrioTexto = if (state.horasPantalla <= 2) "Equilibrado" else "Desbalanceado"
             )
+        }
+    }
+
+    /**
+     * Verifica el uso real en el dispositivo y realiza la comparativa con el plan de 24h.
+     */
+    fun verificarYAnalizarUsoReal(context: Context) {
+        val repository = UsageStatsRepository(context)
+
+        if (!repository.hasUsageStatsPermission()) {
+            _uiState.update {
+                it.copy(
+                    tienePermisoUso = false,
+                    mostrarDialogoPermiso = true
+                )
+            }
+            return
+        }
+
+        val summary = repository.getTodayUsageSummary()
+
+        _uiState.update { state ->
+            val planeadoPantallaMin = state.horasPantalla * 60L
+            val planeadoRedesMin = (state.horasPantalla * 60L * 0.45f).toLong().coerceAtLeast(45L)
+            val planeadoOcioMin = (state.horasPantalla * 60L * 0.35f).toLong().coerceAtLeast(45L)
+            val planeadoEstudioMin = ((state.horasEscuela + state.horasEstudio) * 60L).coerceAtLeast(180L)
+            val planeadoDesconexionMin = ((state.horasSuenio + state.horasDeporte + state.horasComidas) * 60L).coerceAtLeast(360L)
+
+            val realRedesMin = summary.socialMediaTimeMinutes
+            val realOcioMin = summary.streamingTimeMinutes
+            val realEstudioMin = summary.productivityTimeMinutes
+            val realDesconexionMin = summary.disconnectionTimeMinutes
+
+            val difRedes = realRedesMin - planeadoRedesMin
+            val feedbackModal = if (difRedes > 0) {
+                val h = difRedes / 60
+                val m = difRedes % 60
+                val tiempoTexto = if (h > 0) "${h}h ${m}m" else "${m}m"
+                "Detectamos ${tiempoTexto} más de redes que lo planeaste en tu organizador hoy. ⚠️"
+            } else {
+                "¡Excelente! Mantuviste tu uso de redes sociales dentro de lo planeado en tu organizador hoy. ✅"
+            }
+
+            state.copy(
+                tienePermisoUso = true,
+                mostrarDialogoPermiso = false,
+                mostrarModalAuditoria = true,
+                usoRealPantallaMinutos = summary.totalScreenTimeMinutes,
+                usoRealRedesSocialesMinutos = summary.socialMediaTimeMinutes,
+                redesPlaneadoMinutos = planeadoRedesMin,
+                redesRealMinutos = realRedesMin,
+                ocioPlaneadoMinutos = planeadoOcioMin,
+                ocioRealMinutos = realOcioMin,
+                estudioPlaneadoMinutos = planeadoEstudioMin,
+                estudioRealMinutos = realEstudioMin,
+                desconexionPlaneadoMinutos = planeadoDesconexionMin,
+                desconexionRealMinutos = realDesconexionMin,
+                feedbackSistemaModal = feedbackModal
+            )
+        }
+    }
+
+    fun solicitarPermisoUso(context: Context) {
+        val repository = UsageStatsRepository(context)
+        repository.openUsageAccessSettings()
+        _uiState.update { it.copy(mostrarDialogoPermiso = false) }
+    }
+
+    fun ocultarDialogoPermiso() {
+        _uiState.update { it.copy(mostrarDialogoPermiso = false) }
+    }
+
+    fun cerrarModalAuditoria() {
+        _uiState.update { it.copy(mostrarModalAuditoria = false) }
+    }
+
+    /**
+     * Sincroniza nuevamente el consumo real del dispositivo y recalcula los indicadores
+     * globales de bienestar (Batería, Foco y Cansancio), impactando en el juego.
+     */
+    fun sincronizarYRecalcularHabitos(context: Context) {
+        val repository = UsageStatsRepository(context)
+        if (repository.hasUsageStatsPermission()) {
+            val summary = repository.getTodayUsageSummary()
+            val usoRealPantallaHs = summary.totalScreenTimeHours
+
+            _uiState.update { state ->
+                val metaPantalla = state.horasPantalla.toFloat()
+                val exceso = usoRealPantallaHs - metaPantalla
+
+                val nuevaBateria = when {
+                    exceso <= 0 -> 95
+                    exceso <= 1.5f -> 75
+                    else -> 40
+                }
+                val nuevoFoco = when {
+                    exceso <= 0 -> "Máximo"
+                    exceso <= 1.5f -> "Regular"
+                    else -> "Brumoso"
+                }
+                val nuevoCansancio = when {
+                    exceso <= 0 -> "Bajo"
+                    exceso <= 1.5f -> "Medio"
+                    else -> "Alto"
+                }
+
+                state.copy(
+                    bateriaDiurna = nuevaBateria,
+                    focoCognitivo = nuevoFoco,
+                    cansancioEstado = nuevoCansancio,
+                    usoRealPantallaMinutos = summary.totalScreenTimeMinutes,
+                    usoRealRedesSocialesMinutos = summary.socialMediaTimeMinutes,
+                    mostrarModalAuditoria = false
+                )
+            }
+
+            val current = _uiState.value
+            UserProgressRepository.guardarProgresoPartida(
+                energiaActual = current.bateriaDiurna,
+                focoActual = if (current.focoCognitivo == "Máximo") 100 else 50,
+                animoActual = if (current.cansancioEstado == "Bajo") 90 else 40,
+                numeroCapitulo = 1,
+                indiceFranja = 0
+            )
+        } else {
+            cerrarModalAuditoria()
         }
     }
 }
