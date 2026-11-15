@@ -1,8 +1,13 @@
 package com.example.bienestar_digital_android.feature.hub
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bienestar_digital_android.data.local.UserPreferencesManager
+import com.example.bienestar_digital_android.data.repository.RankingRepository
 import com.example.bienestar_digital_android.data.repository.UserProgressRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,22 +16,19 @@ import kotlinx.coroutines.launch
 
 class HubViewModel : ViewModel() {
 
-    // 1. Estado mutable privado (solo el ViewModel puede modificarlo)
     private val _uiState = MutableStateFlow(HubUiState())
-
-    // 2. Estado público inmutable (la vista solo lo lee de forma reactiva)
     val uiState: StateFlow<HubUiState> = _uiState.asStateFlow()
 
-    // 1. Invocamos las funciones en el arranque
+    private var rankingJob: Job? = null
+
     init {
         cargarDatasHub()
         observarProgresoGlobal()
-
+        cargarRankingFirebase("Global")
     }
 
     private fun cargarDatasHub() {
         viewModelScope.launch {
-            // Simulamos la carga inicial con los datos del diseño
             _uiState.update {
                 HubUiState(
                     isLoading = false,
@@ -77,13 +79,7 @@ class HubViewModel : ViewModel() {
         }
     }
 
-    /* OBSERVA EL ESTADO GLOBAL COMPARTIDO:
-         Cuando el usuario juega "Decisiones Conectadas", termina su partida y pulsa
-         "Volver al menú principal", esta corrutina recibe la emisión de UserProgressRepository
-         y actualiza de inmediato el objeto `stats = RadarStats(...)` de la pantalla principal.
-     */
     private fun observarProgresoGlobal() {
-        // Escuchamos los cambios del repositorio global en tiempo real
         viewModelScope.launch {
             UserProgressRepository.estadoGlobal.collect { estado ->
                 _uiState.update { actual ->
@@ -102,42 +98,98 @@ class HubViewModel : ViewModel() {
         }
     }
 
-    // Función para llamar el nombre puesto en la creación de perfil
     fun setUserName(name: String) {
-        if(name.isNotBlank()) {
+        if (name.isNotBlank()) {
             _uiState.update { it.copy(userName = name) }
         }
     }
 
-    // Inicializa la racha dinámica de días consecutivos que se conecta el usuario
-    fun inicializarPreferenciasRacha(context: android.content.Context) {
-        val prefs = com.example.bienestar_digital_android.data.local.UserPreferencesManager(context)
+    fun inicializarPreferenciasRacha(context: Context) {
+        val prefs = UserPreferencesManager(context)
         val rachaCalculada = prefs.actualizarRachaConsecutiva()
-        _uiState.update { it.copy(userRacha = rachaCalculada) }
+        _uiState.update {
+            it.copy(
+                userRacha = rachaCalculada,
+                userName = if (prefs.gamertagGuardado.isNotBlank()) prefs.gamertagGuardado else it.userName,
+                avatarResId = prefs.avatarResId,
+                customAvatarUri = prefs.customAvatarUri
+            )
+        }
     }
 
-    // 3. Receptor de eventos del usuario
-    fun onEvent (event: HubUiEvent) {
+    fun abrirRankingDialog() {
+        _uiState.update { it.copy(mostrarRankingDialog = true) }
+        cargarRankingFirebase(_uiState.value.juegoFiltroRanking)
+    }
+
+    fun cerrarRankingDialog() {
+        _uiState.update { it.copy(mostrarRankingDialog = false) }
+    }
+
+    fun cambiarFiltroRanking(filtro: String) {
+        _uiState.update { it.copy(juegoFiltroRanking = filtro) }
+        cargarRankingFirebase(filtro)
+    }
+
+    fun abrirEditarPerfilDialog() {
+        _uiState.update { it.copy(mostrarEditarPerfilDialog = true) }
+    }
+
+    fun cerrarEditarPerfilDialog() {
+        _uiState.update { it.copy(mostrarEditarPerfilDialog = false) }
+    }
+
+    fun actualizarPerfil(context: Context, nuevoNombre: String, avatarResId: Int, customAvatarUri: String?) {
+        val finalNombre = nuevoNombre.ifBlank { "Recluta" }
+        val prefs = UserPreferencesManager(context)
+        prefs.guardarPerfilUsuario(finalNombre, avatarResId, customAvatarUri)
+
+        _uiState.update {
+            it.copy(
+                userName = finalNombre,
+                avatarResId = avatarResId,
+                customAvatarUri = customAvatarUri,
+                mostrarEditarPerfilDialog = false
+            )
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val db = com.example.bienestar_digital_android.data.local.db.BienestarDatabase.getDatabase(context)
+                db.userProfileDao().guardarPerfil(
+                    com.example.bienestar_digital_android.data.local.db.UserProfileEntity(
+                        gamertag = finalNombre,
+                        age = 20,
+                        gender = "Masculino",
+                        avatarResId = avatarResId,
+                        customAvatarUri = customAvatarUri,
+                        energia = _uiState.value.stats.energia,
+                        foco = _uiState.value.stats.foco,
+                        animo = _uiState.value.stats.animo
+                    )
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun cargarRankingFirebase(filtro: String) {
+        rankingJob?.cancel()
+        rankingJob = viewModelScope.launch {
+            RankingRepository.obtenerTop10Ranking(filtro).collect { items ->
+                _uiState.update { it.copy(rankingList = items) }
+            }
+        }
+    }
+
+    fun onEvent(event: HubUiEvent) {
         when (event) {
-            is HubUiEvent.OnContinuarNarrativaClick -> {
-                // Aquí más adelante dispararemos la navegación al capítulo
-            }
-
-            is HubUiEvent.OnMiniMisionClick -> {
-                // event.misionId nos dice si tocó "caza_notis" o "mito_verdad"
-            }
-
-            is HubUiEvent.OnOrganizadorClick -> {
-                // Navegación a la pantalla del organizador 24 hs
-            }
-
-            is HubUiEvent.OnPerfilClick -> {
-                // Navegación al perfil
-            }
-
-            is HubUiEvent.OnTipClick -> {
-                // Acción opcional para abrir link/nota
-            }
+            is HubUiEvent.OnContinuarNarrativaClick -> {}
+            is HubUiEvent.OnMiniMisionClick -> {}
+            is HubUiEvent.OnOrganizadorClick -> {}
+            is HubUiEvent.OnPerfilClick -> {}
+            is HubUiEvent.OnTipClick -> {}
         }
     }
 }

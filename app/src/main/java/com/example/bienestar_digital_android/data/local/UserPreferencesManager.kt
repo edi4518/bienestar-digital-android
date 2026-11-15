@@ -25,6 +25,20 @@ class UserPreferencesManager(context: Context) {
         set(value) = prefs.edit().putString("gamertag_guardado", value).apply()
 
     /**
+     * ID de avatar preset seleccionado.
+     */
+    var avatarResId: Int
+        get() = prefs.getInt("avatar_res_id", 1)
+        set(value) = prefs.edit().putInt("avatar_res_id", value).apply()
+
+    /**
+     * URI de la foto seleccionada desde la galería del teléfono.
+     */
+    var customAvatarUri: String?
+        get() = prefs.getString("custom_avatar_uri", null)
+        set(value) = prefs.edit().putString("custom_avatar_uri", value).apply()
+
+    /**
      * Racha de días consecutivos que el usuario se conecta a la app.
      */
     var rachaDias: Int
@@ -82,13 +96,15 @@ class UserPreferencesManager(context: Context) {
     }
 
     /**
-     * Guarda la información del perfil del usuario.
+     * Guarda la información del perfil del usuario de forma segura.
      */
-    fun guardarPerfilUsuario(gamertag: String) {
+    fun guardarPerfilUsuario(gamertag: String, avatarResId: Int = 1, customAvatarUri: String? = null) {
         val finalTag = gamertag.ifBlank { "Recluta" }
         prefs.edit()
             .putBoolean("ha_completado_perfil", true)
             .putString("gamertag_guardado", finalTag)
+            .putInt("avatar_res_id", avatarResId)
+            .putString("custom_avatar_uri", customAvatarUri)
             .apply()
     }
 
@@ -99,6 +115,8 @@ class UserPreferencesManager(context: Context) {
         prefs.edit()
             .remove("ha_completado_perfil")
             .remove("gamertag_guardado")
+            .remove("avatar_res_id")
+            .remove("custom_avatar_uri")
             .remove("racha_dias")
             .remove("ultima_fecha_conexion")
             .apply()

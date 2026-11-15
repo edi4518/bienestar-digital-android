@@ -100,6 +100,7 @@ fun DesmitificadorScreen(
     var tiempoRestante by remember { mutableIntStateOf(60) }
     var respuestaSeleccionada by remember { mutableStateOf<Boolean?>(null) }
     var juegoFinalizado by remember { mutableStateOf(false) }
+    val historialResultados = remember { androidx.compose.runtime.mutableStateListOf<Boolean>() }
 
     // Temporizador de 60 segundos por sesión según especificación
     LaunchedEffect(juegoFinalizado) {
@@ -111,6 +112,14 @@ fun DesmitificadorScreen(
             if (tiempoRestante <= 0 && !juegoFinalizado) {
                 juegoFinalizado = true
             }
+        } else if (totalXp > 0) {
+            val prefs = com.example.bienestar_digital_android.data.local.UserPreferencesManager(context)
+            val gamertag = prefs.gamertagGuardado.ifBlank { "Recluta" }
+            com.example.bienestar_digital_android.data.repository.RankingRepository.guardarPuntajeFirebase(
+                gamertag = gamertag,
+                juegoNombre = "Desmitificador",
+                puntaje = totalXp
+            )
         }
     }
 
@@ -140,6 +149,7 @@ fun DesmitificadorScreen(
                         totalXp = 0
                         tiempoRestante = 60
                         respuestaSeleccionada = null
+                        historialResultados.clear()
                         juegoFinalizado = false
                     },
                     onVolver = onNavigateBack
@@ -154,6 +164,7 @@ fun DesmitificadorScreen(
                         totalRondas = mitos.size,
                         tiempoRestante = tiempoRestante,
                         xp = totalXp,
+                        historialResultados = historialResultados,
                         onNavigateBack = onNavigateBack
                     )
 
@@ -171,7 +182,9 @@ fun DesmitificadorScreen(
                         onRespuesta = { esVerdad ->
                             if (respuestaSeleccionada == null) {
                                 respuestaSeleccionada = esVerdad
-                                if (esVerdad == mitoActual.esVerdad) {
+                                val esAcierto = (esVerdad == mitoActual.esVerdad)
+                                historialResultados.add(esAcierto)
+                                if (esAcierto) {
                                     aciertos++
                                     totalXp += mitoActual.xp
                                 }
@@ -187,7 +200,9 @@ fun DesmitificadorScreen(
                         onSeleccionarMito = {
                             if (respuestaSeleccionada == null) {
                                 respuestaSeleccionada = false
-                                if (!mitoActual.esVerdad) {
+                                val esAcierto = (!mitoActual.esVerdad)
+                                historialResultados.add(esAcierto)
+                                if (esAcierto) {
                                     aciertos++
                                     totalXp += mitoActual.xp
                                 }
@@ -196,7 +211,9 @@ fun DesmitificadorScreen(
                         onSeleccionarVerdad = {
                             if (respuestaSeleccionada == null) {
                                 respuestaSeleccionada = true
-                                if (mitoActual.esVerdad) {
+                                val esAcierto = (mitoActual.esVerdad)
+                                historialResultados.add(esAcierto)
+                                if (esAcierto) {
                                     aciertos++
                                     totalXp += mitoActual.xp
                                 }
@@ -249,6 +266,7 @@ fun HeaderDesmitificador(
     totalRondas: Int,
     tiempoRestante: Int,
     xp: Int,
+    historialResultados: List<Boolean> = emptyList(),
     onNavigateBack: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -322,7 +340,7 @@ fun HeaderDesmitificador(
                 }
             }
 
-            // XP "180 XP"
+            // XP
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50))
@@ -350,27 +368,29 @@ fun HeaderDesmitificador(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Barra de Progreso Segmentada (10 segmentos)
+        // Barra de Progreso Segmentada (Verde Acierto, Rojo Error o Gris Pendiente)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             for (i in 1..totalRondas) {
-                val esCompletado = i < rondaActual
+                val indexSegmento = i - 1
+                val esAciertoPrevio = if (indexSegmento < historialResultados.size) historialResultados[indexSegmento] else null
                 val esActual = i == rondaActual
+
+                val colorSegmento = when {
+                    esAciertoPrevio == true -> AccentLime // Verde Acierto
+                    esAciertoPrevio == false -> AccentPink // Rojo/Rosa Error
+                    esActual -> AccentLime.copy(alpha = 0.9f)
+                    else -> Color(0xFF2A2A38) // Gris pendiente
+                }
 
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(8.dp)
                         .clip(RoundedCornerShape(4.dp))
-                        .background(
-                            when {
-                                esActual -> AccentLime
-                                esCompletado -> AccentLime.copy(alpha = 0.6f)
-                                else -> Color(0xFF2A2A38)
-                            }
-                        )
+                        .background(colorSegmento)
                 )
             }
         }
@@ -737,25 +757,26 @@ fun FeedbackCardEvidencia(
                             color = Color.White
                         )
                         Text(
-                            text = if (esCorrecto) "Respuesta correcta confirmada" else "Revisión empírica de la respuesta",
+                            text = if (esCorrecto) "Respuesta correcta confirmada" else "¡Respuesta incorrecta!",
                             fontSize = 10.sp,
-                            color = Color(0xFF8E8E9F)
+                            fontWeight = FontWeight.Bold,
+                            color = if (esCorrecto) Color(0xFF8E8E9F) else AccentPink
                         )
                     }
                 }
 
-                // Badge +100 XP
+                // Badge +100 XP (Verde si acertó, Rojo/Rosa si erró)
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
-                        .background(AccentLime)
+                        .background(if (esCorrecto) AccentLime else AccentPink.copy(alpha = 0.85f))
                         .padding(horizontal = 8.dp, vertical = 3.dp)
                 ) {
                     Text(
-                        text = "+${mito.xp} XP",
+                        text = if (esCorrecto) "+${mito.xp} XP" else "+0 XP",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF0F0F14)
+                        color = if (esCorrecto) Color(0xFF0F0F14) else Color.White
                     )
                 }
             }

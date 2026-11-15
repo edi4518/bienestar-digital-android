@@ -235,6 +235,15 @@ fun CazaNotificacionesContent(
     LaunchedEffect(state.isGameOver) {
         if (state.isGameOver) {
             SoundPlayer.playSound(context, R.raw.juego_terminado)
+            val prefs = com.example.bienestar_digital_android.data.local.UserPreferencesManager(context)
+            val gamertag = prefs.gamertagGuardado.ifBlank { "Recluta" }
+            if (state.score > 0) {
+                com.example.bienestar_digital_android.data.repository.RankingRepository.guardarPuntajeFirebase(
+                    gamertag = gamertag,
+                    juegoNombre = "CazaNotificaciones",
+                    puntaje = state.score
+                )
+            }
         }
     }
 

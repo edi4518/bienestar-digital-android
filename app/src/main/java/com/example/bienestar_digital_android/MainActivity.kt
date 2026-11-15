@@ -139,6 +139,14 @@ class MainActivity : ComponentActivity() {
 
                                         else -> Unit
                                     }
+                                },
+                                onAbrirRankingClick = { viewModel.abrirRankingDialog() },
+                                onCerrarRankingClick = { viewModel.cerrarRankingDialog() },
+                                onCambiarFiltroRanking = { filtro -> viewModel.cambiarFiltroRanking(filtro) },
+                                onAbrirEditarPerfilClick = { viewModel.abrirEditarPerfilDialog() },
+                                onCerrarEditarPerfilClick = { viewModel.cerrarEditarPerfilDialog() },
+                                onGuardarPerfilClick = { nuevoNombre, avatarId, uri ->
+                                    viewModel.actualizarPerfil(context, nuevoNombre, avatarId, uri)
                                 }
                             )
                         }

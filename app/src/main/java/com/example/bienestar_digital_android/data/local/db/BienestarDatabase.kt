@@ -30,7 +30,9 @@ abstract class BienestarDatabase : RoomDatabase() {
                     context.applicationContext,
                     BienestarDatabase::class.java,
                     "bienestar_digital_db"
-                ).build()
+                )
+                .fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }

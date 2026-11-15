@@ -1,17 +1,25 @@
 package com.example.bienestar_digital_android.feature.hub
 
+import com.example.bienestar_digital_android.data.repository.RankingItem
+
 // Estado principal que consumira la pantalla
 
 data class HubUiState(
-    val isLoading: Boolean =false,
-    val userName: String ="",
+    val isLoading: Boolean = false,
+    val userName: String = "",
     val userRacha: Int = 0,
     val nivel: Int = 1,
     val stats: RadarStats = RadarStats(),
-    val misionNarrativa: MissionNarrativaState  = MissionNarrativaState(),
+    val misionNarrativa: MissionNarrativaState = MissionNarrativaState(),
     val miniMisiones: List<MiniMisionState> = emptyList(),
     val balance: Balance24HorasState = Balance24HorasState(),
-    val tipDelDia: TipDataState = TipDataState()
+    val tipDelDia: TipDataState = TipDataState(),
+    val mostrarRankingDialog: Boolean = false,
+    val juegoFiltroRanking: String = "Global",
+    val rankingList: List<RankingItem> = emptyList(),
+    val mostrarEditarPerfilDialog: Boolean = false,
+    val avatarResId: Int = 1,
+    val customAvatarUri: String? = null
 )
 
 // Métricas de energia, foco y ánimo (valores de 0 a 100)
