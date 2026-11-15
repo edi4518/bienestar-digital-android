@@ -86,9 +86,10 @@ La aplicación cumple rigurosamente con la arquitectura **Model-View-ViewModel**
 
 | Integrante | Rol Principal | Tareas Realizadas |
 | :--- | :--- | :--- |
-| **Eduardo** | Lead Developer & Android Architect | Implementación de Room/SQLite, Firebase Firestore, UsageStatsManager, Jetpack Compose UI y minijuegos. |
-| **Integrante 2** | Diseñador UI/UX | Diseño del Design System Neo-Brutalista, Bento Grid Layouts y prototipo de pantallas. |
-| **Integrante 3** | QA & Content Specialist | Curación de las 15 tarjetas científicas de mitos, guion narrativo de 7 capítulos y pruebas de unidad. |
+| **Eduardo** | Lead Developer & Creacion y desarrrollador | Implementación de Room/SQLite, Firebase Firestore, UsageStatsManager, y Minijuego 1 Deciciones Conectadas. |
+| **Gonzalo** | Diseñador UI/UX & Creacion y desarrollo | Diseño del Design System Neo-Brutalista, Bento Grid Layouts y prototipo de pantallas y desarrollo de Organizador 24 hs y de la pantalla de Home. |
+| **Leandro** | Arquitectura y creacion de contenido Minijuego | Logica y desarrollo del Minijuego Caza de Notificaciones y pruebas de unidad y desarrollo del diseño de pantalla de creacion de perfil. |
+| **Franco** | Arquitectura y creacion de contenido Minijuego | Desarrollo de Nimijuego de Mito o Verdad y desarrollo de logica de la creacion del perfil y pruebas de unidad. |
 
 ---
 
