@@ -1,7 +1,6 @@
 package com.example.bienestar_digital_android
 
 import com.example.bienestar_digital_android.data.repository.DailyUsageSummary
-import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hUiState
 import com.example.bienestar_digital_android.feature.organizador24h.Organizador24hViewModel.Organizador24hViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -27,12 +26,12 @@ class Organizador24hViewModelTest {
     }
 
     @Test
-    fun `al cambiar horas de pantalla se actualiza el total de asignadas`() {
-        viewModel.cambiarHoras("pantalla", 1) // 4 -> 5
+    fun `al cambiar horas de suenio se actualiza el total de asignadas`() {
+        viewModel.cambiarHoras("suenio", -1) // 8 -> 7
         val uiState = viewModel.uiState.value
 
-        assertEquals(5, uiState.horasPantalla)
-        assertEquals(25, uiState.totalAsignadas)
+        assertEquals(7, uiState.horasSuenio)
+        assertEquals(23, uiState.totalAsignadas)
         assertFalse(uiState.esSumaValida)
     }
 

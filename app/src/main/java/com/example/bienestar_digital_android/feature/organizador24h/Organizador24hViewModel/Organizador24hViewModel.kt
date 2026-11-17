@@ -75,7 +75,11 @@ class Organizador24hViewModel : ViewModel() {
         }
     }
 
-    fun cambiarHoras(context: Context, actividad: String, delta: Int) {
+    fun cambiarHoras(actividad: String, delta: Int) {
+        cambiarHoras(null, actividad, delta)
+    }
+
+    fun cambiarHoras(context: Context?, actividad: String, delta: Int) {
         _uiState.update { currentState ->
             val totalActual = currentState.totalAsignadas
             if (delta > 0 && totalActual >= 24) return@update currentState
@@ -96,9 +100,8 @@ class Organizador24hViewModel : ViewModel() {
 
             val total = suenio + escuela + pantalla + deporte + comidas
 
-            // Guardar preferencias del día
-            val prefs = context.getSharedPreferences("organizador24h_prefs", Context.MODE_PRIVATE)
-            prefs.edit().apply {
+            // Guardar preferencias del día si el contexto no es nulo
+            context?.getSharedPreferences("organizador24h_prefs", Context.MODE_PRIVATE)?.edit()?.apply {
                 putInt("suenio_${currentState.diaSeleccionado}", suenio)
                 putInt("escuela_${currentState.diaSeleccionado}", escuela)
                 putInt("pantalla_${currentState.diaSeleccionado}", pantalla)
