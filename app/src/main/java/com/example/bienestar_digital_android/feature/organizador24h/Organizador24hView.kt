@@ -55,6 +55,7 @@ private val SurfaceBright = Color(0xFF39393D)
 @Composable
 fun Organizador24hScreen(
     uiState: Organizador24hUiState,
+    onSeleccionarDia: (Int) -> Unit,
     onCambiarHoras: (String, Int) -> Unit,
     onSimularClick: () -> Unit,
     onAnalizarUsoRealClick: () -> Unit = {},
@@ -143,6 +144,36 @@ fun Organizador24hScreen(
                     fontWeight = FontWeight.Bold,
                     color = chipTextColor
                 )
+            }
+        }
+
+        // 1.5. Selector de Días de la Semana
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val dias = listOf("L", "M", "MI", "J", "V", "S", "D")
+            dias.forEachIndexed { index, dia ->
+                val isSelected = uiState.diaSeleccionado == index
+                val bgColor = if (isSelected) PrimaryFixed else SurfaceContainer
+                val textColor = if (isSelected) OnPrimaryFixed else TextOnSurface
+
+                Box(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .background(bgColor, CircleShape)
+                        .clip(CircleShape)
+                        .clickable { onSeleccionarDia(index) },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = dia,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
+                    )
+                }
             }
         }
 
@@ -452,6 +483,7 @@ fun Organizador24hScreen(
                 icon = Icons.Default.Bedtime,
                 iconBg = Color(0x4D6A0BAA),
                 iconColor = PurpleText,
+                puedesSumar = uiState.totalAsignadas < 24,
                 onMinus = { onCambiarHoras("suenio", -1) },
                 onPlus = { onCambiarHoras("suenio", 1) }
             )
@@ -469,16 +501,19 @@ fun Organizador24hScreen(
                 fijoLockIcon = true
             )
 
-            // Tarjeta 3: Redes y Pantallas (Zona crítica)
+            // Tarjeta 3: Redes y Pantallas (Zona crítica o Sincronizado)
             TarjetaAsignacionItem(
                 titulo = "Redes y Pantallas",
-                subtitulo = "Zona crítica de ocio",
-                subtituloColor = RedError,
+                subtitulo = if (uiState.esPantallaAutomatica) "Sincronizado con tu celular" else "Zona crítica de ocio",
+                subtituloColor = if (uiState.esPantallaAutomatica) SecondaryFixed else RedError,
                 horas = uiState.horasPantalla,
-                horasColor = RedError,
+                horasColor = if (uiState.esPantallaAutomatica) SecondaryFixed else RedError,
                 icon = Icons.Default.Smartphone,
-                iconBg = Color(0x4DFF5964),
-                iconColor = RedError,
+                iconBg = if (uiState.esPantallaAutomatica) Color(0x3300DFC1) else Color(0x4DFF5964),
+                iconColor = if (uiState.esPantallaAutomatica) SecondaryFixed else RedError,
+                puedesSumar = uiState.totalAsignadas < 24 && !uiState.esPantallaAutomatica,
+                esFijo = uiState.esPantallaAutomatica,
+                fijoLockIcon = uiState.esPantallaAutomatica,
                 onMinus = { onCambiarHoras("pantalla", -1) },
                 onPlus = { onCambiarHoras("pantalla", 1) }
             )
@@ -492,6 +527,7 @@ fun Organizador24hScreen(
                 icon = Icons.Default.SportsVolleyball,
                 iconBg = Color(0x33C3F400),
                 iconColor = PrimaryFixed,
+                puedesSumar = uiState.totalAsignadas < 24,
                 onMinus = { onCambiarHoras("deporte", -1) },
                 onPlus = { onCambiarHoras("deporte", 1) }
             )
@@ -505,6 +541,7 @@ fun Organizador24hScreen(
                 icon = Icons.Default.Restaurant,
                 iconBg = SurfaceBright,
                 iconColor = TextOnSurface,
+                puedesSumar = uiState.totalAsignadas < 24,
                 onMinus = { onCambiarHoras("comidas", -1) },
                 onPlus = { onCambiarHoras("comidas", 1) }
             )
@@ -1113,6 +1150,7 @@ fun TarjetaAsignacionItem(
     horasColor: Color = TextOnSurface,
     esFijo: Boolean = false,
     fijoLockIcon: Boolean = false,
+    puedesSumar: Boolean = true,
     onMinus: () -> Unit = {},
     onPlus: () -> Unit = {}
 ) {
@@ -1185,6 +1223,7 @@ fun TarjetaAsignacionItem(
                 )
             }
         } else {
+            val canMinus = horas > 0
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -1192,11 +1231,11 @@ fun TarjetaAsignacionItem(
                 Box(
                     modifier = Modifier
                         .size(32.dp)
-                        .background(SurfaceContainerHighest, CircleShape)
-                        .clickable { onMinus() },
+                        .background(if (canMinus) SurfaceContainerHighest else SurfaceContainerHighest.copy(alpha = 0.5f), CircleShape)
+                        .then(if (canMinus) Modifier.clickable { onMinus() } else Modifier),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "-", color = TextOnSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "-", color = if (canMinus) TextOnSurface else TextOnSurface.copy(alpha = 0.5f), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
 
                 Text(
@@ -1211,11 +1250,11 @@ fun TarjetaAsignacionItem(
                 Box(
                     modifier = Modifier
                         .size(32.dp)
-                        .background(SurfaceContainerHighest, CircleShape)
-                        .clickable { onPlus() },
+                        .background(if (puedesSumar) SurfaceContainerHighest else SurfaceContainerHighest.copy(alpha = 0.5f), CircleShape)
+                        .then(if (puedesSumar) Modifier.clickable { onPlus() } else Modifier),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "+", color = TextOnSurface, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "+", color = if (puedesSumar) TextOnSurface else TextOnSurface.copy(alpha = 0.5f), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -1228,6 +1267,7 @@ fun Organizador24hScreenPreview() {
     BienestardigitalandroidTheme {
         Organizador24hScreen(
             uiState = Organizador24hUiState(),
+            onSeleccionarDia = {},
             onCambiarHoras = { _, _ -> },
             onSimularClick = {},
             onBackClick = {}
