@@ -1,7 +1,10 @@
 package com.example.bienestar_digital_android.feature.organizador24h
 
 data class Organizador24hUiState (
-    // Datos de Usuario de manera predeterminada según spec
+    // Día seleccionado (0=L, 1=M, 2=MI, 3=J, 4=V, 5=S, 6=D)
+    val diaSeleccionado: Int = 0,
+
+    // Datos de Usuario de manera predeterminada según spec (para el día seleccionado)
     val horasSuenio: Int = 8,
     val horasEscuela: Int = 6,
     val horasPantalla: Int = 4,
@@ -9,6 +12,9 @@ data class Organizador24hUiState (
     val horasComidas: Int = 3,
     val horasEstudio: Int = 0,
     val horasSocial: Int = 3,
+
+    // Automatización con uso real
+    val esPantallaAutomatica: Boolean = false,
 
     // Total de las horas del día
     val totalAsignadas: Int = 24,

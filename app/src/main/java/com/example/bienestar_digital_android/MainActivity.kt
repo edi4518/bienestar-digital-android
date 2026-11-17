@@ -187,9 +187,14 @@ class MainActivity : ComponentActivity() {
                             val viewModel: Organizador24hViewModel = viewModel()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+                            LaunchedEffect(Unit) {
+                                viewModel.initData(context)
+                            }
+
                             Organizador24hScreen(
                                 uiState = uiState,
-                                onCambiarHoras = { actividad, delta -> viewModel.cambiarHoras(actividad, delta) },
+                                onSeleccionarDia = { diaIndex -> viewModel.seleccionarDia(context, diaIndex) },
+                                onCambiarHoras = { actividad, delta -> viewModel.cambiarHoras(context, actividad, delta) },
                                 onSimularClick = { viewModel.simularJornada() },
                                 onAnalizarUsoRealClick = { viewModel.verificarYAnalizarUsoReal(context) },
                                 onSolicitarPermisoClick = { viewModel.solicitarPermisoUso(context) },

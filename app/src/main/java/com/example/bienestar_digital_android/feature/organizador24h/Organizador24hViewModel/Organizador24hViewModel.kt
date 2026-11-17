@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.example.bienestar_digital_android.data.repository.UserProgressRepository
+import java.util.Calendar
 
 class Organizador24hViewModel : ViewModel() {
 
@@ -18,8 +19,67 @@ class Organizador24hViewModel : ViewModel() {
     val uiState: StateFlow<Organizador24hUiState> = _uiState.asStateFlow()
 
     // Actualizar el estado del ViewModel
-    fun cambiarHoras(actividad: String, delta: Int) {
+    fun initData(context: Context) {
+        val calendar = Calendar.getInstance()
+        val hoyIndex = (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7
+        seleccionarDia(context, hoyIndex)
+    }
+
+    fun seleccionarDia(context: Context, diaIndex: Int) {
+        val prefs = context.getSharedPreferences("organizador24h_prefs", Context.MODE_PRIVATE)
+        val suenio = prefs.getInt("suenio_$diaIndex", 8)
+        val escuela = prefs.getInt("escuela_$diaIndex", 6)
+        var pantalla = prefs.getInt("pantalla_$diaIndex", 4)
+        val deporte = prefs.getInt("deporte_$diaIndex", 3)
+        val comidas = prefs.getInt("comidas_$diaIndex", 3)
+
+        var esPantallaAutomatica = false
+        val calendar = Calendar.getInstance()
+        val hoyIndex = (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7
+
+        if (diaIndex == hoyIndex) {
+            val repository = UsageStatsRepository(context)
+            if (repository.hasUsageStatsPermission()) {
+                val summary = repository.getTodayUsageSummary()
+                val horasReales = (summary.totalScreenTimeMinutes / 60L).toInt()
+                pantalla = horasReales.coerceIn(0, 24)
+                esPantallaAutomatica = true
+                prefs.edit().putInt("pantalla_$diaIndex", pantalla).apply()
+            }
+        }
+
+        val total = suenio + escuela + pantalla + deporte + comidas
+        
         _uiState.update { currentState ->
+            val bateria = calcularBateria(suenio, pantalla)
+            val foco = calcularFoco(suenio, pantalla)
+            val cansancio = calcularCansancio(suenio, pantalla)
+
+            currentState.copy(
+                diaSeleccionado = diaIndex,
+                esPantallaAutomatica = esPantallaAutomatica,
+                horasSuenio = suenio,
+                horasEscuela = escuela,
+                horasPantalla = pantalla,
+                horasDeporte = deporte,
+                horasComidas = comidas,
+                horasSocial = deporte,
+                totalAsignadas = total,
+                esSumaValida = total == 24,
+                bateriaDiurna = bateria,
+                focoCognitivo = foco,
+                cansancioEstado = cansancio,
+                alertaActiva = null,
+                feedbackReflexivo = null
+            )
+        }
+    }
+
+    fun cambiarHoras(context: Context, actividad: String, delta: Int) {
+        _uiState.update { currentState ->
+            val totalActual = currentState.totalAsignadas
+            if (delta > 0 && totalActual >= 24) return@update currentState
+
             var suenio = currentState.horasSuenio
             var escuela = currentState.horasEscuela
             var pantalla = currentState.horasPantalla
@@ -29,32 +89,28 @@ class Organizador24hViewModel : ViewModel() {
             when (actividad) {
                 "suenio", "sleep" -> suenio = (suenio + delta).coerceIn(0, 24)
                 "escuela", "school" -> escuela = (escuela + delta).coerceIn(0, 24)
-                "pantalla", "screens" -> pantalla = (pantalla + delta).coerceIn(0, 24)
+                "pantalla", "screens" -> if (!currentState.esPantallaAutomatica) pantalla = (pantalla + delta).coerceIn(0, 24)
                 "deporte", "social", "sport" -> deporte = (deporte + delta).coerceIn(0, 24)
                 "comidas", "leisure", "estudio" -> comidas = (comidas + delta).coerceIn(0, 24)
             }
 
             val total = suenio + escuela + pantalla + deporte + comidas
 
+            // Guardar preferencias del día
+            val prefs = context.getSharedPreferences("organizador24h_prefs", Context.MODE_PRIVATE)
+            prefs.edit().apply {
+                putInt("suenio_${currentState.diaSeleccionado}", suenio)
+                putInt("escuela_${currentState.diaSeleccionado}", escuela)
+                putInt("pantalla_${currentState.diaSeleccionado}", pantalla)
+                putInt("deporte_${currentState.diaSeleccionado}", deporte)
+                putInt("comidas_${currentState.diaSeleccionado}", comidas)
+                apply()
+            }
+
             // Calculo dinamico de bateria, foco y cansancio
-            val bateria = when {
-                suenio >= 8 && pantalla <= 3 -> 95
-                suenio >= 7 && pantalla <= 5 -> 80
-                suenio < 7 -> 45
-                else -> 60
-            }
-            val foco = when {
-                suenio >= 8 && pantalla <= 3 -> "Máximo"
-                suenio >= 7 && pantalla <= 5 -> "Óptimo"
-                suenio < 7 -> "Brumoso"
-                else -> "Regular"
-            }
-            val cansancio = when {
-                suenio >= 8 && pantalla <= 3 -> "Nulo"
-                suenio >= 7 && pantalla <= 5 -> "Bajo"
-                suenio < 7 -> "Alto"
-                else -> "Medio"
-            }
+            val bateria = calcularBateria(suenio, pantalla)
+            val foco = calcularFoco(suenio, pantalla)
+            val cansancio = calcularCansancio(suenio, pantalla)
 
             currentState.copy(
                 horasSuenio = suenio,
@@ -69,6 +125,33 @@ class Organizador24hViewModel : ViewModel() {
                 focoCognitivo = foco,
                 cansancioEstado = cansancio
             )
+        }
+    }
+
+    private fun calcularBateria(suenio: Int, pantalla: Int): Int {
+        return when {
+            suenio >= 8 && pantalla <= 3 -> 95
+            suenio >= 7 && pantalla <= 5 -> 80
+            suenio < 7 -> 45
+            else -> 60
+        }
+    }
+
+    private fun calcularFoco(suenio: Int, pantalla: Int): String {
+        return when {
+            suenio >= 8 && pantalla <= 3 -> "Máximo"
+            suenio >= 7 && pantalla <= 5 -> "Óptimo"
+            suenio < 7 -> "Brumoso"
+            else -> "Regular"
+        }
+    }
+
+    private fun calcularCansancio(suenio: Int, pantalla: Int): String {
+        return when {
+            suenio >= 8 && pantalla <= 3 -> "Nulo"
+            suenio >= 7 && pantalla <= 5 -> "Bajo"
+            suenio < 7 -> "Alto"
+            else -> "Medio"
         }
     }
 
