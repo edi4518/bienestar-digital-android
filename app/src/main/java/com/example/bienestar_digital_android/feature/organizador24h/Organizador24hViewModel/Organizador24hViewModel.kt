@@ -209,6 +209,7 @@ class Organizador24hViewModel : ViewModel() {
         val summary = repository.getTodayUsageSummary()
 
         _uiState.update { state ->
+            val realPantallaMin = summary.totalScreenTimeMinutes
             val planeadoPantallaMin = state.horasPantalla * 60L
             val planeadoRedesMin = (state.horasPantalla * 60L * 0.45f).toLong().coerceAtLeast(45L)
             val planeadoOcioMin = (state.horasPantalla * 60L * 0.35f).toLong().coerceAtLeast(45L)
@@ -220,14 +221,34 @@ class Organizador24hViewModel : ViewModel() {
             val realEstudioMin = summary.productivityTimeMinutes
             val realDesconexionMin = summary.disconnectionTimeMinutes
 
+            val difPantalla = realPantallaMin - planeadoPantallaMin
             val difRedes = realRedesMin - planeadoRedesMin
-            val feedbackModal = if (difRedes > 0) {
-                val h = difRedes / 60
-                val m = difRedes % 60
-                val tiempoTexto = if (h > 0) "${h}h ${m}m" else "${m}m"
-                "Detectamos ${tiempoTexto} más de redes que lo planeaste en tu organizador hoy. ⚠️"
-            } else {
-                "¡Excelente! Mantuviste tu uso de redes sociales dentro de lo planeado en tu organizador hoy. ✅"
+
+            val feedbackModal = when {
+                difPantalla > 0 && difRedes > 0 -> {
+                    val hP = difPantalla / 60
+                    val mP = difPantalla % 60
+                    val tP = if (hP > 0) "${hP}h ${mP}m" else "${mP}m"
+                    val hR = difRedes / 60
+                    val mR = difRedes % 60
+                    val tR = if (hR > 0) "${hR}h ${mR}m" else "${mR}m"
+                    "Detectamos ${tP} más de tiempo total en pantalla y ${tR} más de redes que lo planeado en tu organizador hoy. ⚠️"
+                }
+                difPantalla > 0 -> {
+                    val hP = difPantalla / 60
+                    val mP = difPantalla % 60
+                    val tP = if (hP > 0) "${hP}h ${mP}m" else "${mP}m"
+                    "Exceso detectado: Usaste la pantalla ${tP} más de la meta fijada en tu organizador hoy. ⚠️"
+                }
+                difRedes > 0 -> {
+                    val hR = difRedes / 60
+                    val mR = difRedes % 60
+                    val tR = if (hR > 0) "${hR}h ${mR}m" else "${mR}m"
+                    "Detectamos ${tR} más de redes sociales que lo planeado en tu organizador hoy. ⚠️"
+                }
+                else -> {
+                    "¡Excelente! Mantuviste tu uso de pantalla y redes sociales dentro de lo planeado en tu organizador hoy. ✅"
+                }
             }
 
             state.copy(
