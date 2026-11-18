@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Process
 import android.provider.Settings
 import java.util.Calendar
+import java.util.Locale
 
 data class AppUsageInfo(
     val packageName: String,
@@ -39,6 +40,7 @@ class UsageStatsRepository(private val context: Context) {
         "com.zhiliaoapp.musically", // TikTok
         "com.ss.android.ugc.trill", // TikTok (variante)
         "com.facebook.katana",
+        "com.facebook.orca", // Facebook Messenger
         "com.twitter.android", // X / Twitter
         "com.snapchat.android",
         "com.pinterest",
@@ -142,18 +144,38 @@ class UsageStatsRepository(private val context: Context) {
                     productivityTimeMillis += timeInForeground
                 }
 
-                // Obtener el nombre legible de la app si está instalada
-                val appLabel = try {
+                // Obtener el nombre legible y amigable de la app (ejemplo: "Instagram", "WhatsApp")
+                val rawLabel = try {
                     val appInfo = packageManager.getApplicationInfo(pkgName, 0)
                     packageManager.getApplicationLabel(appInfo).toString()
                 } catch (_: Exception) {
                     pkgName
                 }
 
+                val friendlyName = when {
+                    pkgName.contains("whatsapp", ignoreCase = true) -> "WhatsApp"
+                    pkgName.contains("instagram", ignoreCase = true) -> "Instagram"
+                    pkgName.contains("tiktok", ignoreCase = true) || pkgName.contains("musically", ignoreCase = true) || pkgName.contains("trill", ignoreCase = true) -> "TikTok"
+                    pkgName.contains("twitter", ignoreCase = true) -> "X (Twitter)"
+                    pkgName.contains("facebook.orca", ignoreCase = true) -> "Messenger"
+                    pkgName.contains("facebook", ignoreCase = true) -> "Facebook"
+                    pkgName.contains("snapchat", ignoreCase = true) -> "Snapchat"
+                    pkgName.contains("pinterest", ignoreCase = true) -> "Pinterest"
+                    pkgName.contains("reddit", ignoreCase = true) -> "Reddit"
+                    pkgName.contains("youtube", ignoreCase = true) -> "YouTube"
+                    else -> {
+                        if (rawLabel.startsWith("com.") || rawLabel.contains(".")) {
+                            pkgName.substringAfterLast(".").replaceFirstChar { it.uppercase(Locale.getDefault()) }
+                        } else {
+                            rawLabel
+                        }
+                    }
+                }
+
                 appsList.add(
                     AppUsageInfo(
                         packageName = pkgName,
-                        appName = appLabel,
+                        appName = friendlyName,
                         usageTimeMinutes = timeInForeground / (1000 * 60),
                         isSocialMedia = isSocial
                     )

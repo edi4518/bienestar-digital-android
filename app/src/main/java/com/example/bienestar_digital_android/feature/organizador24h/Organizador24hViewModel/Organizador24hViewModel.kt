@@ -266,7 +266,7 @@ class Organizador24hViewModel : ViewModel() {
                 desconexionPlaneadoMinutos = planeadoDesconexionMin,
                 desconexionRealMinutos = realDesconexionMin,
                 feedbackSistemaModal = feedbackModal,
-                redesDetalleApps = summary.topApps.filter { it.isSocialMedia || it.usageTimeMinutes > 0 }
+                redesDetalleApps = summary.topApps.filter { it.isSocialMedia && it.usageTimeMinutes > 0 }
             )
         }
     }
