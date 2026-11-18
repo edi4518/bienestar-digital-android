@@ -333,20 +333,24 @@ class Organizador24hViewModel : ViewModel() {
                 indiceFranja = 0
             )
 
-            // Persistencia permanente en SQLite con Room
-            val db = com.example.bienestar_digital_android.data.local.db.BienestarDatabase.getDatabase(context)
-            viewModelScope.launch {
-                val hoyFecha = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
-                val auditoria = com.example.bienestar_digital_android.data.local.db.AuditoriaDiariaEntity(
-                    fecha = hoyFecha,
-                    totalPantallaMinutos = summary.totalScreenTimeMinutes,
-                    redesSocialesMinutos = summary.socialMediaTimeMinutes,
-                    desconexionMinutos = summary.disconnectionTimeMinutes,
-                    metaPantallaHoras = current.horasPantalla,
-                    metaCumplida = (summary.totalScreenTimeHours <= current.horasPantalla),
-                    bateriaDiurna = current.bateriaDiurna
-                )
-                db.auditoriaDao().guardarAuditoria(auditoria)
+            // Persistencia permanente en SQLite con Room (Ejecutada en hilo de E/S Dispatchers.IO para evitar cierres)
+            viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+                try {
+                    val db = com.example.bienestar_digital_android.data.local.db.BienestarDatabase.getDatabase(context)
+                    val hoyFecha = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+                    val auditoria = com.example.bienestar_digital_android.data.local.db.AuditoriaDiariaEntity(
+                        fecha = hoyFecha,
+                        totalPantallaMinutos = summary.totalScreenTimeMinutes,
+                        redesSocialesMinutos = summary.socialMediaTimeMinutes,
+                        desconexionMinutos = summary.disconnectionTimeMinutes,
+                        metaPantallaHoras = current.horasPantalla,
+                        metaCumplida = (summary.totalScreenTimeHours <= current.horasPantalla),
+                        bateriaDiurna = current.bateriaDiurna
+                    )
+                    db.auditoriaDao().guardarAuditoria(auditoria)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         } else {
             cerrarModalAuditoria()
