@@ -265,9 +265,14 @@ class Organizador24hViewModel : ViewModel() {
                 estudioRealMinutos = realEstudioMin,
                 desconexionPlaneadoMinutos = planeadoDesconexionMin,
                 desconexionRealMinutos = realDesconexionMin,
-                feedbackSistemaModal = feedbackModal
+                feedbackSistemaModal = feedbackModal,
+                redesDetalleApps = summary.topApps.filter { it.isSocialMedia || it.usageTimeMinutes > 0 }
             )
         }
+    }
+
+    fun toggleExpandirRedes() {
+        _uiState.update { it.copy(estaRedesExpandido = !it.estaRedesExpandido) }
     }
 
     fun solicitarPermisoUso(context: Context) {

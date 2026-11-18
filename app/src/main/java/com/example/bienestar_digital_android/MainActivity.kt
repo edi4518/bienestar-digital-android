@@ -201,6 +201,7 @@ class MainActivity : ComponentActivity() {
                                 onDismissDialogoPermiso = { viewModel.ocultarDialogoPermiso() },
                                 onCerrarModalAuditoria = { viewModel.cerrarModalAuditoria() },
                                 onSincronizarClick = { viewModel.sincronizarYRecalcularHabitos(context) },
+                                onToggleExpandirRedes = { viewModel.toggleExpandirRedes() },
                                 onBackClick = { navController.popBackStack() }
                             )
                         }

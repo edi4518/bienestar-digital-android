@@ -1,5 +1,10 @@
 package com.example.bienestar_digital_android.feature.organizador24h
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -63,6 +68,7 @@ fun Organizador24hScreen(
     onDismissDialogoPermiso: () -> Unit = {},
     onCerrarModalAuditoria: () -> Unit = {},
     onSincronizarClick: () -> Unit = {},
+    onToggleExpandirRedes: () -> Unit = {},
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -733,7 +739,8 @@ fun Organizador24hScreen(
         AuditoriaDigitalModal(
             uiState = uiState,
             onDismiss = { onCerrarModalAuditoria() },
-            onSincronizarClick = { onSincronizarClick() }
+            onSincronizarClick = { onSincronizarClick() },
+            onToggleExpandirRedes = { onToggleExpandirRedes() }
         )
     }
 }
@@ -742,7 +749,8 @@ fun Organizador24hScreen(
 fun AuditoriaDigitalModal(
     uiState: Organizador24hUiState,
     onDismiss: () -> Unit,
-    onSincronizarClick: () -> Unit = {}
+    onSincronizarClick: () -> Unit = {},
+    onToggleExpandirRedes: () -> Unit = {}
 ) {
     Dialog(
         onDismissRequest = onDismiss,
@@ -907,13 +915,107 @@ fun AuditoriaDigitalModal(
                         )
                     }
 
-                    // Fila 1: Redes Sociales
-                    ItemComparativaBarra(
-                        numero = "1.",
-                        titulo = "Redes Sociales:",
-                        planeadoMin = uiState.redesPlaneadoMinutos,
-                        realMin = uiState.redesRealMinutos
-                    )
+                    // Fila 1: Redes Sociales (Expandible con Desglose Discriminado por App)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(Color(0xFF1E1E28))
+                            .padding(10.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onToggleExpandirRedes() },
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(modifier = Modifier.weight(1f)) {
+                                ItemComparativaBarra(
+                                    numero = "1.",
+                                    titulo = "Redes Sociales:",
+                                    planeadoMin = uiState.redesPlaneadoMinutos,
+                                    realMin = uiState.redesRealMinutos
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Icon(
+                                imageVector = if (uiState.estaRedesExpandido) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                contentDescription = "Expandir desglose por app",
+                                tint = Color(0xFF00E5FF),
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
+
+                        // Desglose Discriminado por App Red Social
+                        AnimatedVisibility(
+                            visible = uiState.estaRedesExpandido,
+                            enter = fadeIn() + expandVertically(),
+                            exit = fadeOut() + shrinkVertically()
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp, start = 6.dp, end = 6.dp),
+                                verticalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                Text(
+                                    text = "DESGLOSE DISCRIMINADO POR APP:",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF00E5FF)
+                                )
+
+                                val appsSociales = uiState.redesDetalleApps
+                                if (appsSociales.isEmpty()) {
+                                    Text(
+                                        text = "No se detectaron aplicaciones de redes sociales activas hoy.",
+                                        fontSize = 11.sp,
+                                        color = Color.Gray
+                                    )
+                                } else {
+                                    appsSociales.forEach { app ->
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .background(Color(0xFF16161F))
+                                                .padding(horizontal = 10.dp, vertical = 6.dp),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Row(
+                                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                val appIcon = when {
+                                                    app.packageName.contains("whatsapp", ignoreCase = true) -> "🟢"
+                                                    app.packageName.contains("instagram", ignoreCase = true) -> "📸"
+                                                    app.packageName.contains("tiktok", ignoreCase = true) || app.packageName.contains("musically", ignoreCase = true) -> "🎵"
+                                                    app.packageName.contains("twitter", ignoreCase = true) -> "🐦"
+                                                    app.packageName.contains("facebook", ignoreCase = true) -> "🟦"
+                                                    else -> "📱"
+                                                }
+                                                Text(text = appIcon, fontSize = 12.sp)
+                                                Text(
+                                                    text = app.appName,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.SemiBold,
+                                                    color = Color.White
+                                                )
+                                            }
+                                            Text(
+                                                text = "${app.usageTimeMinutes} min",
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = Color(0xFFC3F400)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     // Fila 2: Ocio / Streaming
                     ItemComparativaBarra(

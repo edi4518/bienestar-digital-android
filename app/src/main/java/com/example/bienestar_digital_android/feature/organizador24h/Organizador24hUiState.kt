@@ -1,5 +1,7 @@
 package com.example.bienestar_digital_android.feature.organizador24h
 
+import com.example.bienestar_digital_android.data.repository.AppUsageInfo
+
 data class Organizador24hUiState (
     // Día seleccionado (0=L, 1=M, 2=MI, 3=J, 4=V, 5=S, 6=D)
     val diaSeleccionado: Int = 0,
@@ -47,5 +49,7 @@ data class Organizador24hUiState (
     val estudioRealMinutos: Long = 0L,
     val desconexionPlaneadoMinutos: Long = 360L,
     val desconexionRealMinutos: Long = 0L,
-    val feedbackSistemaModal: String = ""
+    val feedbackSistemaModal: String = "",
+    val redesDetalleApps: List<AppUsageInfo> = emptyList(),
+    val estaRedesExpandido: Boolean = false
 )
